@@ -166,6 +166,7 @@ const Login = ({navigation}) => {
               backgroundColor: "#1A9FE0",
               borderRadius: 10,
             }}
+            onPress={() => navigation.navigate("Registo")}
           >
             <Text
               style={{
@@ -174,7 +175,6 @@ const Login = ({navigation}) => {
                 color: "white",
                 textAlign: "center",
               }}
-              onPress={() => navigation.navigate("Registo")}
             >
               Registar
             </Text>

@@ -1,5 +1,3 @@
-import * as firebase from 'firebase';
-import '@firebase/auth';
 import '@firebase/firestore';
 
 const firebaseConfig = {
@@ -12,8 +10,5 @@ const firebaseConfig = {
     measurementId: "G-D5LVW1D5CJ"
   };
 
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
 
-export { firebase };
+export default firebaseConfig;
