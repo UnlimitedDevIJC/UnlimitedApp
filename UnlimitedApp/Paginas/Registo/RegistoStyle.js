@@ -4,7 +4,7 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "white",
-    marginTop: "12%",
+    marginTop: "14%",
   },
 
   scrollView: {
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#16508D",
     width: "100%",
     height: 120,
-    transform: "rotateZ(-15deg)",
+    transform: [{ rotateZ: '-15deg' }],
     left: -28,
     top: -70,
   },

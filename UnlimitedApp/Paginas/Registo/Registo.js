@@ -12,20 +12,8 @@ import {
   Image,
 } from "react-native"
 import React, { useState } from "react"
-import styles from './RegistoStyle'
+import styles from "./RegistoStyle"
 import { FontAwesome5 } from "@expo/vector-icons"
-//   import {
-//     getFirestore,
-//     collection,
-//     onSnapshot,
-//     addDoc,
-//     deleteDocs,
-//     setDoc,
-//     doc,
-//     getDocs,
-//   } from "firebase/firestore"
-//   import { initializeApp, onLog } from "firebase/app"
-//   import firebaseConfig from "../../firebase/config"
 
 const Registo = ({ navigation }) => {
   //Firebase
@@ -161,9 +149,9 @@ const Registo = ({ navigation }) => {
               </Text>
             </TouchableOpacity>
           </>
-        </TouchableWithoutFeedback>
-      </ScrollView>
-    </SafeAreaView>
+         </TouchableWithoutFeedback>
+       </ScrollView>
+     </SafeAreaView>
   )
 }
 
