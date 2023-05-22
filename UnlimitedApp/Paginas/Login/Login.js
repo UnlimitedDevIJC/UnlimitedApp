@@ -97,6 +97,7 @@ import {
                 justifyContent: "center",
                 cursor: "pointer",
               }}
+              onPress={() => navigation.navigate("RecuperarPassword")}
             >
               <Text
                 style={{
@@ -132,6 +133,7 @@ import {
                 backgroundColor: "#1A9FE0",
                 borderRadius: 10,
               }}
+              onPress={() => navigation.navigate("HomePage")}
             >
               <Text
                 style={{

@@ -3,6 +3,8 @@ import React from "react"
 import Login from "../Paginas/Login/Login"
 import { createStackNavigator } from "@react-navigation/stack"
 import Registo from "../Paginas/Registo/Registo"
+import RecuperarPassword from "../Paginas/RecuperarPassword/RecuperarPassword"
+import HomePage from "../Paginas/HomePage/HomePage"
 
 const Stack = createStackNavigator()
 
@@ -20,6 +22,22 @@ function LoginStack() {
       <Stack.Screen
         name="Registo"
         component={Registo}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="RecuperarPassword"
+        component={RecuperarPassword}
+        options={{
+          headerShown: false,
+          gestureEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="HomePage"
+        component={HomePage}
         options={{
           headerShown: false,
           gestureEnabled: false,
