@@ -31,8 +31,10 @@ const HomePage = ({ navigation }) => {
               resizeMode="cover"
               style={{ flex: 1, opacity: 0.65 }}
             ></ImageBackground>
+
             {/* Retangulo de fundo */}
             <View style={styles.retanguloFundo} />
+            
             {/* Logo pequneo */}
             <Image
               style={styles.logo}

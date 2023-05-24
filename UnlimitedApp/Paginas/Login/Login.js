@@ -1,190 +1,162 @@
 import {
-    View,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    KeyboardAvoidingView,
-    Platform,
-    TouchableWithoutFeedback,
-    Keyboard,
-    Image,
-    ImageBackground,
-    Touchable,
-  } from "react-native"
-  import React, { useState } from "react"
-  
-  const Login = ({navigation}) => {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-  
-    return (
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss()
-        }}
-      >
-        <>
-          <ImageBackground
-            source={require("../Login/ULTeam.png")}
-            resizeMode="cover"
-            style={{ flex: 1, opacity: 0.65 }}
-          ></ImageBackground>
-          <Image
-            style={{
-              width: 200,
-              height: 200,
-              position: "absolute",
-              left: "25%",
-              top: "15%",
-            }}
-            source={require("../Login/unlimitedLogo.png")}
-          />
-          <TextInput
-            keyboardType="email-address"
-            style={{
-              width: 300,
-              height: 50,
-              position: "absolute",
-              top: "45%",
-              alignSelf: "center",
-              // backgroundColor: "blue",
-              padding: 5,
-              borderBottomColor: "white",
-              borderBottomWidth: 1.5,
-              fontSize: 22,
-              textAlign: "left",
-            }}
-            type="text"
-            onChangeText={(email) => setEmail(email)}
-            value={email}
-          >
-            <Text style={{color:'white', fontWeight:'600'}}>Introduzir Email</Text>
-          </TextInput>
-          <TextInput
-            keyboardType="email-address"
-            style={{
-              width: 300,
-              height: 50,
-              position: "absolute",
-              top: "54%",
-              alignSelf: "center",
-              // backgroundColor: "blue",
-              padding: 5,
-              borderBottomColor: "white",
-              borderBottomWidth: 1.5,
-              fontSize: 22,
-              textAlign: "left",
-            }}
-            type="text"
-            onChangeText={(password) => setPassword(password)}
-            value={password}
-          >
-            <Text style={{color: 'white', fontWeight: '600'}}>Introduzir Password</Text>
-          </TextInput>
-          <View
-            style={{
-              width: "100%",
-              height: 35,
-              position: "absolute",
-              top: "62%",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                width: "100%",
-                height: "100%",
-                alignItems: "center",
-                justifyContent: "center",
-                cursor: "pointer",
-              }}
-              onPress={() => navigation.navigate("RecuperarPassword")}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontWeight: '700',
-                  textDecorationLine: "underline",
-                  letterSpacing: 0.5,
-                  color:'white'
-                }}
-              >
-                Recuperar Password
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              width: "100%",
-              height: 50,
-              position: "absolute",
-              top: "70%",
-              // backgroundColor: "blue",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                width: "50%",
-                height: "100%",
-                backgroundColor: "orange",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#1A9FE0",
-                borderRadius: 10,
-              }}
-              onPress={() => navigation.navigate("HomePage")}
-            >
-              <Text
-                style={{
-                  fontSize: 22,
-                  fontWeight: "600",
-                  color: "white",
-                  textAlign: "center",
-                }}
-              >
-                Login
-              </Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              width: "100%",
-              height: 50,
-              position: "absolute",
-              top: "78%",
-              // backgroundColor: "blue",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <TouchableOpacity
-              style={{
-                width: "50%",
-                height: "100%",
-                backgroundColor: "orange",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "#1A9FE0",
-                borderRadius: 10,
-              }}
-              onPress={() => navigation.navigate("Registo")}
-            >
-              <Text
-                style={{
-                  fontSize: 22,
-                  fontWeight: "600",
-                  color: "white",
-                  textAlign: "center",
-                }}
-              >
-                Registar
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      </TouchableWithoutFeedback>
-    )
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Image,
+  ImageBackground,
+  Touchable,
+} from "react-native"
+import React, { useState, useEffect } from "react"
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+} from "firebase/auth"
+import { initializeApp } from "firebase/app"
+import firebase from "../../Config/firebase"
+import styles from "./LoginStyle"
+import TabsStack from "../../Navigator/TabsStack"
+
+const Login = ({ navigation }) => {
+  //Firebase
+
+  //Constantes
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [errorLogin, setErrorLogin] = useState(false)
+
+  //Funções
+  const loginFirebase = (email, password) => {
+    const auth = getAuth()
+    .signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        setErrorLogin(false)
+        const user = userCredential.user
+        if (user.emailVerified) navigation.navigate(TabsStack, "HomePageTab")
+        else Alert("Erro")
+        return
+      })
+      .catch((error) => {
+        setErrorLogin(true)
+        const errorCode = error.code
+        const errorMessage = error.message
+      })
   }
-  
-  export default Login
+
+  useEffect(() => {
+    //verificar se tem login feito
+    let mounted = true
+    if (mounted) {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user.uid
+          if (user.emailVerified) navigation.navigate("HomePage")
+          else navigation.navigate("Registo")
+          console.log("User signed in login")
+        } else {
+          console.log("User signed out login")
+        }
+      })
+    }
+    return () => (mounted = false)
+  }, [])
+
+  return (
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss()
+      }}
+    >
+      <>
+        {/* Imagem de fundo */}
+        <ImageBackground
+          source={require("../Login/ULTeam.png")}
+          resizeMode="cover"
+          style={styles.imageBackground}
+        ></ImageBackground>
+
+        {/* Logo principal */}
+        <Image
+          style={styles.imageLogo}
+          source={require("../Login/unlimitedLogo.png")}
+        />
+
+        {/* Inserir Email */}
+        <TextInput
+          keyboardType="email-address"
+          placeholderTextColor="white"
+          placeholder="Introduzir Email"
+          autoCapitalize="none"
+          type="text"
+          onChangeText={(email) => setEmail(email)}
+          value={email}
+          style={styles.emailInput}
+        ></TextInput>
+
+        {/* Inserir Password */}
+        <TextInput
+          placeholderTextColor="white"
+          placeholder="Introduzir Password"
+          type="text"
+          onChangeText={(password) => setPassword(password)}
+          value={password}
+          style={styles.passwordInput}
+        ></TextInput>
+
+        {/* Recuperar Password */}
+        <View style={styles.recuperarPasswordView}>
+          <TouchableOpacity
+            style={styles.recuperarPasswordButton}
+            onPress={() => navigation.navigate("RecuperarPassword")}
+          >
+            <Text style={styles.recuperarPasswordText}>Recuperar Password</Text>
+          </TouchableOpacity>
+        </View>
+
+        {/* Caso falhe o login */}
+        {errorLogin === true ? (
+          <Text>Email ou password incorretos</Text>
+        ) : (
+          <View />
+        )}
+
+        {/* Caso os campos estejam vazios */}
+        {email === "" || password === "" ? (
+          <View style={styles.loginView}>
+            <TouchableOpacity disabled={true} style={styles.loginButtonDisable}>
+              <Text style={styles.loginText}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <View style={styles.loginView}>
+            <TouchableOpacity
+              style={styles.loginButton}
+              onPress={() => loginFirebase(email, password)}
+            >
+              <Text style={styles.loginText}>Login</Text>
+            </TouchableOpacity>
+          </View>
+        )}
+
+        {/* Butão para Registar novo utilizador */}
+        <View style={styles.registarView}>
+          <TouchableOpacity
+            style={styles.registarButton}
+            onPress={() => navigation.navigate("Registo")}
+          >
+            <Text style={styles.registarText}>Registar</Text>
+          </TouchableOpacity>
+        </View>
+      </>
+    </TouchableWithoutFeedback>
+  )
+}
+
+export default Login

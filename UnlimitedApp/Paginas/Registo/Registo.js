@@ -10,7 +10,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
-  Alert
+  Alert,
 } from "react-native"
 import {
   getFirestore,
@@ -27,44 +27,29 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth"
-import { firebase, initializeApp } from "firebase/app"
-import firebaseConfig from "../../Config/firebase"
+import { firebase } from "../../Config/firebase"
 import React, { useState } from "react"
 import styles from "./RegistoStyle"
 import { FontAwesome5 } from "@expo/vector-icons"
 
 const Registo = ({ navigation }) => {
   //Firebase
-  initializeApp(firebaseConfig)
   const db = getFirestore()
-  const colRef = collection(db, "Universidade")
 
   //Constantes
-  const [nome, setNome] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [checkPassword, setCheckPassword] = useState("")
-  const [telemovel, setTelemovel] = useState("")
-  const [universidade, setUniversidade] = useState("")
-  const [anoEscolar, setAnoEscolar] = useState("")
+  const [nome, setNome] = useState("Gonçalo")
+  const [email, setEmail] = useState("goncalotavares.bentes@gmail.com")
+  const [password, setPassword] = useState("12345")
+  const [checkPassword, setCheckPassword] = useState("12345")
+  const [telemovel, setTelemovel] = useState("914818122")
+  const [universidade, setUniversidade] = useState("iscte")
+  const [anoEscolar, setAnoEscolar] = useState("3")
   const [errorRegister, setErrorRegister] = useState("")
 
   //Variaveis
   let listaUniversidades = []
 
   //Funções
-
-  //Vai buscar a lista de universidades
-  onSnapshot(colRef, (snapshot) => {
-    let mounted = true
-    if (mounted) {
-      listaUniversidades = []
-      snapshot.docs.forEach((doc) => {
-        listaUniversidades.push({ ...doc.data(), id: doc.id })
-      })
-    }
-    return () => (mounted = false)
-  })
 
   //Criar Utilizador - Chave primária "Email"
   function adicionarUtilizador() {
@@ -75,9 +60,7 @@ const Registo = ({ navigation }) => {
         snapshot.docs.forEach((doc) => {
           if (doc.id == email) {
             existe = true
-            Alert.alert(
-              "Esse email já foi utilizado!"
-            )
+            Alert.alert("Esse email já foi utilizado!")
           }
         })
       })
@@ -85,7 +68,6 @@ const Registo = ({ navigation }) => {
         if (existe == false) {
           setDoc(doc(db, "Utilizador", email), {
             nome: nome,
-            password: password,
             telemovel: telemovel,
             universidade: universidade,
             anoEscolar: anoEscolar,
@@ -96,26 +78,21 @@ const Registo = ({ navigation }) => {
 
   //Regista na Firebase
   const registerFirebase = async () => {
-    let mounted = true
-    if (mounted) {
-      const auth = getAuth()
-      createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-          setErrorRegister(false)
-          sendEmailVerification(userCredential.user)
-          Alert.alert(
-            "Foi enviado um email de verificação para o email indicado! Verifica o lixo/spam"
-          )
-          navigation.navigate("Login")
-        })
-        .catch((error) => {
-          setErrorRegister(true)
-          const errorCode = error.code
-          const errorMessage = error.message
-        })
-      adicionarUtilizador()
-    }
-    return () => (mounted = false)
+    console.log(email, " ", password)
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        // Signed in
+        console.log(response.user)
+        const user = response.user
+        //navigation.navigate(TabsStack, "HomePage")
+      })
+      .catch((error) => {
+        const errorCode = error.code
+        const errorMessage = error.message
+      })
+    adicionarUtilizador()
   }
 
   return (
@@ -129,13 +106,16 @@ const Registo = ({ navigation }) => {
           <>
             {/* Retangulo de fundo */}
             <View style={styles.retanguloFundo} />
+
             {/* Logo pequneo */}
             <Image
               style={styles.logo}
               source={require("../Login/unlimitedLogo.png")}
             />
+
             {/* Registar */}
             <Text style={styles.registarTitulo}>Registar</Text>
+
             {/* Nome */}
             <View style={styles.nomeView}>
               <FontAwesome5 style={styles.nomeIcon} name="user" />
@@ -148,6 +128,7 @@ const Registo = ({ navigation }) => {
                 value={nome}
               ></TextInput>
             </View>
+
             {/* Email */}
             <View style={styles.emailView}>
               <FontAwesome5 style={styles.emailIcon} name="envelope" />
@@ -155,11 +136,13 @@ const Registo = ({ navigation }) => {
                 style={styles.emailInput}
                 placeholderTextColor="white"
                 placeholder="Email"
+                autoCapitalize="none"
                 type="text"
                 onChangeText={(text) => setEmail(text)}
                 value={email}
               ></TextInput>
             </View>
+
             {/* Numero Telemovel */}
             <View style={styles.telemovelView}>
               <FontAwesome5 style={styles.telemovelIcon} name="mobile" />
@@ -172,6 +155,7 @@ const Registo = ({ navigation }) => {
                 value={telemovel}
               ></TextInput>
             </View>
+
             {/* Password */}
             <View style={styles.passwordView}>
               <FontAwesome5 style={styles.passwordIcon} name="lock" />
@@ -184,6 +168,7 @@ const Registo = ({ navigation }) => {
                 value={password}
               ></TextInput>
             </View>
+
             {/* Confirmar Password */}
             <View style={styles.checkpassView}>
               <FontAwesome5 style={styles.checkpassIcon} name="lock" />
@@ -196,6 +181,7 @@ const Registo = ({ navigation }) => {
                 value={checkPassword}
               ></TextInput>
             </View>
+
             {/* Instituicao de ensino */}
             <View style={styles.escolaView}>
               <FontAwesome5 style={styles.escolaIcon} name="school" />
@@ -208,6 +194,7 @@ const Registo = ({ navigation }) => {
                 value={universidade}
               ></TextInput>
             </View>
+
             {/* Ano de Escolaridade */}
             <View style={styles.anoescolaView}>
               <FontAwesome5
@@ -223,13 +210,13 @@ const Registo = ({ navigation }) => {
                 value={anoEscolar}
               ></TextInput>
             </View>
+
             {/* Registar */}
             <TouchableOpacity
               style={styles.registarBtn}
               onPress={() =>
                 registerFirebase(
                   email,
-                  password,
                   nome,
                   universidade,
                   anoEscolar,
@@ -239,6 +226,7 @@ const Registo = ({ navigation }) => {
             >
               <Text style={styles.registarText}>Registar</Text>
             </TouchableOpacity>
+
             {/* Retornar a login */}
             <TouchableOpacity
               style={styles.returnLoginBtn}

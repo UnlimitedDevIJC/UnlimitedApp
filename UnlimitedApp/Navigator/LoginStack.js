@@ -35,14 +35,6 @@ function LoginStack() {
           gestureEnabled: false,
         }}
       />
-      <Stack.Screen
-        name="HomePage"
-        component={HomePage}
-        options={{
-          headerShown: false,
-          gestureEnabled: false,
-        }}
-      />
     </Stack.Navigator>
   )
 }
