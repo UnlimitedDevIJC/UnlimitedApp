@@ -52,61 +52,48 @@ const Registo = ({ navigation }) => {
 
   //Funções
 
-  //Criar Utilizador - Chave primária "Email"
-  // function adicionarUtilizador() {
-  //   const ref = collection(db, "Utilizador")
-  //   let existe = false
-  //   getDocs(ref)
-  //     .then((snapshot) => {
-  //       snapshot.docs.forEach((doc) => {
-  //         if (doc.id == email) {
-  //           existe = true
-  //           Alert.alert("Esse email já foi utilizado!")
-  //         }
-  //       })
-  //     })
-  //     .then(() => {
-  //       if (existe == false) {
-  //         setDoc(doc(db, "Utilizador", email), {
-  //           nome: nome,
-  //           telemovel: telemovel,
-  //           universidade: universidade,
-  //           anoEscolar: anoEscolar,
-  //         })
-  //       }
-  //     })
-  // }
+  // Criar Utilizador - Chave primária "Email"
+  function adicionarUtilizador() {
+    const ref = collection(db, "Utilizador")
+    let existe = false
+    getDocs(ref)
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          if (doc.id == email) {
+            existe = true
+            Alert.alert("Esse email já foi utilizado!")
+          }
+        })
+      })
+      .then(() => {
+        if (existe == false) {
+          setDoc(doc(db, "Utilizador", email), {
+            nome: nome,
+            telemovel: telemovel,
+            universidade: universidade,
+            anoEscolar: anoEscolar,
+          })
+        }
+      })
+  }
 
-  //Regista na Firebase
-  // const registerFirebase = async () => {
-  //   console.log(email, " ", password)
-  //   firebase
-  //     .auth()
-  //     .createUserWithEmailAndPassword(auth, email, password)
-  //     .then((response) => {
-  //       // Signed in
-  //       console.log(response.user)
-  //       const user = response.user
-  //       //navigation.navigate(TabsStack, "HomePage")
-  //     })
-  //     .catch((error) => {
-  //       const errorCode = error.code
-  //       const errorMessage = error.message
-  //     })
-  //   adicionarUtilizador()
-  // }
-
-  const registerFirebase = () => {
+  // Regista na Firebase
+  const registerFirebase = async () => {
+    console.log(email, " ", password)
     firebase
       .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredencial) => {
-        let user = userCredencial.user
+      .createUserWithEmailAndPassword(auth, email, password)
+      .then((response) => {
+        // Signed in
+        console.log(response.user)
+        const user = response.user
+        //navigation.navigate(TabsStack, "HomePage")
       })
       .catch((error) => {
-        var errorCode = error.code
-        var errorMessage = error.message
+        const errorCode = error.code
+        const errorMessage = error.message
       })
+    adicionarUtilizador()
   }
 
   return (
@@ -228,7 +215,7 @@ const Registo = ({ navigation }) => {
             {/* Registar */}
             <TouchableOpacity
               style={styles.registarBtn}
-              onPress={registerFirebase}
+              onPress={() => registerFirebase}
             >
               <Text style={styles.registarText}>Registar</Text>
             </TouchableOpacity>
