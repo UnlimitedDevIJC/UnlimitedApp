@@ -138,7 +138,8 @@ const Login = ({ navigation }) => {
           <View style={styles.loginView}>
             <TouchableOpacity
               style={styles.loginButton}
-              onPress={() => loginFirebase(email, password)}
+              // onPress={() => loginFirebase(email, password)}
+              onPress={() => navigation.navigate(TabsStack, "HomePageTab")}
             >
               <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>

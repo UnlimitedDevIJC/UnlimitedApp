@@ -27,11 +27,12 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth"
-import "firebase/auth";
+import { auth } from '../../Config/firebase'
 import { firebase } from "../../Config/firebase"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styles from "./RegistoStyle"
 import { FontAwesome5 } from "@expo/vector-icons"
+import TabsStack from "../../Navigator/TabsStack"
 
 const Registo = ({ navigation }) => {
   //Firebase
@@ -78,22 +79,26 @@ const Registo = ({ navigation }) => {
   }
 
   // Regista na Firebase
-  const registerFirebase = async () => {
-    console.log(email, " ", password)
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(auth, email, password)
-      .then((response) => {
-        // Signed in
-        console.log(response.user)
-        const user = response.user
-        //navigation.navigate(TabsStack, "HomePage")
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        navigation.navigate(TabsStack, "HomePageTab")
+      }
+    })
+
+    return unsubscribe
+  }, [])
+
+  const handleSignUp = () => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user
+        adicionarUtilizador()
+        navigation.navigate("Login")
+        Alert.alert("Inicia sessão para entrares na tua conta")
+        console.log("Registered with:", user.email)
       })
-      .catch((error) => {
-        const errorCode = error.code
-        const errorMessage = error.message
-      })
-    adicionarUtilizador()
+      .catch((error) => alert(error.message))
   }
 
   return (
@@ -215,7 +220,7 @@ const Registo = ({ navigation }) => {
             {/* Registar */}
             <TouchableOpacity
               style={styles.registarBtn}
-              onPress={() => registerFirebase}
+              onPress={handleSignUp}
             >
               <Text style={styles.registarText}>Registar</Text>
             </TouchableOpacity>

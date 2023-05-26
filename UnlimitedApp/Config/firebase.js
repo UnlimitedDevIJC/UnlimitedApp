@@ -1,8 +1,17 @@
-import firebase from 'firebase/compat/app'
-import 'firebase/compat/app'
-import 'firebase/compat/firestore'
-import 'firebase/auth'
+import { initializeApp, firebase } from "firebase/app";
+import {getAuth} from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getStorage, ref } from "firebase/storage";
 
+
+
+
+// Import the functions you need from the SDKs you need
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyCjB38BqwYIgrUKHv7eEffrqbCEInUZBpo",
   authDomain: "unlimitedfuture-772c5.firebaseapp.com",
@@ -14,7 +23,10 @@ const firebaseConfig = {
   measurementId: "G-D5LVW1D5CJ"
 };
 
-if(!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig)
-}
-export {firebase}
+const app = initializeApp(firebaseConfig);
+const firestore= getFirestore(app);
+export const storage = getStorage(app);
+
+
+export const auth = getAuth(app);
+export default firestore;
