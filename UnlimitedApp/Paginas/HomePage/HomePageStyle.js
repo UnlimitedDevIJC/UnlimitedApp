@@ -3,29 +3,29 @@ import { Platform, StyleSheet } from "react-native"
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "white",
-    marginTop: "14%",
+    backgroundColor: "#16508D",
   },
 
   scrollView: {
     height: "100%",
+    backgroundColor:'white'
   },
 
   retanguloFundo: {
     backgroundColor: "#16508D",
-    width: "100%",
-    height: 120,
+    width: "110%",
+    height: 130,
     transform: [{ rotateZ: "-15deg" }],
-    left: -28,
+    left: -25,
     top: -70,
   },
 
   logo: {
     width: 85,
     height: 85,
-    position: "absolute",
-    left: 50,
-    top: 40,
+    alignSelf:'center',
+    position:'absolute',
+    top:'16%'
   },
 })
 
