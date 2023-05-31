@@ -11,6 +11,7 @@ import {
   Keyboard,
   Image,
   Alert,
+  ImageBackground,
 } from "react-native"
 import {
   getFirestore,
@@ -27,7 +28,7 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
 } from "firebase/auth"
-import { auth } from '../../Config/firebase'
+import { auth } from "../../Config/firebase"
 import { firebase } from "../../Config/firebase"
 import React, { useState, useEffect } from "react"
 import styles from "./RegistoStyle"
@@ -39,13 +40,13 @@ const Registo = ({ navigation }) => {
   const db = getFirestore()
 
   //Constantes
-  const [nome, setNome] = useState("Gonçalo")
-  const [email, setEmail] = useState("goncalotavares.bentes@gmail.com")
-  const [password, setPassword] = useState("12345")
-  const [checkPassword, setCheckPassword] = useState("12345")
-  const [telemovel, setTelemovel] = useState("914818122")
-  const [universidade, setUniversidade] = useState("iscte")
-  const [anoEscolar, setAnoEscolar] = useState("3")
+  const [nome, setNome] = useState("")
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
+  const [checkPassword, setCheckPassword] = useState("")
+  const [telemovel, setTelemovel] = useState("")
+  const [universidade, setUniversidade] = useState("")
+  const [anoEscolar, setAnoEscolar] = useState("")
   const [errorRegister, setErrorRegister] = useState("")
 
   //Variaveis
@@ -102,7 +103,7 @@ const Registo = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView edges={["bottom"]} style={styles.safeArea}>
       <ScrollView style={styles.scrollView} bounces={false}>
         <TouchableWithoutFeedback
           onPress={() => {
@@ -218,10 +219,7 @@ const Registo = ({ navigation }) => {
             </View>
 
             {/* Registar */}
-            <TouchableOpacity
-              style={styles.registarBtn}
-              onPress={handleSignUp}
-            >
+            <TouchableOpacity style={styles.registarBtn} onPress={handleSignUp}>
               <Text style={styles.registarText}>Registar</Text>
             </TouchableOpacity>
 

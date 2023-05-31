@@ -25,13 +25,7 @@ import {
               Keyboard.dismiss()
             }}
           >
-            <>
-              <ImageBackground
-                source={require("../Login/ULTeam.png")}
-                resizeMode="cover"
-                style={{ flex: 1, opacity: 0.65 }}
-              ></ImageBackground>
-  
+            <>  
               {/* Retangulo de fundo */}
               <View style={styles.retanguloFundo} />
               

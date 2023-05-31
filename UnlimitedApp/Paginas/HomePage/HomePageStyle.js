@@ -3,7 +3,7 @@ import { Platform, StyleSheet } from "react-native"
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#16508D",
+    backgroundColor: "#1A649F",
   },
 
   scrollView: {
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   },
 
   retanguloFundo: {
-    backgroundColor: "#16508D",
+    backgroundColor: "#1A649F",
     width: "110%",
     height: 130,
     transform: [{ rotateZ: "-15deg" }],

@@ -3,54 +3,53 @@ import { Platform, StyleSheet } from "react-native"
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "white",
-    marginTop: "14%",
+    backgroundColor: "#1A649F",
   },
 
   scrollView: {
     height: "100%",
+    backgroundColor:'white'
   },
 
   retanguloFundo: {
-    backgroundColor: "#16508D",
-    width: "100%",
-    height: 120,
+    backgroundColor: "#1A649F",
+    width: "110%",
+    height: 130,
     transform: [{ rotateZ: "-15deg" }],
-    left: -28,
+    left: -25,
     top: -70,
   },
 
   logo: {
     width: 85,
     height: 85,
-    position: "absolute",
-    left: 50,
-    top: 40,
+    alignSelf:'center',
+    position:'absolute',
+    top:'2.5%'
   },
 
   tituloView: {
-    width: "60%",
+    width: "100%",
     alignSelf: "center",
     justifyContent: "center",
   },
 
-  registarTitulo: {
+  alterarTitulo: {
     textAlign: "center",
     marginTop: 25,
     color: "#16508D",
-    fontSize: 36,
-    fontWeight: "800",
-    letterSpacing: 1,
+    fontSize: 28,
+    fontWeight: "700",
+    letterSpacing: 0.5,
   },
 
   emailView: {
     width: "80%",
     height: 50,
-    backgroundColor: "#1A9FE0",
+    backgroundColor: "#174162",
     marginTop: 120,
     alignSelf: "center",
     flexDirection: "row",
-    borderRadius: 10,
   },
 
   emailIcon: {
@@ -64,17 +63,17 @@ const styles = StyleSheet.create({
   emailInput: {
     fontSize: 18,
     width: "100%",
+    color:'white'
   },
 
   enviarEmailBtn: {
     width: "50%",
     height: 50,
-    backgroundColor: "#1A9FE0",
-    marginTop: 140,
+    backgroundColor: "#174162",
+    marginTop: 70,
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 10,
   },
 
   enviarEmailText: {
@@ -82,6 +81,25 @@ const styles = StyleSheet.create({
     fontWeight: "400",
     color: "white",
     letterSpacing: 1,
+  },
+
+  returnLoginBtn: {
+    marginTop: 160,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+  },
+
+  returnLoginText: {
+    fontSize: 22,
+    fontWeight: "600",
+  },
+
+  returnArrowLeft: {
+    color: "#174162",
+    fontSize: 24,
+    width: 50,
+    paddingLeft: 14,
   },
 })
 

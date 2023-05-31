@@ -17,6 +17,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth"
+import { auth } from '../../Config/firebase'
 import { initializeApp } from "firebase/app"
 import firebase from "../../Config/firebase"
 import styles from "./LoginStyle"
@@ -32,21 +33,13 @@ const Login = ({ navigation }) => {
 
   //Funções
   const loginFirebase = (email, password) => {
-    const auth = getAuth()
-    .signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        setErrorLogin(false)
-        const user = userCredential.user
-        if (user.emailVerified) navigation.navigate(TabsStack, "HomePageTab")
-        else Alert("Erro")
-        return
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredentials) => {
+        const user = userCredentials.user
+        navigation.navigate(TabsStack, "HomePageTab")
+        console.log("Logged in with:", user.email)
       })
-      .catch((error) => {
-        setErrorLogin(true)
-        const errorCode = error.code
-        const errorMessage = error.message
-      })
+      .catch((error) => alert(error.message))
   }
 
   useEffect(() => {
@@ -75,13 +68,6 @@ const Login = ({ navigation }) => {
       }}
     >
       <>
-        {/* Imagem de fundo */}
-        <ImageBackground
-          source={require("../Login/ULTeam.png")}
-          resizeMode="cover"
-          style={styles.imageBackground}
-        ></ImageBackground>
-
         {/* Logo principal */}
         <Image
           style={styles.imageLogo}
@@ -91,7 +77,7 @@ const Login = ({ navigation }) => {
         {/* Inserir Email */}
         <TextInput
           keyboardType="email-address"
-          placeholderTextColor="white"
+          placeholderTextColor="#174162"
           placeholder="Introduzir Email"
           autoCapitalize="none"
           type="text"
@@ -102,7 +88,7 @@ const Login = ({ navigation }) => {
 
         {/* Inserir Password */}
         <TextInput
-          placeholderTextColor="white"
+          placeholderTextColor="#174162"
           placeholder="Introduzir Password"
           type="text"
           onChangeText={(password) => setPassword(password)}
@@ -138,8 +124,8 @@ const Login = ({ navigation }) => {
           <View style={styles.loginView}>
             <TouchableOpacity
               style={styles.loginButton}
-              // onPress={() => loginFirebase(email, password)}
-              onPress={() => navigation.navigate(TabsStack, "HomePageTab")}
+              onPress={() => loginFirebase(email, password)}
+              // onPress={() => navigation.navigate(TabsStack, "HomePageTab")}
             >
               <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>

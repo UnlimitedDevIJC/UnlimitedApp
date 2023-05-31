@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     // backgroundColor: "blue",
     padding: 5,
-    borderBottomColor: "white",
+    borderBottomColor: "black",
     borderBottomWidth: 1.5,
     fontSize: 22,
     textAlign: "left",
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     // backgroundColor: "blue",
     padding: 5,
-    borderBottomColor: "white",
+    borderBottomColor: "#174162",
     borderBottomWidth: 1.5,
     fontSize: 22,
     textAlign: "left",
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     textDecorationLine: "underline",
     letterSpacing: 0.5,
-    color: "white",
+    color: "#174162",
   },
 
   loginView: {
@@ -81,8 +81,7 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#1A9FE0",
-    borderRadius: 10,
+    backgroundColor: "#174162",
   },
 
   loginText: {
@@ -108,8 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#1A9FE0",
-    borderRadius: 10,
+    backgroundColor: "#174162",
   },
 
   registarText: {
@@ -125,9 +123,8 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#1A9FE0",
-    opacity: 0.45,
-    borderRadius: 10,
+    backgroundColor: "#174162",
+    opacity: 0.75,
   }
 })
 

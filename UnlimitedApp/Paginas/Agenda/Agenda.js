@@ -1,22 +1,21 @@
 import {
-  View,
-  Text,
-  TextInput,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Image,
-  Alert,
-  ImageBackground,
-} from "react-native"
-import React from "react"
-import styles from "./HomePageStyle"
+    View,
+    Text,
+    TextInput,
+    SafeAreaView,
+    ScrollView,
+    TouchableOpacity,
+    KeyboardAvoidingView,
+    Platform,
+    TouchableWithoutFeedback,
+    Keyboard,
+    Image,
+    Alert,
+    ImageBackground,
+  } from "react-native"
+import styles from "./AgendaStyle"
 
-const HomePage = ({ navigation }) => {
+const Agenda = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.scrollView} bounces={false}>
@@ -28,7 +27,7 @@ const HomePage = ({ navigation }) => {
           <>
             {/* Retangulo de fundo */}
             <View style={styles.retanguloFundo} />
-            
+
             {/* Logo pequneo */}
             <Image
               style={styles.logo}
@@ -41,4 +40,4 @@ const HomePage = ({ navigation }) => {
   )
 }
 
-export default HomePage
+export default Agenda

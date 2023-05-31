@@ -3,29 +3,29 @@ import { Platform, StyleSheet } from "react-native"
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "white",
-    marginTop: "14%",
+    backgroundColor: "#1A649F",
   },
 
   scrollView: {
     height: "100%",
+    backgroundColor: "white",
   },
 
   retanguloFundo: {
-    backgroundColor: "#16508D",
-    width: "100%",
-    height: 120,
-    transform: [{ rotateZ: '-15deg' }],
-    left: -28,
+    backgroundColor: "#1A649F",
+    width: "110%",
+    height: 130,
+    transform: [{ rotateZ: "-15deg" }],
+    left: -25,
     top: -70,
   },
 
   logo: {
     width: 85,
     height: 85,
+    alignSelf: "center",
     position: "absolute",
-    left: 50,
-    top: 40,
+    top: "2.5%",
   },
 
   registarTitulo: {
@@ -41,11 +41,10 @@ const styles = StyleSheet.create({
   nomeView: {
     width: "80%",
     height: 50,
-    backgroundColor: "#1A9FE0",
+    backgroundColor: "#174162",
     marginTop: 20,
     alignSelf: "center",
     flexDirection: "row",
-    borderRadius: 10,
   },
 
   nomeIcon: {
@@ -59,16 +58,16 @@ const styles = StyleSheet.create({
   nomeInput: {
     fontSize: 18,
     width: "100%",
+    color: "white",
   },
 
   emailView: {
     width: "80%",
     height: 50,
-    backgroundColor: "#1A9FE0",
+    backgroundColor: "#174162",
     marginTop: 10,
     alignSelf: "center",
     flexDirection: "row",
-    borderRadius: 10,
   },
 
   emailIcon: {
@@ -82,16 +81,16 @@ const styles = StyleSheet.create({
   emailInput: {
     fontSize: 18,
     width: "100%",
+    color: "white",
   },
 
   telemovelView: {
     width: "80%",
     height: 50,
-    backgroundColor: "#1A9FE0",
+    backgroundColor: "#174162",
     marginTop: 10,
     alignSelf: "center",
     flexDirection: "row",
-    borderRadius: 10,
   },
 
   telemovelIcon: {
@@ -105,16 +104,16 @@ const styles = StyleSheet.create({
   telemovelInput: {
     fontSize: 18,
     width: "100%",
+    color: "white",
   },
 
   passwordView: {
     width: "80%",
     height: 50,
-    backgroundColor: "#1A9FE0",
+    backgroundColor: "#174162",
     marginTop: 10,
     alignSelf: "center",
     flexDirection: "row",
-    borderRadius: 10,
   },
 
   passwordIcon: {
@@ -128,16 +127,16 @@ const styles = StyleSheet.create({
   passwordInput: {
     fontSize: 18,
     width: "100%",
+    color: "white",
   },
 
   checkpassView: {
     width: "80%",
     height: 50,
-    backgroundColor: "#1A9FE0",
+    backgroundColor: "#174162",
     marginTop: 10,
     alignSelf: "center",
     flexDirection: "row",
-    borderRadius: 10,
   },
 
   checkpassIcon: {
@@ -151,16 +150,16 @@ const styles = StyleSheet.create({
   checkpassInput: {
     fontSize: 18,
     width: "100%",
+    color: "white",
   },
 
   anoescolaView: {
     width: "80%",
     height: 50,
-    backgroundColor: "#1A9FE0",
+    backgroundColor: "#174162",
     marginTop: 10,
     alignSelf: "center",
     flexDirection: "row",
-    borderRadius: 10,
   },
 
   anoescolaIcon: {
@@ -174,16 +173,16 @@ const styles = StyleSheet.create({
   anoescolaInput: {
     fontSize: 18,
     width: "100%",
+    color: "white",
   },
 
   escolaView: {
     width: "80%",
     height: 50,
-    backgroundColor: "#1A9FE0",
+    backgroundColor: "#174162",
     marginTop: 10,
     alignSelf: "center",
     flexDirection: "row",
-    borderRadius: 10,
   },
 
   escolaIcon: {
@@ -197,17 +196,17 @@ const styles = StyleSheet.create({
   escolaInput: {
     fontSize: 18,
     width: "100%",
+    color: "white",
   },
 
   registarBtn: {
     width: "50%",
     height: 50,
-    backgroundColor: "#1A9FE0",
+    backgroundColor: "#174162",
     marginTop: 40,
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    borderRadius: 10,
   },
 
   registarText: {

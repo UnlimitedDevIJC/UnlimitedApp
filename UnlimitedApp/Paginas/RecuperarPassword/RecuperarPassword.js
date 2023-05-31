@@ -34,7 +34,7 @@ const RecuperarPassword = ({ navigation }) => {
             />
             {/* Registar */}
             <View style={styles.tituloView}>
-              <Text style={styles.registarTitulo}>Mudar Password</Text>
+              <Text style={styles.alterarTitulo}>Alterar Palavra-Passe</Text>
             </View>
             {/* Email */}
             <View style={styles.emailView}>
@@ -54,6 +54,16 @@ const RecuperarPassword = ({ navigation }) => {
               onPress={() => navigation.navigate("Login")}
             >
               <Text style={styles.enviarEmailText}>Enviar Email</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.returnLoginBtn}
+              onPress={() => navigation.navigate("Login")}
+            >
+              <FontAwesome5 style={styles.returnArrowLeft} name="arrow-left"/>
+              <Text style={styles.returnLoginText}>
+                Voltar ao Iniciar Sessão
+              </Text>
             </TouchableOpacity>
           </>
         </TouchableWithoutFeedback>
