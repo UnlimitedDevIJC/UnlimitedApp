@@ -3,16 +3,16 @@ import { Platform, StyleSheet } from "react-native"
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#16508D",
+    backgroundColor: "#1A649F",
   },
 
   scrollView: {
     height: "100%",
-    backgroundColor:'white'
+    backgroundColor: "white",
   },
 
   retanguloFundo: {
-    backgroundColor: "#16508D",
+    backgroundColor: "#1A649F",
     width: "110%",
     height: 130,
     transform: [{ rotateZ: "-15deg" }],
@@ -23,10 +23,98 @@ const styles = StyleSheet.create({
   logo: {
     width: 85,
     height: 85,
-    alignSelf:'center',
-    position:'absolute',
-    top:'16%'
+    alignSelf: "center",
+    position: "absolute",
+    top: "9%",
   },
+
+  editProfileBtn: {
+    width: "10%",
+    position: "absolute",
+    top: 50,
+    right: 35,
+    alignSelf: "flex-end",
+  },
+
+  editProfileIcon: {
+    fontSize: 45,
+    color: "#174162",
+  },
+
+  perfilContainer: {
+    width: "100%",
+    height: "100%",
+  },
+
+  perfilImageContainer: {
+    height: "55%",
+    width: '50%',
+    alignSelf:'center',
+    backgroundColor:'white',
+    zIndex: 1,
+  },
+
+  perfilImage: {
+    width: 150,
+    height: 150,
+    alignSelf: "center",
+  },
+
+  perfilDataContainer: {
+    backgroundColor: "white",
+    width: "70%",
+    alignSelf: "center",
+    position: "absolute",
+    top: 130,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 5,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 20,
+  },
+
+  perfilNomeContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 40,
+  },
+
+  perfilNome: {
+    fontSize: 22,
+    color: "black",
+    fontWeight:'700',
+    letterSpacing: 0.8,
+    padding: 5,
+  },
+
+  perfilDetalhesContainer: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 15,
+  },
+
+  perfilDetalhes: {
+    fontSize: 18,
+    color: "black",
+    fontWeight:'600',
+    letterSpacing: 0.8,
+    padding: 5,
+  },
+
+  perfilPontos: {
+    fontSize: 24,
+    color: "#174162",
+    fontWeight:'700',
+    letterSpacing: 0.8,
+    padding: 5,
+    marginBottom: 10,
+  }
 })
 
 export default styles

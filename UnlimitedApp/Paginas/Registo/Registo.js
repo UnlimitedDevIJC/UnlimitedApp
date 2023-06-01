@@ -47,7 +47,9 @@ const Registo = ({ navigation }) => {
   const [telemovel, setTelemovel] = useState("")
   const [universidade, setUniversidade] = useState("")
   const [anoEscolar, setAnoEscolar] = useState("")
-  const [errorRegister, setErrorRegister] = useState("")
+  const [pontos, setPontos] = useState("")
+  const [linkedIn, setLinkedIn] = useState("")
+  const [curriculo, setCurriculo] = useState("")
 
   //Variaveis
   let listaUniversidades = []
@@ -74,6 +76,9 @@ const Registo = ({ navigation }) => {
             telemovel: telemovel,
             universidade: universidade,
             anoEscolar: anoEscolar,
+            pontos: pontos,
+            linkedIn: linkedIn,
+            curriculo: curriculo,
           })
         }
       })
