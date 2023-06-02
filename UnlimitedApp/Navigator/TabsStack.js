@@ -1,3 +1,18 @@
+import {
+  View,
+  Text,
+  TextInput,
+  SafeAreaView,
+  ScrollView,
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Image,
+  Alert,
+  ImageBackground,
+} from "react-native"
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
 import * as React from "react"
 import { FontAwesome5 } from "@expo/vector-icons"
@@ -5,12 +20,23 @@ import HomePageStack from "../Navigator/HomePageStack"
 import GamificationStack from "../Navigator/GamificationStack"
 import PerfilStack from "./PerfilStack"
 import AgendaStack from "./AgendaStack"
+import styles from "./TabsStackStyle"
 
 const Tab = createBottomTabNavigator()
 
 const TabsStack = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        showLabel: false,
+        tabBarStyle: {
+          position: "absolute",
+          backgroundColor: "#333333",
+          elevation: 0,
+          height: 110,
+        },
+      }}
+    >
       <Tab.Screen
         name="HomePageTab"
         component={HomePageStack}
@@ -24,12 +50,40 @@ const TabsStack = () => {
           headerTitleAlign: "center",
           title: "HomePage",
 
-          tabBarIcon: ({ focused, color, size }) => (
-            <FontAwesome5
-              name={focused ? "home" : "home"}
-              color={focused ? "blue" : "black"}
-              size={focused ? 30 : 26}
-            />
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {focused === true ? (
+                <View
+                  style={{
+                    backgroundColor: "#F2F3F5",
+                    height: 110,
+                    width:'70%',
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1,
+                  }}
+                >
+                  <FontAwesome5
+                    name={focused ? "home" : "home"}
+                    color={focused ? '#000000' : '#FFFFFF'}
+                    size={focused ? 35 : 30}
+                  />
+                </View>
+              ) : (
+                <FontAwesome5
+                    name={focused ? "home" : "home"}
+                    color={focused ? "#000000" : "#FFFFFF"}
+                    size={focused ? 35 : 30}
+                  />
+              )}
+            </View>
           ),
         }}
       />
@@ -47,12 +101,40 @@ const TabsStack = () => {
           headerTitleAlign: "center",
           title: "HomePage",
 
-          tabBarIcon: ({ focused, color, size }) => (
-            <FontAwesome5
-              name={focused ? "calendar" : "calendar"}
-              color={focused ? "blue" : "black"}
-              size={focused ? 30 : 26}
-            />
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {focused === true ? (
+                <View
+                  style={{
+                    backgroundColor: "#F2F3F5",
+                    height: 110,
+                    width:'70%',
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1,
+                  }}
+                >
+                  <FontAwesome5
+                    name={focused ? "calendar" : "calendar"}
+                    color={focused ? '#000000' : '#FFFFFF'}
+                    size={focused ? 35 : 30}
+                  />
+                </View>
+              ) : (
+                <FontAwesome5
+                    name={focused ? "calendar" : "calendar"}
+                    color={focused ? "#000000" : "#FFFFFF"}
+                    size={focused ? 35 : 30}
+                  />
+              )}
+            </View>
           ),
         }}
       />
@@ -70,12 +152,40 @@ const TabsStack = () => {
           headerTitleAlign: "center",
           title: "HomePage",
 
-          tabBarIcon: ({ focused, color, size }) => (
-            <FontAwesome5
-              name={focused ? "trophy" : "trophy"}
-              color={focused ? "blue" : "black"}
-              size={focused ? 30 : 26}
-            />
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {focused === true ? (
+                <View
+                  style={{
+                    backgroundColor: "#F2F3F5",
+                    height: 110,
+                    width:'70%',
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1,
+                  }}
+                >
+                  <FontAwesome5
+                    name={focused ? "trophy" : "trophy"}
+                    color={focused ? '#000000' : '#FFFFFF'}
+                    size={focused ? 35 : 30}
+                  />
+                </View>
+              ) : (
+                <FontAwesome5
+                    name={focused ? "trophy" : "trophy"}
+                    color={focused ? "#000000" : "#FFFFFF"}
+                    size={focused ? 35 : 30}
+                  />
+              )}
+            </View>
           ),
         }}
       />
@@ -93,12 +203,40 @@ const TabsStack = () => {
           headerTitleAlign: "center",
           title: "HomePage",
 
-          tabBarIcon: ({ focused, color, size }) => (
-            <FontAwesome5
-              name={focused ? "user" : "user"}
-              color={focused ? "blue" : "black"}
-              size={focused ? 30 : 26}
-            />
+          tabBarIcon: ({ focused }) => (
+            <View
+              style={{
+                height: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "100%",
+              }}
+            >
+              {focused === true ? (
+                <View
+                  style={{
+                    backgroundColor: "#F2F3F5",
+                    height: 110,
+                    width:'70%',
+                    alignItems: "center",
+                    justifyContent: "center",
+                    zIndex: 1,
+                  }}
+                >
+                  <FontAwesome5
+                    name={focused ? "user" : "user"}
+                    color={focused ? '#000000' : '#FFFFFF'}
+                    size={focused ? 35 : 30}
+                  />
+                </View>
+              ) : (
+                <FontAwesome5
+                    name={focused ? "user" : "user"}
+                    color={focused ? "#000000" : "#FFFFFF"}
+                    size={focused ? 35 : 30}
+                  />
+              )}
+            </View>
           ),
         }}
       />
