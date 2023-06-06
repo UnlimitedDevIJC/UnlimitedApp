@@ -90,9 +90,6 @@ const EditarPerfil = ({ navigation }) => {
                   <Text style={styles.perfilNome}>{utilizador.nome}</Text>
                 </TextInput>
                 <TextInput style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>E-mail</Text>
-                </TextInput>
-                <TextInput style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
                     {utilizador.telemovel}
                   </Text>

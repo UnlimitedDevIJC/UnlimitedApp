@@ -113,6 +113,7 @@ const styles = StyleSheet.create({
     padding:5,
     borderWidth:1,
     borderColor: '#B9B6B6',
+    alignSelf:'center'
   },
 
   perfilDetalhes: {
