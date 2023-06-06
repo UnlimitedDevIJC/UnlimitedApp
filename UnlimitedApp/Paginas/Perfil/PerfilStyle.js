@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: 85,
     alignSelf: "center",
     position: "absolute",
-    top: "9%",
+    top: "7%",
   },
 
   editProfileBtn: {
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
 
   editProfileIcon: {
-    fontSize: 45,
+    fontSize: 35,
     color: "#174162",
   },
 

@@ -28,7 +28,7 @@ import styles from "./PerfilStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 import React, { useEffect, useState } from "react"
 
-const Perfil = () => {
+const Perfil = ({navigation}) => {
   const [utilizador, setUtilizador] = useState("null")
   const db = getFirestore()
 
@@ -76,14 +76,14 @@ const Perfil = () => {
               source={require("../Login/unlimitedLogo.png")}
             />
 
-            <TouchableOpacity style={styles.editProfileBtn}>
-              <FontAwesome style={styles.editProfileIcon} name="user" />
+            <TouchableOpacity style={styles.editProfileBtn} onPress={() => navigation.navigate("EditarPerfil")}>
+              <FontAwesome5 style={styles.editProfileIcon} name="user-edit" />
             </TouchableOpacity>
             <View style={styles.perfilContainer}>
               <View style={styles.perfilImageContainer}>
                 <Image
                   style={styles.perfilImage}
-                  source={require("../Login/unlimitedLogo.png")}
+                  source={require("./foto.jpeg")}
                 />
               </View>
               <View style={styles.perfilDataContainer}>
