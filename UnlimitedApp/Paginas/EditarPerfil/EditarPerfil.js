@@ -86,33 +86,33 @@ const EditarPerfil = ({ navigation }) => {
                 <FontAwesome5 name="pen" style={styles.editFotoIcon} />
               </TouchableOpacity>
               <View style={styles.perfilDataContainer}>
-                <View style={styles.perfilNomeContainer}>
+                <TextInput style={styles.perfilNomeContainer}>
                   <Text style={styles.perfilNome}>{utilizador.nome}</Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
+                </TextInput>
+                <TextInput style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>E-mail</Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
+                </TextInput>
+                <TextInput style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
                     {utilizador.telemovel}
                   </Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
+                </TextInput>
+                <TextInput style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
                     {utilizador.universidade}
                   </Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
+                </TextInput>
+                <TextInput style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
                     {utilizador.anoEscolar}
                   </Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
+                </TextInput>
+                <TextInput style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>Currículo</Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
+                </TextInput>
+                <TextInput style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>LinkedIn</Text>
-                </View>
+                </TextInput>
                 <TouchableOpacity style={styles.guardarBtn}>
                   <Text style={styles.guardarTexto}>Guardar</Text>
                 </TouchableOpacity>
