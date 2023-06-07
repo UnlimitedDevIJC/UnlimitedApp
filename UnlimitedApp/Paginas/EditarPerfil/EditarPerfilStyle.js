@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
 
   scrollView: {
     height: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#F2F3F5",
   },
 
   retanguloFundo: {
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     height: "55%",
     width: '50%',
     alignSelf:'center',
-    backgroundColor:'white',
     zIndex: 1,
   },
 
@@ -88,8 +87,9 @@ const styles = StyleSheet.create({
     width: "80%",
     alignItems: "center",
     justifyContent: "center",
+    textAlign:'center',
     backgroundColor: 'lightgrey',
-    marginTop: 50,
+    marginTop: 70,
     marginBottom:5,
     borderWidth:1,
     padding:5,
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   perfilNome: {
     fontSize: 20,
     color: "black",
-    fontWeight:'600',
+    fontWeight:'700',
     letterSpacing: 0.8,
     padding: 5,
   },
@@ -107,19 +107,20 @@ const styles = StyleSheet.create({
   perfilDetalhesContainer: {
     alignItems: "center",
     justifyContent: "center",
+    textAlign:'center',
     backgroundColor:'lightgrey',
     width:'80%',
     margin: 6,
     padding:5,
     borderWidth:1,
     borderColor: '#B9B6B6',
-    alignSelf:'center'
+    alignSelf:'center',
   },
 
   perfilDetalhes: {
     fontSize: 18,
     color: "black",
-    fontWeight:'600',
+    fontWeight:'500',
     letterSpacing: 0.8,
     padding: 3,
   },

@@ -62,7 +62,7 @@ const TabsStack = () => {
               {focused === true ? (
                 <View
                   style={{
-                    backgroundColor: "#F2F3F5",
+                    backgroundColor: "white",
                     height: 110,
                     width:'70%',
                     alignItems: "center",
@@ -113,7 +113,7 @@ const TabsStack = () => {
               {focused === true ? (
                 <View
                   style={{
-                    backgroundColor: "#F2F3F5",
+                    backgroundColor: "white",
                     height: 110,
                     width:'70%',
                     alignItems: "center",
@@ -164,7 +164,7 @@ const TabsStack = () => {
               {focused === true ? (
                 <View
                   style={{
-                    backgroundColor: "#F2F3F5",
+                    backgroundColor: "white",
                     height: 110,
                     width:'70%',
                     alignItems: "center",
@@ -215,7 +215,7 @@ const TabsStack = () => {
               {focused === true ? (
                 <View
                   style={{
-                    backgroundColor: "#F2F3F5",
+                    backgroundColor: "white",
                     height: 110,
                     width:'70%',
                     alignItems: "center",
