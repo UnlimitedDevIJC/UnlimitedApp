@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
 
   scrollView: {
     height: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#F2F3F5",
   },
 
   retanguloFundo: {
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: 85,
     alignSelf: "center",
     position: "absolute",
-    top: "2.5%",
+    top: "5.5%",
   },
 
   registarTitulo: {
@@ -59,6 +59,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     width: "100%",
     color: "white",
+    marginLeft: 10,
   },
 
   emailView: {
@@ -82,6 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     width: "100%",
     color: "white",
+    marginLeft: 10,
   },
 
   telemovelView: {
@@ -105,6 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     width: "100%",
     color: "white",
+    marginLeft: 10,
   },
 
   passwordView: {
@@ -128,6 +131,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     width: "100%",
     color: "white",
+    marginLeft: 10,
   },
 
   checkpassView: {
@@ -151,6 +155,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     width: "100%",
     color: "white",
+    marginLeft: 10,
   },
 
   anoescolaView: {
@@ -165,7 +170,7 @@ const styles = StyleSheet.create({
   anoescolaIcon: {
     color: "white",
     fontSize: 24,
-    width: 50,
+    width: "15%",
     paddingTop: 13,
     paddingLeft: 12,
   },
@@ -197,6 +202,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     width: "100%",
     color: "white",
+    marginLeft: 10,
   },
 
   registarBtn: {
@@ -226,6 +232,86 @@ const styles = StyleSheet.create({
   returnLoginText: {
     fontSize: 22,
     fontWeight: "600",
+  },
+
+  dataView: {
+    width: "60%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  iconView: {
+    justifyContent: "center",
+    alignItems: "center",
+    width: "15%",
+  },
+
+  icon: {
+    color: "white",
+    fontSize: 30,
+    alignSelf: "center",
+  },
+
+  registarBtnDisable: {
+    width: "50%",
+    height: 50,
+    backgroundColor: "#174162",
+    marginTop: 40,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    opacity: 0.75,
+  },
+
+  verPassBtn: {
+    width: "10%",
+    zIndex: 100,
+    alignSelf: "center",
+    position: "absolute",
+    right: 0,
+  },
+
+  registarView: {
+    width: "100%",
+    height: 50,
+    // backgroundColor: "blue",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 40,
+  },
+
+  registarButton: {
+    width: "50%",
+    height: "100%",
+    backgroundColor: "orange",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#174162",
+  },
+
+  registarText: {
+    fontSize: 22,
+    fontWeight: "600",
+    color: "white",
+    textAlign: "center",
+  },
+
+  codigoInput: {
+    width: 300,
+    height: 50,
+    alignSelf: "center",
+    padding: 5,
+    borderBottomColor: "black",
+    borderBottomWidth: 1.5,
+    fontSize: 22,
+    textAlign: "center",
+  },
+
+  returnLoginBtnCodigo: {
+    marginTop: 60,
+    marginBottom: 40,
+    justifyContent: "center",
+    alignItems: "center",
   },
 })
 

@@ -34,6 +34,7 @@ import React, { useState, useEffect } from "react"
 import styles from "./RegistoStyle"
 import { FontAwesome5 } from "@expo/vector-icons"
 import TabsStack from "../../Navigator/TabsStack"
+import SelectDropdown from "react-native-select-dropdown"
 
 const Registo = ({ navigation }) => {
   //Firebase
@@ -50,9 +51,14 @@ const Registo = ({ navigation }) => {
   const [pontos, setPontos] = useState("")
   const [linkedIn, setLinkedIn] = useState("")
   const [curriculo, setCurriculo] = useState("")
+  const [errorRegisterPassword, setErrorRegisterPassword] = useState(false)
+  const [verPalavraPasse, setVerPalavraPasse] = useState(true)
+  const [verCheckPalavraPasse, setVerCheckPalavraPasse] = useState(true)
+  const [codigo, setCodigo] = useState("")
+  const [paginaRegister, setPaginaRegister] = useState(1)
 
   //Variaveis
-  let listaUniversidades = []
+  const anos = ["1", "2", "3", "4", "5"]
 
   //Funções
 
@@ -79,37 +85,43 @@ const Registo = ({ navigation }) => {
             pontos: pontos,
             linkedIn: linkedIn,
             curriculo: curriculo,
+            codigo: codigo,
           })
         }
       })
   }
 
   // Regista na Firebase
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        navigation.navigate(TabsStack, "HomePageTab")
-      }
-    })
-
-    return unsubscribe
-  }, [])
-
   const handleSignUp = () => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        const user = userCredentials.user
-        adicionarUtilizador()
-        navigation.navigate("Login")
-        Alert.alert("Inicia sessão para entrares na tua conta")
-        console.log("Registered with:", user.email)
-      })
-      .catch((error) => alert(error.message))
+    if (errorRegisterPassword == false) {
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredentials) => {
+          const user = userCredentials.user
+          adicionarUtilizador()
+          navigation.navigate("Login")
+          Alert.alert("Inicia sessão para entrares na tua conta")
+        })
+        .catch((error) => alert(error.message))
+    }
+  }
+
+  //Verificar password
+  function verificarPalavraPasse() {
+    if (password.length < 6) {
+      setErrorRegisterPassword(true)
+      Alert.alert("A password não tem caracteres suficientes")
+    } else if (checkPassword !== password) {
+      setErrorRegisterPassword(true)
+      Alert.alert("As palavra-passes não coincidem")
+    } else {
+      setErrorRegisterPassword(false)
+      setPaginaRegister(2)
+    }
   }
 
   return (
-    <SafeAreaView edges={["bottom"]} style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} bounces={false}>
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView style={styles.scrollView} bounces={true}>
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss()
@@ -124,120 +136,229 @@ const Registo = ({ navigation }) => {
               style={styles.logo}
               source={require("../Login/unlimitedLogo.png")}
             />
+            {paginaRegister == 1 ? (
+              <View>
+                {/* Registar */}
+                <Text style={styles.registarTitulo}>Registar</Text>
+                {/* Nome */}
+                <View style={styles.nomeView}>
+                  <FontAwesome5 style={styles.nomeIcon} name="user" />
+                  <TextInput
+                    style={styles.nomeInput}
+                    placeholderTextColor="white"
+                    placeholder="Nome"
+                    type="text"
+                    onChangeText={(text) => setNome(text)}
+                    value={nome}
+                  ></TextInput>
+                </View>
 
-            {/* Registar */}
-            <Text style={styles.registarTitulo}>Registar</Text>
+                {/* Email */}
+                <View style={styles.emailView}>
+                  <FontAwesome5 style={styles.emailIcon} name="envelope" />
+                  <TextInput
+                    style={styles.emailInput}
+                    placeholderTextColor="white"
+                    placeholder="Email"
+                    autoCapitalize="none"
+                    type="text"
+                    onChangeText={(text) => setEmail(text)}
+                    value={email}
+                  ></TextInput>
+                </View>
 
-            {/* Nome */}
-            <View style={styles.nomeView}>
-              <FontAwesome5 style={styles.nomeIcon} name="user" />
-              <TextInput
-                style={styles.nomeInput}
-                placeholderTextColor="white"
-                placeholder="Nome"
-                type="text"
-                onChangeText={(text) => setNome(text)}
-                value={nome}
-              ></TextInput>
-            </View>
+                {/* Numero Telemovel */}
+                <View style={styles.telemovelView}>
+                  <FontAwesome5 style={styles.telemovelIcon} name="mobile" />
+                  <TextInput
+                    style={styles.telemovelInput}
+                    placeholderTextColor="white"
+                    placeholder="Número de Telemóvel"
+                    type="text"
+                    onChangeText={(text) => setTelemovel(text)}
+                    value={telemovel}
+                  ></TextInput>
+                </View>
 
-            {/* Email */}
-            <View style={styles.emailView}>
-              <FontAwesome5 style={styles.emailIcon} name="envelope" />
-              <TextInput
-                style={styles.emailInput}
-                placeholderTextColor="white"
-                placeholder="Email"
-                autoCapitalize="none"
-                type="text"
-                onChangeText={(text) => setEmail(text)}
-                value={email}
-              ></TextInput>
-            </View>
+                {/* Password */}
+                <View style={styles.passwordView}>
+                  <FontAwesome5 style={styles.passwordIcon} name="lock" />
+                  <TextInput
+                    style={styles.passwordInput}
+                    placeholderTextColor="white"
+                    placeholder="Palavra-Passe"
+                    type="text"
+                    onChangeText={(text) => setPassword(text)}
+                    value={password}
+                    secureTextEntry={verPalavraPasse}
+                  ></TextInput>
+                  <TouchableOpacity style={styles.verPassBtn}>
+                    {verPalavraPasse ? (
+                      <FontAwesome5
+                        name="eye"
+                        onPress={() => setVerPalavraPasse(false)}
+                        color={"white"}
+                        size={18}
+                      />
+                    ) : (
+                      <FontAwesome5
+                        name="eye-slash"
+                        onPress={() => setVerPalavraPasse(true)}
+                        color={"red"}
+                        size={18}
+                      />
+                    )}
+                  </TouchableOpacity>
+                </View>
 
-            {/* Numero Telemovel */}
-            <View style={styles.telemovelView}>
-              <FontAwesome5 style={styles.telemovelIcon} name="mobile" />
-              <TextInput
-                style={styles.telemovelInput}
-                placeholderTextColor="white"
-                placeholder="Número de Telemóvel"
-                type="text"
-                onChangeText={(text) => setTelemovel(text)}
-                value={telemovel}
-              ></TextInput>
-            </View>
+                {/* Confirmar Password */}
+                <View style={styles.checkpassView}>
+                  <FontAwesome5 style={styles.checkpassIcon} name="lock" />
+                  <TextInput
+                    style={styles.checkpassInput}
+                    placeholderTextColor="white"
+                    placeholder="Confirmar Palavra-Passe"
+                    type="text"
+                    onChangeText={(text) => setCheckPassword(text)}
+                    value={checkPassword}
+                    secureTextEntry={verCheckPalavraPasse}
+                  ></TextInput>
+                  <TouchableOpacity style={styles.verPassBtn}>
+                    {verCheckPalavraPasse ? (
+                      <FontAwesome5
+                        name="eye"
+                        onPress={() => setVerCheckPalavraPasse(false)}
+                        color={"white"}
+                        size={18}
+                      />
+                    ) : (
+                      <FontAwesome5
+                        name="eye-slash"
+                        onPress={() => setVerCheckPalavraPasse(true)}
+                        color={"red"}
+                        size={18}
+                      />
+                    )}
+                  </TouchableOpacity>
+                </View>
 
-            {/* Password */}
-            <View style={styles.passwordView}>
-              <FontAwesome5 style={styles.passwordIcon} name="lock" />
-              <TextInput
-                style={styles.passwordInput}
-                placeholderTextColor="white"
-                placeholder="Palavra-Passe"
-                type="text"
-                onChangeText={(text) => setPassword(text)}
-                value={password}
-              ></TextInput>
-            </View>
+                {/* Instituicao de ensino */}
+                <View style={styles.escolaView}>
+                  <FontAwesome5 style={styles.escolaIcon} name="school" />
+                  <TextInput
+                    style={styles.escolaInput}
+                    placeholderTextColor="white"
+                    placeholder="Instituição de Ensino"
+                    type="text"
+                    onChangeText={(text) => setUniversidade(text)}
+                    value={universidade}
+                  ></TextInput>
+                </View>
 
-            {/* Confirmar Password */}
-            <View style={styles.checkpassView}>
-              <FontAwesome5 style={styles.checkpassIcon} name="lock" />
-              <TextInput
-                style={styles.checkpassInput}
-                placeholderTextColor="white"
-                placeholder="Confirmar Palavra-Passe"
-                type="text"
-                onChangeText={(text) => setCheckPassword(text)}
-                value={checkPassword}
-              ></TextInput>
-            </View>
+                {/* Ano de Escolaridade */}
+                <View style={styles.anoescolaView}>
+                  <FontAwesome5
+                    style={styles.anoescolaIcon}
+                    name="graduation-cap"
+                  />
+                  <SelectDropdown
+                    dropdownStyle={{
+                      width: "40%",
+                      borderRadius: 5,
+                    }}
+                    buttonStyle={{
+                      width: "85%",
+                      height: "100%",
+                      backgroundColor: "transparent",
+                      textAlign: "left",
+                    }}
+                    defaultButtonText={"Ano de escolaridade"}
+                    buttonTextStyle={{
+                      color: "white",
+                      fontSize: 18,
+                      textAlign: "left",
+                      margin: 0,
+                      padding: 0,
+                      position: "absolute",
+                      right: 0,
+                    }}
+                    data={anos}
+                    onSelect={(selectedItem, index) => {
+                      setAnoEscolar(selectedItem)
+                    }}
+                  />
+                </View>
 
-            {/* Instituicao de ensino */}
-            <View style={styles.escolaView}>
-              <FontAwesome5 style={styles.escolaIcon} name="school" />
-              <TextInput
-                style={styles.escolaInput}
-                placeholderTextColor="white"
-                placeholder="Instituição de Ensino"
-                type="text"
-                onChangeText={(text) => setUniversidade(text)}
-                value={universidade}
-              ></TextInput>
-            </View>
+                {/* Registar */}
+                {email === "" ||
+                telemovel === "" ||
+                nome === "" ||
+                password === "" ||
+                password.length < 6 ||
+                checkPassword === "" ||
+                universidade === "" ||
+                anoEscolar === "" ? (
+                  <TouchableOpacity
+                    disabled={true}
+                    style={styles.registarBtnDisable}
+                    onPress={() => verificarPalavraPasse()}
+                  >
+                    <Text style={styles.registarText}>Continuar</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.registarBtn}
+                    onPress={() => verificarPalavraPasse()}
+                  >
+                    <Text style={styles.registarText}>Continuar</Text>
+                  </TouchableOpacity>
+                )}
+                {/* Retornar a login */}
+                <TouchableOpacity
+                  style={styles.returnLoginBtn}
+                  onPress={() => navigation.navigate("Login")}
+                >
+                  <Text style={styles.returnLoginText}>
+                    Já tens uma conta?{" "}
+                    <Text style={{ color: "#16508D" }}>Inicia Sessão</Text>
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            ) : (
+              <View style={{ top: 200 }}>
+                {/* Inserir Email */}
+                <TextInput
+                  keyboardType="text"
+                  placeholderTextColor="#174162"
+                  placeholder="Introduzir Código"
+                  autoCapitalize="none"
+                  type="text"
+                  onChangeText={(codigo) => setCodigo(codigo)}
+                  value={codigo}
+                  style={styles.codigoInput}
+                ></TextInput>
 
-            {/* Ano de Escolaridade */}
-            <View style={styles.anoescolaView}>
-              <FontAwesome5
-                style={styles.anoescolaIcon}
-                name="graduation-cap"
-              />
-              <TextInput
-                style={styles.anoescolaInput}
-                placeholderTextColor="white"
-                placeholder="Ano de Escolaridade"
-                type="text"
-                onChangeText={(text) => setAnoEscolar(text)}
-                value={anoEscolar}
-              ></TextInput>
-            </View>
-
-            {/* Registar */}
-            <TouchableOpacity style={styles.registarBtn} onPress={handleSignUp}>
-              <Text style={styles.registarText}>Registar</Text>
-            </TouchableOpacity>
-
-            {/* Retornar a login */}
-            <TouchableOpacity
-              style={styles.returnLoginBtn}
-              onPress={() => navigation.navigate("Login")}
-            >
-              <Text style={styles.returnLoginText}>
-                Já tens uma conta?{" "}
-                <Text style={{ color: "#16508D" }}>Inicia Sessão</Text>
-              </Text>
-            </TouchableOpacity>
+                {/* Butão para Registar novo utilizador */}
+                <View style={styles.registarView}>
+                  <TouchableOpacity
+                    style={styles.registarButton}
+                    onPress={() => handleSignUp()}
+                  >
+                    <Text style={styles.registarText}>Registar</Text>
+                  </TouchableOpacity>
+                </View>
+                {/* Retornar a login */}
+                <TouchableOpacity
+                  style={styles.returnLoginBtnCodigo}
+                  onPress={() => navigation.navigate("Login")}
+                >
+                  <Text style={styles.returnLoginText}>
+                    Já tens uma conta?{" "}
+                    <Text style={{ color: "#16508D" }}>Inicia Sessão</Text>
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </>
         </TouchableWithoutFeedback>
       </ScrollView>

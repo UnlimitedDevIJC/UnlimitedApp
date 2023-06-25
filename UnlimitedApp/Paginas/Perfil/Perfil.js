@@ -28,7 +28,7 @@ import styles from "./PerfilStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 import React, { useEffect, useState } from "react"
 
-const Perfil = ({navigation}) => {
+const Perfil = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
   const db = getFirestore()
 
@@ -49,7 +49,7 @@ const Perfil = ({navigation}) => {
             }
           })
         } else {
-          console.log("User is signed out home")
+          // console.log("User is signed out home")
         }
       })
     }
@@ -57,6 +57,11 @@ const Perfil = ({navigation}) => {
       isMounted = false
     }
   }, [])
+
+  function handleLogout() {
+    const auth = getAuth()
+    auth.signOut().then(() => navigation.navigate("Login"))
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -76,7 +81,10 @@ const Perfil = ({navigation}) => {
               source={require("../Login/unlimitedLogo.png")}
             />
 
-            <TouchableOpacity style={styles.editProfileBtn} onPress={() => navigation.navigate("EditarPerfil")}>
+            <TouchableOpacity
+              style={styles.editProfileBtn}
+              onPress={() => navigation.navigate("EditarPerfil")}
+            >
               <FontAwesome5 style={styles.editProfileIcon} name="user-edit" />
             </TouchableOpacity>
             <View style={styles.perfilContainer}>
@@ -109,14 +117,26 @@ const Perfil = ({navigation}) => {
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>Currículo</Text>
+                  <Text style={styles.perfilDetalhes}>
+                    {utilizador.curriculo}
+                  </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>LinkedIn</Text>
+                  <Text style={styles.perfilDetalhes}>
+                    {utilizador.linkedIn}
+                  </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilPontos}>{utilizador.pontos} Pontos</Text>
+                  <Text style={styles.perfilPontos}>
+                    {utilizador.pontos} Pontos
+                  </Text>
                 </View>
+                <TouchableOpacity
+                  style={styles.perfilLogout}
+                  onPress={() => handleLogout()}
+                >
+                  <FontAwesome5 style={styles.logout} name="sign-out-alt" />
+                </TouchableOpacity>
               </View>
             </View>
           </>

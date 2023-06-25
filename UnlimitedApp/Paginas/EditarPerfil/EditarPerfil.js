@@ -17,6 +17,7 @@ import {
   getFirestore,
   collection,
   onSnapshot,
+  updateDoc,
   addDoc,
   deleteDocs,
   getDoc,
@@ -27,6 +28,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import styles from "./EditarPerfilStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 import React, { useEffect, useState, useSyncExternalStore } from "react"
+import PerfilStack from "../../Navigator/PerfilStack"
 
 const EditarPerfil = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
@@ -47,11 +49,9 @@ const EditarPerfil = ({ navigation }) => {
             if (doc.exists()) {
               setUtilizador(doc.data())
             } else {
-              console.log("No such document!")
             }
           })
         } else {
-          console.log("User is signed out home")
         }
       })
     }
@@ -70,10 +70,8 @@ const EditarPerfil = ({ navigation }) => {
       curriculo: utilizador.curriculo,
       linkedIn: utilizador.linkedIn,
     }).then(() => {
-      console.log("User Updated!")
+      navigation.navigate("Perfil")
     })
-
-    navigation.navigate("Profile")
   }
 
   return (
