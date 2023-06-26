@@ -29,8 +29,10 @@ import styles from "./DetalheEventosStyle"
 
 const DetalheEventos = ({ route }) => {
   const db = getFirestore()
+  const ref = collection(db, "EventoUtilizador")
 
   const [utilizador, setUtilizador] = useState("null")
+  const [inscrito, setInscrito] = useState(false)
 
   let utilizadorRef = null
   useEffect(() => {
@@ -58,11 +60,88 @@ const DetalheEventos = ({ route }) => {
     }
   })
 
-  function inscrever() {
+  let listaEventoUtilizador = []
 
-    console.log(route.params.item.id)
-    console.log(utilizador)
+  onSnapshot(ref, (snapshot) => {
+    let mounted = true
+    if (mounted) {
+      listaEventoUtilizador = []
+      snapshot.docs.forEach((doc) => {
+        listaEventoUtilizador.push({ ...doc.data(), id: doc.id })
+      })
+
+      for (let i = 0; i < listaEventoUtilizador.length; i++) {
+        if (
+          listaEventoUtilizador[i].idEvento == route.params.item.id &&
+          listaEventoUtilizador[i].utilizador == utilizador.email
+        ) {
+          setInscrito(true)
+        }
+      }
+    }
+    return () => (mounted = false)
+  })
+
+  function inscrever() {
+    getDocs(ref).then(() => {
+      if (inscrito == false) {
+        setDoc(doc(db, "EventoUtilizador", route.params.item.id), {
+          idEvento: route.params.item.id,
+          utilizador: utilizador.email,
+        })
+      }
+    })
+
+    // getDocs(ref)
+    //   .then((snapshot) => {
+    //     snapshot.docs.forEach((doc) => {
+    //       if (doc.id == route.params.item.id) {
+    //         inscrito = true
+    //         Alert.alert("Já estás inscrito neste evento")
+    //       }
+    //     })
+    //   })
+    //   .then(() => {
+    //     if (inscrito == false) {
+    //       setDoc(doc(db, "EventoUtilizador", email), {
+    //         nome: nome,
+    //         telemovel: telemovel,
+    //         universidade: universidade,
+    //         anoEscolar: anoEscolar,
+    //         pontos: pontos,
+    //         linkedIn: linkedIn,
+    //         curriculo: curriculo,
+    //         codigo: codigo,
+    //       })
+    //     }
+    //   })
   }
+
+  // function inscrever() {
+  //   const ref = collection(db, "EventoUtilizador")
+  //   let existe = false
+  //   getDocs(ref)
+  //     .then((snapshot) => {
+  //       snapshot.docs.forEach((doc) => {
+  //         console.log(doc.idEvento)
+  //         if (
+  //           doc.idEvento == route.params.item.id &&
+  //           doc.utilizador == utilizador.email
+  //         ) {
+  //           existe = true
+  //         }
+  //       })
+  //     })
+  //     .then(() => {
+  //       if (existe == false) {
+  //         setDoc(doc(db, "EventoUtilizador"), {
+  //           idEvento: route.params.item.id,
+  //           utilizador: utilizador.email,
+  //         })
+  //       }
+  //     })
+
+  // }
 
   return (
     <SafeAreaView style={styles.safeArea}>

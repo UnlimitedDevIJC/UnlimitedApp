@@ -95,7 +95,7 @@ const Agenda = ({ navigation }) => {
         listaEventos.push({ ...doc.data(), id: doc.id })
       })
       listaEventosFiltrada = listaEventos.filter((item) => {
-        return item.academiaCodigo == utilizador.codigoAcademia && item.ano <= utilizador.anoEscolar
+        return item.academiaCodigo == utilizador.codigoAcademia && item.anoEscolar <= utilizador.anoEscolar
       })
       filtros = [...new Set(listaEventos.map((item) => item.palavrasChave))]
       filtros.unshift("Todos") //Vai buscar os valores das areas sem estarem repetidos e acrescenta "Todos" ao inicio
