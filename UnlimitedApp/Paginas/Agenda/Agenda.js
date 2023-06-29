@@ -33,7 +33,6 @@ import SelectDropdown from "react-native-select-dropdown"
 const db = getFirestore()
 const colRef = collection(db, "Evento")
 const academiaRef = collection(db, "Academia")
-const utilizadorRef = collection(db, "Utilizador")
 
 let listaEventos = []
 let listaEventosFiltrada = []
@@ -94,13 +93,27 @@ const Agenda = ({ navigation }) => {
       snapshot.docs.forEach((doc) => {
         listaEventos.push({ ...doc.data(), id: doc.id })
       })
-      listaEventosFiltrada = listaEventos.filter((item) => {
-        return item.academiaCodigo == utilizador.codigoAcademia && item.anoEscolar <= utilizador.anoEscolar
-      })
       filtros = [...new Set(listaEventos.map((item) => item.palavrasChave))]
       filtros.unshift("Todos") //Vai buscar os valores das areas sem estarem repetidos e acrescenta "Todos" ao inicio
     }
     return () => (mounted = false)
+  })
+
+  useEffect(() => {
+    const data = onSnapshot(colRef, (snapshot) => {
+      let mounted = true
+      if (mounted) {
+        listaEventosFiltrada = listaEventos.filter((item) => {
+          return (
+            item.academiaCodigo == utilizador.codigoAcademia &&
+            item.anoEscolar <= utilizador.anoEscolar
+          )
+        })
+      }
+      return () => (mounted = false)
+    })
+
+    return () => data()
   })
 
   function _renderItem(item) {
@@ -115,7 +128,7 @@ const Agenda = ({ navigation }) => {
 
   function alterarAcademias() {
     for (let i = 0; i < listaAcademia.length; i++) {
-      if (listaAcademia[i].codigo == utilizadorCodigo) {
+      if (listaAcademia[i].codigo == utilizador.codigoAcademia) {
         setAcademia(listaAcademia[i])
       }
     }
@@ -127,19 +140,30 @@ const Agenda = ({ navigation }) => {
     if (item == "Todos") {
       listaEventosFiltrada = listaEventos.filter((evento) => {
         return (
-          evento.codigo == utilizador.codigo &&
-          evento.codigo == academia.codigo &&
-          evento.ano <= utilizador.anoEscolar
+          evento.academiaCodigo == utilizador.codigoAcademia &&
+          evento.academiaCodigo == academia.codigo &&
+          evento.anoEscolar <= utilizador.anoEscolar
         )
       })
     } else {
       listaEventosFiltrada = listaEventos.filter((evento) => {
         return (
           evento.academiaCodigo == utilizador.codigoAcademia &&
-          evento.codigo == academia.codigo &&
+          evento.academiaCodigo == academia.codigo &&
           evento.palavrasChave == item &&
-          evento.ano <= utilizador.anoEscolar
+          evento.anoEscolar <= utilizador.anoEscolar
         )
+      })
+    }
+  }
+
+  function alterarFiltroManual(text) {
+    setFiltro(text)
+    if (text == "") {
+      listaEventosFiltrada = listaEventosFiltrada
+    } else {
+      listaEventosFiltrada = listaEventos.filter((item) => {
+        return String(item.tema.toLowerCase()).includes(text.toLowerCase())
       })
     }
   }
@@ -167,7 +191,7 @@ const Agenda = ({ navigation }) => {
             <TextInput
               placeholder="Pesquisa..."
               type="text"
-              onChangeText={(text) => setFiltro(text)}
+              onChangeText={(text) => alterarFiltroManual(text)}
               value={filtro}
               style={styles.searchInput}
             />
@@ -209,8 +233,8 @@ const Agenda = ({ navigation }) => {
             />
           </View>
           <FlatList
-            initialNumToRender={10}
             data={listaEventosFiltrada}
+            initialNumToRender={10}
             renderItem={(item) => _renderItem(item)}
             keyExtractor={(item) => {
               return item.id
@@ -236,7 +260,7 @@ class ItemLista extends React.PureComponent {
         >
           <View style={styles.cardView}>
             <View style={styles.cardInfo}>
-              <Text style={styles.cardNome}>{this.props.item.nome}</Text>
+              <Text style={styles.cardNome}>{this.props.item.tema}</Text>
               <Text style={styles.cardData}>Datas: {this.props.item.data}</Text>
             </View>
             <View style={styles.cardIconContainer}>

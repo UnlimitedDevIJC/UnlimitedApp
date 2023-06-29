@@ -99,7 +99,7 @@ const Perfil = ({ navigation }) => {
                   <Text style={styles.perfilNome}>{utilizador.nome}</Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>E-mail</Text>
+                  <Text style={styles.perfilDetalhes}>{utilizador.email}</Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
@@ -118,7 +118,7 @@ const Perfil = ({ navigation }) => {
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
-                    {utilizador.curriculo}
+                    Currículo
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>

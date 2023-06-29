@@ -48,7 +48,7 @@ const Registo = ({ navigation }) => {
   const [telemovel, setTelemovel] = useState("")
   const [universidade, setUniversidade] = useState("")
   const [anoEscolar, setAnoEscolar] = useState("")
-  const [pontos, setPontos] = useState("")
+  const [pontos, setPontos] = useState(0)
   const [linkedIn, setLinkedIn] = useState("")
   const [curriculo, setCurriculo] = useState("")
   const [errorRegisterPassword, setErrorRegisterPassword] = useState(false)
@@ -115,6 +115,29 @@ const Registo = ({ navigation }) => {
       Alert.alert("As palavra-passes não coincidem")
     } else {
       setErrorRegisterPassword(false)
+      setPaginaRegister(2)
+    }
+  }
+
+  function verificarCredenciais() {
+    if (password.length < 6) {
+      setErrorRegisterPassword(true)
+      Alert.alert("A password não tem caracteres suficientes")
+    } else if (checkPassword !== password) {
+      setErrorRegisterPassword(true)
+      Alert.alert("As palavra-passes não coincidem")
+    } else {
+      setErrorRegisterPassword(false)
+    }
+
+    if(telemovel.length < 9) {
+      setErrorRegisterPassword(true)
+      Alert.alert("O número de telemóvel não está certo")
+    } else {
+      setErrorRegisterPassword(false)
+    }
+
+    if(errorRegisterPassword == false) {
       setPaginaRegister(2)
     }
   }

@@ -91,57 +91,7 @@ const DetalheEventos = ({ route }) => {
         })
       }
     })
-
-    // getDocs(ref)
-    //   .then((snapshot) => {
-    //     snapshot.docs.forEach((doc) => {
-    //       if (doc.id == route.params.item.id) {
-    //         inscrito = true
-    //         Alert.alert("Já estás inscrito neste evento")
-    //       }
-    //     })
-    //   })
-    //   .then(() => {
-    //     if (inscrito == false) {
-    //       setDoc(doc(db, "EventoUtilizador", email), {
-    //         nome: nome,
-    //         telemovel: telemovel,
-    //         universidade: universidade,
-    //         anoEscolar: anoEscolar,
-    //         pontos: pontos,
-    //         linkedIn: linkedIn,
-    //         curriculo: curriculo,
-    //         codigo: codigo,
-    //       })
-    //     }
-    //   })
   }
-
-  // function inscrever() {
-  //   const ref = collection(db, "EventoUtilizador")
-  //   let existe = false
-  //   getDocs(ref)
-  //     .then((snapshot) => {
-  //       snapshot.docs.forEach((doc) => {
-  //         console.log(doc.idEvento)
-  //         if (
-  //           doc.idEvento == route.params.item.id &&
-  //           doc.utilizador == utilizador.email
-  //         ) {
-  //           existe = true
-  //         }
-  //       })
-  //     })
-  //     .then(() => {
-  //       if (existe == false) {
-  //         setDoc(doc(db, "EventoUtilizador"), {
-  //           idEvento: route.params.item.id,
-  //           utilizador: utilizador.email,
-  //         })
-  //       }
-  //     })
-
-  // }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -161,20 +111,18 @@ const DetalheEventos = ({ route }) => {
               source={require("../Login/unlimitedLogo.png")}
             />
 
-            <View style={styles.eventoLogo}></View>
+            <View style={styles.eventoLogo} />
 
             <View style={styles.detalhesEvento}>
               <View style={styles.eventoTituloBox}>
                 <Text style={styles.eventoTitulo}>
-                  {route.params.item.codigo}
+                  {route.params.item.tema}
                 </Text>
               </View>
               <View style={styles.descricaoEventoBox}>
                 <Text style={styles.descricao}>
-                  Descrição:{" "}
-                  <Text style={styles.descricaoEvento}>
-                    {route.params.item.descricao}
-                  </Text>
+                  <Text style={styles.descricaoEvento}>Descrição: </Text>
+                  {route.params.item.descricao}
                 </Text>
               </View>
               <View style={styles.inscreverBotaoBox}>
@@ -184,8 +132,6 @@ const DetalheEventos = ({ route }) => {
                 >
                   <Text style={styles.inscreverText}>Inscrever</Text>
                 </TouchableOpacity>
-              </View>
-              <View style={styles.inscreverBotaoBox}>
                 <TouchableOpacity style={styles.inscreverBotao}>
                   <Text style={styles.inscreverText}>Ler Qr Code</Text>
                 </TouchableOpacity>

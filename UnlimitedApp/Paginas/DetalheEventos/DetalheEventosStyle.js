@@ -14,86 +14,76 @@ const styles = StyleSheet.create({
   retanguloFundo: {
     backgroundColor: "#1A649F",
     width: "110%",
-    height: 130,
+    height:'35%',
+    // height: 130,
     transform: [{ rotateZ: "-15deg" }],
     left: -25,
     top: -70,
   },
 
   logo: {
-    width: 85,
-    height: 85,
+    width: '22%',
+    height:'22%',
     alignSelf: "center",
-    top: "-51%",
+    top: "-27%",
   },
 
   eventoLogo: {
     backgroundColor: "orange",
     width: "100%",
-    height: 200,
-    position: "absolute",
-    top: 0,
+    height: "55%",
+    position:'absolute',
     zIndex: -1,
   },
 
   detalhesEvento: {
-    position: "absolute",
-    top: 200,
     width: "100%",
     height: "100%",
   },
 
   eventoTituloBox: {
-    alignSelf:'center',
     width:'100%',
-    margin: 10,
+    marginTop: '3%',
   },
 
   eventoTitulo: {
     alignSelf:'center',
-    justifyContent:'center',
     color:'#174162',
     fontSize: 35,
     fontWeight: '600',
     letterSpacing: 1.5,
-    padding: 10,
-
+    padding:'3%'
   },
 
   descricaoEventoBox: {
-    height: '100%',
     width: '100%',
-    marginTop: 10,
-    flexDirection: 'row'
+    height:'55%',
+    flexDirection: 'row',
+    padding:'3%',
   },
 
   descricao: {
     fontSize: 20,
-    fontWeight: '700',
-    padding: 15,
     lineHeight: 35,
     letterSpacing: 1
   }, 
 
   descricaoEvento: {
-    padding: 20,
     fontSize: 20,
-    fontWeight: '0'
+    fontWeight:'700'
   },
 
   inscreverBotaoBox: {
-    height: 50,
-    marginTop: 20,
-    alignItems:'center'
+    alignItems:'center',
+    width:'100%',
   },
 
   inscreverBotao: {
-    marginTop: 40,
     width: "75%",
-    height: "100%",
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#174162",
+    marginTop:'5%'
   },
 
   inscreverText: {
@@ -101,6 +91,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "white",
     textAlign: "center",
+    padding:'4%'
   }
 })
 
