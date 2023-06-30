@@ -125,7 +125,23 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#174162",
     opacity: 0.75,
-  }
+  },
+
+  verPassBtn: {
+    width: "10%",
+    zIndex: 1,
+    alignSelf: "center",
+    top: '56%',
+    left: '30%'
+  },
+
+  passwordView: {
+    width: "80%",
+    height: 50,
+    marginTop: 10,
+    alignSelf: "center",
+    flexDirection: "row",
+  },
 })
 
 export default styles

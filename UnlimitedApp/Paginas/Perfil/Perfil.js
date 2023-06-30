@@ -30,6 +30,7 @@ import React, { useEffect, useState } from "react"
 
 const Perfil = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
+  
   const db = getFirestore()
 
   let utilizadorRef = null

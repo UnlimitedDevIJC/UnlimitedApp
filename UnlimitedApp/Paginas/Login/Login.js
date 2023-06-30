@@ -17,11 +17,12 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth"
-import { auth } from '../../Config/firebase'
+import { auth } from "../../Config/firebase"
 import { initializeApp } from "firebase/app"
 import firebase from "../../Config/firebase"
 import styles from "./LoginStyle"
 import TabsStack from "../../Navigator/TabsStack"
+import { FontAwesome5 } from "@expo/vector-icons"
 
 const Login = ({ navigation }) => {
   //Firebase
@@ -30,6 +31,7 @@ const Login = ({ navigation }) => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [errorLogin, setErrorLogin] = useState(false)
+  const [verPalavraPasse, setVerPalavraPasse] = useState(true)
 
   //Funções
   const loginFirebase = (email, password) => {
@@ -85,14 +87,32 @@ const Login = ({ navigation }) => {
         ></TextInput>
 
         {/* Inserir Password */}
-        <TextInput
-          placeholderTextColor="#174162"
-          placeholder="Introduzir Password"
-          type="text"
-          onChangeText={(password) => setPassword(password)}
-          value={password}
-          style={styles.passwordInput}
-        ></TextInput>
+          <TextInput
+            placeholderTextColor="#174162"
+            placeholder="Introduzir Password"
+            type="text"
+            onChangeText={(password) => setPassword(password)}
+            value={password}
+            style={styles.passwordInput}
+            secureTextEntry={verPalavraPasse}
+          ></TextInput>
+          <TouchableOpacity style={styles.verPassBtn}>
+            {verPalavraPasse ? (
+              <FontAwesome5
+                name="eye"
+                onPress={() => setVerPalavraPasse(false)}
+                color={"black"}
+                size={18}
+              />
+            ) : (
+              <FontAwesome5
+                name="eye-slash"
+                onPress={() => setVerPalavraPasse(true)}
+                color={"red"}
+                size={18}
+              />
+            )}
+          </TouchableOpacity>
 
         {/* Recuperar Password */}
         <View style={styles.recuperarPasswordView}>
