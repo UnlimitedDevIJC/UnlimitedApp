@@ -27,7 +27,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import React, { useState, useEffect } from "react"
 import styles from "./DetalheEventosStyle"
 
-const DetalheEventos = ({ route }) => {
+const DetalheEventos = ({ route, navigation }) => {
   const db = getFirestore()
   const ref = collection(db, "EventoUtilizador")
 
@@ -91,6 +91,7 @@ const DetalheEventos = ({ route }) => {
         })
       }
     })
+    navigation.navigate("Agenda")
   }
 
   return (
