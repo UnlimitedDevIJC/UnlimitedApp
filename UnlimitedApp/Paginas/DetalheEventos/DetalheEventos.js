@@ -58,7 +58,7 @@ const DetalheEventos = ({ route }) => {
     return () => {
       isMounted = false
     }
-  })
+  }, [])
 
   let listaEventoUtilizador = []
 
@@ -73,7 +73,7 @@ const DetalheEventos = ({ route }) => {
       for (let i = 0; i < listaEventoUtilizador.length; i++) {
         if (
           listaEventoUtilizador[i].idEvento == route.params.item.id &&
-          listaEventoUtilizador[i].utilizador == utilizador.email
+          listaEventoUtilizador[i].utilizador == utilizador.nome
         ) {
           setInscrito(true)
         }
@@ -87,7 +87,7 @@ const DetalheEventos = ({ route }) => {
       if (inscrito == false) {
         setDoc(doc(db, "EventoUtilizador", route.params.item.id), {
           idEvento: route.params.item.id,
-          utilizador: utilizador.email,
+          utilizador: utilizador.nome
         })
       }
     })

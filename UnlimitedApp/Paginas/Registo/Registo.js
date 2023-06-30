@@ -85,7 +85,7 @@ const Registo = ({ navigation }) => {
             pontos: pontos,
             linkedIn: linkedIn,
             curriculo: curriculo,
-            codigo: codigo,
+            codigoAcademia: codigo,
           })
         }
       })

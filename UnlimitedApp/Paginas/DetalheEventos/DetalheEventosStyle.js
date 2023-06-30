@@ -14,24 +14,24 @@ const styles = StyleSheet.create({
   retanguloFundo: {
     backgroundColor: "#1A649F",
     width: "110%",
-    height:'35%',
+    height:'45%',
     // height: 130,
     transform: [{ rotateZ: "-15deg" }],
     left: -25,
-    top: -70,
+    top: '-20%',
   },
 
   logo: {
-    width: '22%',
+    width: '15%',
     height:'22%',
     alignSelf: "center",
-    top: "-27%",
+    top: "-30%",
   },
 
   eventoLogo: {
     backgroundColor: "orange",
     width: "100%",
-    height: "55%",
+    height: "70%",
     position:'absolute',
     zIndex: -1,
   },
@@ -76,6 +76,8 @@ const styles = StyleSheet.create({
   inscreverBotaoBox: {
     alignItems:'center',
     width:'100%',
+    height:'60%',
+    top:'50%',
   },
 
   inscreverBotao: {
