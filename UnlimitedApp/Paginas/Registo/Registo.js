@@ -79,6 +79,7 @@ const Registo = ({ navigation }) => {
         if (existe == false) {
           setDoc(doc(db, "Utilizador", email), {
             nome: nome,
+            email: email,
             telemovel: telemovel,
             universidade: universidade,
             anoEscolar: anoEscolar,
@@ -317,7 +318,6 @@ const Registo = ({ navigation }) => {
                 telemovel === "" ||
                 nome === "" ||
                 password === "" ||
-                password.length < 6 ||
                 checkPassword === "" ||
                 universidade === "" ||
                 anoEscolar === "" ? (

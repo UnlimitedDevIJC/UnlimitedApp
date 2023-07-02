@@ -163,7 +163,10 @@ const Agenda = ({ navigation }) => {
       listaEventosFiltrada = listaEventosFiltrada
     } else {
       listaEventosFiltrada = listaEventos.filter((item) => {
-        return String(item.tema.toLowerCase()).includes(text.toLowerCase())
+        return (
+          String(item.tema.toLowerCase()).includes(text.toLowerCase()) &&
+          item.anoEscolar <= utilizador.anoEscolar
+        )
       })
     }
   }
