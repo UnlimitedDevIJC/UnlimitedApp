@@ -64,6 +64,7 @@ const EditarPerfil = ({ navigation }) => {
     utilizadorRef = doc(db, "Utilizador", user.email)
     updateDoc(utilizadorRef, {
       nome: utilizador.nome,
+      email:utilizador.email, 
       telemovel: utilizador.telemovel,
       universidade: utilizador.universidade,
       anoEscolar: utilizador.anoEscolar,
