@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     width:'100%',
     height:'60%',
-    top:'50%',
+    top:'35%',
   },
 
   inscreverBotao: {
