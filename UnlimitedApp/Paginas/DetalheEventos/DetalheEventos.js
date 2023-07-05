@@ -85,12 +85,20 @@ const DetalheEventos = ({ route, navigation }) => {
   function inscrever() {
     getDocs(ref).then(() => {
       if (inscrito == false) {
+        //REVER
         setDoc(doc(db, "EventoUtilizador", route.params.item.id), {
           idEvento: route.params.item.id,
-          utilizador: utilizador.nome
+          utilizador: utilizador.nome,
         })
       }
     })
+
+    if (inscrito == true) {
+      Alert.alert("Já estás inscrito para este evento! Esperamos-te lá!")
+    } else {
+      Alert.alert("Foste inscrito para este evento! Esperamos-te lá!")
+    }
+
     navigation.navigate("Agenda")
   }
 
@@ -112,7 +120,12 @@ const DetalheEventos = ({ route, navigation }) => {
               source={require("../Login/unlimitedLogo.png")}
             />
 
-            <View style={styles.eventoLogo} />
+            <View style={styles.eventoLogo}>
+              <Image
+                style={{ height: "100%", width: "100%" }}
+                source={require("../Login/ULTeam.png")}
+              />
+            </View>
 
             <View style={styles.detalhesEvento}>
               <View style={styles.eventoTituloBox}>

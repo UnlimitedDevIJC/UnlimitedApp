@@ -1,43 +1,11 @@
-import {
-  View,
-  Text,
-  TextInput,
-  SafeAreaView,
-  ScrollView,
-  TouchableOpacity,
-  KeyboardAvoidingView,
-  Platform,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Image,
-  Alert,
-  ImageBackground,
-} from "react-native"
-import React from "react"
-import styles from "./HomePageStyle"
+import { View, Text } from 'react-native'
+import React from 'react'
 
-const HomePage = ({ navigation }) => {
+const HomePage = () => {
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} bounces={false}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            Keyboard.dismiss()
-          }}
-        >
-          <>
-            {/* Retangulo de fundo */}
-            <View style={styles.retanguloFundo} />
-            
-            {/* Logo pequneo */}
-            <Image
-              style={styles.logo}
-              source={require("../Login/unlimitedLogo.png")}
-            />
-          </>
-        </TouchableWithoutFeedback>
-      </ScrollView>
-    </SafeAreaView>
+    <View>
+      <Text>HomePage</Text>
+    </View>
   )
 }
 

@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   },
 
   eventoLogo: {
-    backgroundColor: "orange",
     width: "100%",
     height: "70%",
     position:'absolute',

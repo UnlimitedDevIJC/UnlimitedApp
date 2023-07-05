@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: 85,
     alignSelf: "center",
     position: "absolute",
-    top: "5.5%",
+    top: "2.5%",
   },
 
   registarTitulo: {

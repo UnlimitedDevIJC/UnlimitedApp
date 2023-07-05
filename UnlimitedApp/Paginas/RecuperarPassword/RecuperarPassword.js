@@ -6,15 +6,76 @@ import {
   TouchableWithoutFeedback,
   Image,
   TextInput,
+  Alert,
   TouchableOpacity,
 } from "react-native"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styles from "./RecuperarPasswordStyle"
 import { FontAwesome5 } from "@expo/vector-icons"
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  sendPasswordResetEmail
+} from "firebase/auth"
+import { auth } from "../../Config/firebase"
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  addDoc,
+  deleteDocs,
+  setDoc,
+  doc,
+  getDocs,
+} from "firebase/firestore"
+
+const db = getFirestore()
+const utilizadoresRef = collection(db, "Utilizador")
+let listaUtilizadores = []
+onSnapshot(utilizadoresRef, (snapshot) => {
+  let mounted = true
+  if (mounted) {
+    listaUtilizadores = []
+    snapshot.docs.forEach((doc) => {
+      listaUtilizadores.push(doc.id)
+    })
+  }
+  return () => (mounted = false)
+})
 
 const RecuperarPassword = ({ navigation }) => {
   //Constantes
   const [email, setEmail] = useState("")
+  const [errorPedido, setErrorPedido] = useState(false)
+  const [user, setUser] = useState()
+
+  const enviarEmail = () => {
+    let existe = false
+    listaUtilizadores.forEach((item) => {
+      if (item === email) {
+        existe = true
+        sendPasswordResetEmail(getAuth(), email)
+        Alert.alert(
+          "Email para redefinir a senha enviado! Verificar a caixa de entrada e o Spam"
+        )
+        return
+      }
+    })
+    if (existe) setErrorPedido(false)
+    else setErrorPedido(true)
+  }
+
+  useEffect(() => {
+    const auth = getAuth()
+    onAuthStateChanged(auth, (user1) => {
+      if (user1) {
+        const uid = user1.uid
+        setUser(user1)
+      } else {
+      }
+    })
+  }, [])
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -41,8 +102,10 @@ const RecuperarPassword = ({ navigation }) => {
               <FontAwesome5 style={styles.emailIcon} name="envelope" />
               <TextInput
                 style={styles.emailInput}
+                keyboardType="email-address"
                 placeholderTextColor="white"
-                placeholder="Email"
+                placeholder="Colocar Email"
+                autoCapitalize="none"
                 type="text"
                 onChangeText={(text) => setEmail(text)}
                 value={email}
@@ -51,7 +114,7 @@ const RecuperarPassword = ({ navigation }) => {
             {/* Registar */}
             <TouchableOpacity
               style={styles.enviarEmailBtn}
-              onPress={() => navigation.navigate("Login")}
+              onPress={() => enviarEmail()}
             >
               <Text style={styles.enviarEmailText}>Enviar Email</Text>
             </TouchableOpacity>
@@ -60,7 +123,7 @@ const RecuperarPassword = ({ navigation }) => {
               style={styles.returnLoginBtn}
               onPress={() => navigation.navigate("Login")}
             >
-              <FontAwesome5 style={styles.returnArrowLeft} name="arrow-left"/>
+              <FontAwesome5 style={styles.returnArrowLeft} name="arrow-left" />
               <Text style={styles.returnLoginText}>
                 Voltar ao Iniciar Sessão
               </Text>

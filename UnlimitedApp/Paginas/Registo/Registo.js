@@ -51,7 +51,7 @@ const Registo = ({ navigation }) => {
   const [pontos, setPontos] = useState(0)
   const [linkedIn, setLinkedIn] = useState("")
   const [curriculo, setCurriculo] = useState("")
-  const [errorRegisterPassword, setErrorRegisterPassword] = useState(false)
+  const [errorRegisterPassword, setErrorRegisterPassword] = useState(true)
   const [verPalavraPasse, setVerPalavraPasse] = useState(true)
   const [verCheckPalavraPasse, setVerCheckPalavraPasse] = useState(true)
   const [codigo, setCodigo] = useState("")
@@ -123,22 +123,25 @@ const Registo = ({ navigation }) => {
   function verificarCredenciais() {
     if (password.length < 6) {
       setErrorRegisterPassword(true)
-      Alert.alert("A password não tem caracteres suficientes")
+      Alert.alert("A password não tem caracteres suficientes!")
+      setPaginaRegister(1)
     } else if (checkPassword !== password) {
       setErrorRegisterPassword(true)
-      Alert.alert("As palavra-passes não coincidem")
+      Alert.alert("As palavra-passes não coincidem!")
+      setPaginaRegister(1)
     } else {
       setErrorRegisterPassword(false)
     }
 
-    if(telemovel.length < 9) {
+    if (telemovel.length < 9) {
       setErrorRegisterPassword(true)
-      Alert.alert("O número de telemóvel não está certo")
+      Alert.alert("O número de telemóvel não tem números suficientes!")
+      setPaginaRegister(1)
     } else {
       setErrorRegisterPassword(false)
     }
 
-    if(errorRegisterPassword == false) {
+    if (errorRegisterPassword == false) {
       setPaginaRegister(2)
     }
   }
@@ -320,18 +323,18 @@ const Registo = ({ navigation }) => {
                 password === "" ||
                 checkPassword === "" ||
                 universidade === "" ||
-                anoEscolar === "" ? (
+                (anoEscolar === "") ? (
                   <TouchableOpacity
                     disabled={true}
                     style={styles.registarBtnDisable}
-                    onPress={() => verificarPalavraPasse()}
+                    onPress={() => verificarCredenciais()}
                   >
                     <Text style={styles.registarText}>Continuar</Text>
                   </TouchableOpacity>
                 ) : (
                   <TouchableOpacity
                     style={styles.registarBtn}
-                    onPress={() => verificarPalavraPasse()}
+                    onPress={() => verificarCredenciais()}
                   >
                     <Text style={styles.registarText}>Continuar</Text>
                   </TouchableOpacity>
@@ -349,11 +352,10 @@ const Registo = ({ navigation }) => {
               </View>
             ) : (
               <View style={{ top: 200 }}>
-                {/* Inserir Email */}
                 <TextInput
                   keyboardType="text"
                   placeholderTextColor="#174162"
-                  placeholder="Introduzir Código"
+                  placeholder="Colocar Código"
                   autoCapitalize="none"
                   type="text"
                   onChangeText={(codigo) => setCodigo(codigo)}
@@ -367,7 +369,7 @@ const Registo = ({ navigation }) => {
                     style={styles.registarButton}
                     onPress={() => handleSignUp()}
                   >
-                    <Text style={styles.registarText}>Registar</Text>
+                    <Text style={styles.registarText}>Entrar</Text>
                   </TouchableOpacity>
                 </View>
                 {/* Retornar a login */}

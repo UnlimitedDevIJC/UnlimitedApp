@@ -158,9 +158,10 @@ const Agenda = ({ navigation }) => {
   }
 
   function alterarFiltroManual(text) {
+    let listaEventosFiltradaManual = listaEventosFiltrada
     setFiltro(text)
     if (text == "") {
-      listaEventosFiltrada = listaEventosFiltrada
+      listaEventosFiltradaManual
     } else {
       listaEventosFiltrada = listaEventos.filter((item) => {
         return (

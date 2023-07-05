@@ -78,7 +78,7 @@ const Login = ({ navigation }) => {
         <TextInput
           keyboardType="email-address"
           placeholderTextColor="#174162"
-          placeholder="Introduzir Email"
+          placeholder="Colocar Email"
           autoCapitalize="none"
           type="text"
           onChangeText={(email) => setEmail(email)}
@@ -89,7 +89,7 @@ const Login = ({ navigation }) => {
         {/* Inserir Password */}
           <TextInput
             placeholderTextColor="#174162"
-            placeholder="Introduzir Password"
+            placeholder="Colocar Palavra-Passe"
             type="text"
             onChangeText={(password) => setPassword(password)}
             value={password}
@@ -101,7 +101,7 @@ const Login = ({ navigation }) => {
               <FontAwesome5
                 name="eye"
                 onPress={() => setVerPalavraPasse(false)}
-                color={"black"}
+                color={"#174162"}
                 size={18}
               />
             ) : (
@@ -120,7 +120,7 @@ const Login = ({ navigation }) => {
             style={styles.recuperarPasswordButton}
             onPress={() => navigation.navigate("RecuperarPassword")}
           >
-            <Text style={styles.recuperarPasswordText}>Recuperar Password</Text>
+            <Text style={styles.recuperarPasswordText}>Recuperar Palavra-Passe</Text>
           </TouchableOpacity>
         </View>
 
@@ -135,7 +135,7 @@ const Login = ({ navigation }) => {
         {email === "" || password === "" ? (
           <View style={styles.loginView}>
             <TouchableOpacity disabled={true} style={styles.loginButtonDisable}>
-              <Text style={styles.loginText}>Login</Text>
+              <Text style={styles.loginText}>Iniciar Sessão</Text>
             </TouchableOpacity>
           </View>
         ) : (
