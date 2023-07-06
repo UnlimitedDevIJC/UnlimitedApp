@@ -33,7 +33,7 @@ const TabsStack = () => {
           position: "absolute",
           backgroundColor: "#333333",
           elevation: 0,
-          height: 110,
+          height: 90,
         },
       }}
     >
@@ -63,7 +63,7 @@ const TabsStack = () => {
                 <View
                   style={{
                     backgroundColor: "white",
-                    height: 110,
+                    height: 80,
                     width:'70%',
                     alignItems: "center",
                     justifyContent: "center",
@@ -114,7 +114,7 @@ const TabsStack = () => {
                 <View
                   style={{
                     backgroundColor: "white",
-                    height: 110,
+                    height: 80,
                     width:'70%',
                     alignItems: "center",
                     justifyContent: "center",
@@ -165,7 +165,7 @@ const TabsStack = () => {
                 <View
                   style={{
                     backgroundColor: "white",
-                    height: 110,
+                    height: 80,
                     width:'70%',
                     alignItems: "center",
                     justifyContent: "center",
@@ -216,7 +216,7 @@ const TabsStack = () => {
                 <View
                   style={{
                     backgroundColor: "white",
-                    height: 110,
+                    height: 80,
                     width:'70%',
                     alignItems: "center",
                     justifyContent: "center",

@@ -51,8 +51,9 @@ const Login = ({ navigation }) => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
           const uid = user.uid
-          if (user.emailVerified) navigation.navigate("HomePage")
-          else navigation.navigate("Registo")
+          if (user.emailVerified) {
+            navigation.navigate(TabsStack, "HomePageTab")
+          } else navigation.navigate("Registo")
         } else {
           // console.log("User signed out login")
         }
@@ -87,32 +88,32 @@ const Login = ({ navigation }) => {
         ></TextInput>
 
         {/* Inserir Password */}
-          <TextInput
-            placeholderTextColor="#174162"
-            placeholder="Colocar Palavra-Passe"
-            type="text"
-            onChangeText={(password) => setPassword(password)}
-            value={password}
-            style={styles.passwordInput}
-            secureTextEntry={verPalavraPasse}
-          ></TextInput>
-          <TouchableOpacity style={styles.verPassBtn}>
-            {verPalavraPasse ? (
-              <FontAwesome5
-                name="eye"
-                onPress={() => setVerPalavraPasse(false)}
-                color={"#174162"}
-                size={18}
-              />
-            ) : (
-              <FontAwesome5
-                name="eye-slash"
-                onPress={() => setVerPalavraPasse(true)}
-                color={"red"}
-                size={18}
-              />
-            )}
-          </TouchableOpacity>
+        <TextInput
+          placeholderTextColor="#174162"
+          placeholder="Colocar Palavra-Passe"
+          type="text"
+          onChangeText={(password) => setPassword(password)}
+          value={password}
+          style={styles.passwordInput}
+          secureTextEntry={verPalavraPasse}
+        ></TextInput>
+        <TouchableOpacity style={styles.verPassBtn}>
+          {verPalavraPasse ? (
+            <FontAwesome5
+              name="eye"
+              onPress={() => setVerPalavraPasse(false)}
+              color={"#174162"}
+              size={18}
+            />
+          ) : (
+            <FontAwesome5
+              name="eye-slash"
+              onPress={() => setVerPalavraPasse(true)}
+              color={"red"}
+              size={18}
+            />
+          )}
+        </TouchableOpacity>
 
         {/* Recuperar Password */}
         <View style={styles.recuperarPasswordView}>
@@ -120,7 +121,9 @@ const Login = ({ navigation }) => {
             style={styles.recuperarPasswordButton}
             onPress={() => navigation.navigate("RecuperarPassword")}
           >
-            <Text style={styles.recuperarPasswordText}>Recuperar Palavra-Passe</Text>
+            <Text style={styles.recuperarPasswordText}>
+              Recuperar Palavra-Passe
+            </Text>
           </TouchableOpacity>
         </View>
 

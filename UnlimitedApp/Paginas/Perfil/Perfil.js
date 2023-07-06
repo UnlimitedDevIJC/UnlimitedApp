@@ -30,7 +30,7 @@ import React, { useEffect, useState } from "react"
 
 const Perfil = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
-  
+
   const db = getFirestore()
 
   let utilizadorRef = null
@@ -119,12 +119,13 @@ const Perfil = ({ navigation }) => {
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
-                    Currículo
+                    {utilizador.curriculo ? utilizador.curriculo : "Curriculo"}
+                    
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
-                    {utilizador.linkedIn}
+                  {utilizador.linkedIn ? utilizador.linkedIn : "LinkedIn"}
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
