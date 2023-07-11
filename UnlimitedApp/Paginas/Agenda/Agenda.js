@@ -261,12 +261,13 @@ const Agenda = ({ navigation }) => {
           </View>
           <FlatList
             data={listaEventosFiltrada}
-            initialNumToRender={10}
+            initialNumToRender={3}
             renderItem={(item) => _renderItem(item)}
             keyExtractor={(item) => {
               return item.id
             }}
           />
+          <View style={{ zIndex: -1, height: 50, marginTop:10 }}></View>
         </>
       </TouchableWithoutFeedback>
     </SafeAreaView>

@@ -114,7 +114,7 @@ const Perfil = ({ navigation }) => {
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
-                    {utilizador.anoEscolar}
+                    {utilizador.anoEscolar}º Ano
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
