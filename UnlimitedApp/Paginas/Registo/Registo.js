@@ -36,9 +36,25 @@ import { FontAwesome5 } from "@expo/vector-icons"
 import TabsStack from "../../Navigator/TabsStack"
 import SelectDropdown from "react-native-select-dropdown"
 
+const db = getFirestore()
+const universidadeRef = collection(db, "Universidade")
+
+let listaUniversidadesData = []
+let listaUniversidades = []
+
+onSnapshot(universidadeRef, (snapshot) => {
+  let existe = true
+  if (existe) {
+    snapshot.docs.forEach((doc) => {
+      listaUniversidadesData.push({ ...doc.data(), id: doc.id })
+    })
+    listaUniversidades = listaUniversidadesData.map((item) => item.nome)
+  }
+  return () => (existe = false)
+})
+
 const Registo = ({ navigation }) => {
   //Firebase
-  const db = getFirestore()
 
   //Constantes
   const [nome, setNome] = useState("")
@@ -58,7 +74,7 @@ const Registo = ({ navigation }) => {
   const [paginaRegister, setPaginaRegister] = useState(1)
 
   //Variaveis
-  const anos = ["1", "2", "3", "4", "5"]
+  let anos = ["1", "2", "3", "4", "5"]
 
   //Funções
 
@@ -272,14 +288,32 @@ const Registo = ({ navigation }) => {
                 {/* Instituicao de ensino */}
                 <View style={styles.escolaView}>
                   <FontAwesome5 style={styles.escolaIcon} name="school" />
-                  <TextInput
-                    style={styles.escolaInput}
-                    placeholderTextColor="white"
-                    placeholder="Instituição de Ensino"
-                    type="text"
-                    onChangeText={(text) => setUniversidade(text)}
-                    value={universidade}
-                  ></TextInput>
+                  <SelectDropdown
+                    dropdownStyle={{
+                      width: "40%",
+                      borderRadius: 5,
+                    }}
+                    buttonStyle={{
+                      width: "85%",
+                      height: "100%",
+                      backgroundColor: "transparent",
+                      textAlign: "left",
+                    }}
+                    defaultButtonText={"Universidade"}
+                    buttonTextStyle={{
+                      color: "white",
+                      fontSize: 18,
+                      textAlign: "left",
+                      margin: 0,
+                      padding: 0,
+                      position: "absolute",
+                      right: 0,
+                    }}
+                    data={listaUniversidades}
+                    onSelect={(selectedItem, index) => {
+                      setUniversidade(selectedItem)
+                    }}
+                  />
                 </View>
 
                 {/* Ano de Escolaridade */}
@@ -323,7 +357,7 @@ const Registo = ({ navigation }) => {
                 password === "" ||
                 checkPassword === "" ||
                 universidade === "" ||
-                (anoEscolar === "") ? (
+                anoEscolar === "" ? (
                   <TouchableOpacity
                     disabled={true}
                     style={styles.registarBtnDisable}

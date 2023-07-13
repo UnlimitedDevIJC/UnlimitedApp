@@ -59,7 +59,6 @@ onSnapshot(palavraChaveRef, (snapshot) => {
     snapshot.docs.forEach((doc) => {
       listaPalavrasChave.push({ ...doc.data(), id: doc.id })
     })
-    console.log(listaPalavrasChave)
   }
   return () => (existe = false)
 })

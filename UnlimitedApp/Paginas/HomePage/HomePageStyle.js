@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
 
   scrollView: {
     height: "100%",
-    backgroundColor:'white'
+    backgroundColor: "white",
   },
 
   retanguloFundo: {
@@ -23,9 +23,20 @@ const styles = StyleSheet.create({
   logo: {
     width: 85,
     height: 85,
-    alignSelf:'center',
-    position:'absolute',
-    top:'16%'
+    alignSelf: "center",
+  },
+
+  editProfileBtn: {
+    width: "15%",
+    position: "absolute",
+    top: '40%',
+    right: '5%',
+    alignSelf: "flex-end",
+  },
+
+  editProfileIcon: {
+    fontSize: '35%',
+    color: "#174162",
   },
 })
 
