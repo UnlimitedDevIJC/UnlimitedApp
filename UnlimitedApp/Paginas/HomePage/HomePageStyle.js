@@ -12,12 +12,18 @@ const styles = StyleSheet.create({
   },
 
   retanguloFundo: {
-    backgroundColor: "#1A649F",
-    width: "110%",
-    height: 130,
+    width: "120%",
     transform: [{ rotateZ: "-15deg" }],
-    left: -25,
-    top: -70,
+    height: "100%",
+    left: "-10%",
+    top: "-55%",
+    backgroundColor: "#1A649F",
+  },
+
+  logoView: {
+    width: "100%",
+    position: "absolute",
+    top: "15%",
   },
 
   logo: {
@@ -26,18 +32,53 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 
-  editProfileBtn: {
+  notificationBtn: {
     width: "15%",
     position: "absolute",
-    top: '40%',
-    right: '5%',
+    top: "40%",
+    right: "5%",
     alignSelf: "flex-end",
   },
 
-  editProfileIcon: {
-    fontSize: '35%',
+  notificationIcon: {
+    fontSize: "35%",
     color: "#174162",
   },
+
+  titleView: {
+    width: "100%",
+    height: "80%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  titleText: {
+    color: "#174162",
+    fontSize: 30,
+    fontWeight: "600",
+  },
+
+  academiaLogoRetangulo: {
+    width: "120%",
+    transform: [{ rotateZ: "-12deg" }],
+    height: "80%",
+    left: "-10%",
+    top: "10%",
+    backgroundColor: "#DADBDB",
+  },
+
+  academiaDescricaoRetangulo: {
+    width: "120%",
+    transform: [{ rotateZ: "-12deg" }],
+    height: "100%",
+    left: "-10%",
+    top: "35%",
+    backgroundColor: "#1A649F",
+  },
+
+  empresaLogoBtnView: {
+    
+  }
 })
 
 export default styles

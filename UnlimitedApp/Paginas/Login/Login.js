@@ -147,7 +147,7 @@ const Login = ({ navigation }) => {
               style={styles.loginButton}
               onPress={() => loginFirebase(email, password)}
             >
-              <Text style={styles.loginText}>Login</Text>
+              <Text style={styles.loginText}>Entrar</Text>
             </TouchableOpacity>
           </View>
         )}
