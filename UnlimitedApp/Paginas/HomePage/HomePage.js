@@ -33,8 +33,12 @@ const HomePage = () => {
               <View style={styles.titleView}>
                 <Text style={styles.titleText}>Bem-Vindo à Academia!</Text>
               </View>
-              <View style={styles.academiaLogoRetangulo}></View>
-              <View style={styles.academiaDescricaoRetangulo}></View>
+              <View style={styles.academiaLogoRetangulo}>
+                <Image style={styles.academiaLogo} source={require("../HomePage/UnlimitedVision.png")}/>
+              </View>
+              <View style={styles.academiaDescricaoRetangulo}>
+                
+              </View>
               <View style={styles.empresaLogoBtnView}>
                 <TouchableOpacity></TouchableOpacity>
               </View>

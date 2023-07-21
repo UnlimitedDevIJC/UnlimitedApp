@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
 
   scrollView: {
     height: "100%",
-    backgroundColor: "white",
+    backgroundColor: "#F2F3F5",
   },
 
   retanguloFundo: {
@@ -18,6 +18,14 @@ const styles = StyleSheet.create({
     left: "-10%",
     top: "-55%",
     backgroundColor: "#1A649F",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 5,
+      height: 8,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 3.84,
+    elevation: 40,
   },
 
   logoView: {
@@ -61,24 +69,46 @@ const styles = StyleSheet.create({
   academiaLogoRetangulo: {
     width: "120%",
     transform: [{ rotateZ: "-12deg" }],
-    height: "80%",
+    height: "100%",
     left: "-10%",
     top: "10%",
     backgroundColor: "#DADBDB",
+    alignItems: "center",
+    justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 5,
+      height: 8,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 3.84,
+    elevation: 40,
+  },
+
+  academiaLogo: {
+    width: "65%",
+    height: "55%",
+    transform: [{ rotateZ: "12deg" }],
   },
 
   academiaDescricaoRetangulo: {
     width: "120%",
     transform: [{ rotateZ: "-12deg" }],
-    height: "100%",
+    height: "130%",
     left: "-10%",
-    top: "35%",
+    top: "45%",
     backgroundColor: "#1A649F",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 5,
+      height: 8,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 3.84,
+    elevation: 40,
   },
 
-  empresaLogoBtnView: {
-    
-  }
+  empresaLogoBtnView: {},
 })
 
 export default styles
