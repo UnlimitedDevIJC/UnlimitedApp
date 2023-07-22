@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
   },
 
   scrollView: {
-    height: "100%",
     backgroundColor: "#F2F3F5",
+    flex: 1,
   },
 
   retanguloFundo: {
@@ -108,7 +108,22 @@ const styles = StyleSheet.create({
     elevation: 40,
   },
 
-  empresaLogoBtnView: {},
+  empresaLogoBtnView: {
+    backgroundColor:'orange',
+    width:'100%',
+    height:'100%',
+    top:'100%',
+  },
+
+  empresaBtn: {
+    width:'100%',
+    height:'100%',
+  },
+
+  empresaLogoBtn: {
+    height:'100%',
+    width:'100%',
+  },
 })
 
 export default styles

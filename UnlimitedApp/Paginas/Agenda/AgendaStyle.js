@@ -6,11 +6,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#F2F3F5",
   },
 
-  // scrollView: {
-  //   height: "100%",
-  //   backgroundColor: "#F2F3F5",
-  // },
-
   retanguloFundo: {
     backgroundColor: "#1A649F",
     width: "110%",
