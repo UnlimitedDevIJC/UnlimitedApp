@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
 
   scrollView: {
     backgroundColor: "#F2F3F5",
-    flex: 1,
+    flexGrow: 1,
   },
 
   retanguloFundo: {

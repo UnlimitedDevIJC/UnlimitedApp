@@ -15,7 +15,7 @@ const HomePage = () => {
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.scrollView} bounces={true}>
-        <View style={{ width: "100%", height: "100%", paddingBottom: "10%" }}>
+        <View style={{ width: "100%", height: "100%"}}>
           <View style={{ width: "100%", height: 130 }}>
             <View style={styles.retanguloFundo} />
             <View style={styles.logoView}>
