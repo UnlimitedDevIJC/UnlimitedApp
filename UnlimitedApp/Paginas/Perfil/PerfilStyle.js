@@ -113,18 +113,6 @@ const styles = StyleSheet.create({
     letterSpacing: 0.8,
     padding: 5,
     marginBottom: 10,
-  },
-
-  perfilLogout: {
-    width: "20%",
-    alignSelf:'flex-end',
-  },
-
-  logout: {
-    marginRight: 20,
-    fontSize: 40,
-    color: '#FF0000',
-    marginBottom: 10,
   }
 })
 

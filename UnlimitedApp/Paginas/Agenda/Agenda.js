@@ -10,7 +10,6 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
   Image,
-  FlatList,
   Alert,
   ImageBackground,
 } from "react-native"
@@ -24,34 +23,42 @@ import {
   doc,
   QuerySnapshot,
 } from "firebase/firestore"
-import { getAuth, onAuthStateChanged } from "firebase/auth"
 import styles from "./AgendaStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
-import React, { useState, useEffect } from "react"
+import { useState } from "react"
 import SelectDropdown from "react-native-select-dropdown"
 
 const db = getFirestore()
 const colRef = collection(db, "Evento")
+<<<<<<< HEAD
 const academiaRef = collection(db, "Academia")
+=======
+>>>>>>> parent of 9a3850d (update)
 
 let listaEventos = []
 let listaEventosFiltrada = []
 let filtros = []
 
-let listaAcademia = []
-
-let listaUtilizadores = []
-
-onSnapshot(academiaRef, (snapshot) => {
-  let existe = true
-  if (existe) {
+onSnapshot(colRef, (snapshot) => {
+  let mounted = true
+  if (mounted) {
+    listaEventos = []
     snapshot.docs.forEach((doc) => {
-      listaAcademia.push({ ...doc.data(), id: doc.id })
+      listaEventos.push({ ...doc.data(), id: doc.id })
     })
+    listaEventos.sort((a, b) => {
+      return a.inicio - b.inicio
+    })
+    // listaEventosFiltrada = listaEventos.filter((item) => {
+    //   return item.hora_inicio.toDate().getDate() == 2
+    // })
+    filtros = [...new Set(listaEventos.map((item) => item.palavrasChave))]
+    filtros.unshift("Todos") //Vai buscar os valores das areas sem estarem repetidos e acrescenta "Todos" ao inicio
   }
-  return () => (existe = false)
+  return () => (mounted = false)
 })
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 onSnapshot(palavraChaveRef, (snapshot) => {
   let existe = true
@@ -184,25 +191,30 @@ const Agenda = ({ navigation }) => {
       })
     }
   }
+=======
+const Agenda = () => {
+  const [filtro, setFiltro] = useState("")
+>>>>>>> parent of 9a3850d (update)
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <TouchableWithoutFeedback
-        onPress={() => {
-          Keyboard.dismiss()
-        }}
-      >
-        <>
-          {/* Retangulo de fundo */}
-          <View style={{ height: 130, backgroundColor: "#F2F3F5" }}>
-            {/* Logo pequneo */}
+      <ScrollView style={styles.scrollView} bounces={false}>
+        <TouchableWithoutFeedback
+          onPress={() => {
+            Keyboard.dismiss()
+          }}
+        >
+          <>
+            {/* Retangulo de fundo */}
             <View style={styles.retanguloFundo} />
+
+            {/* Logo pequneo */}
             <Image
               style={styles.logo}
               source={require("../Login/unlimitedLogo.png")}
             />
-          </View>
 
+<<<<<<< HEAD
           {/* Barra de Pesquisa e filtro / palavras-chave*/}
           <View style={styles.searchView}>
             <TextInput
@@ -260,10 +272,54 @@ const Agenda = ({ navigation }) => {
           <View style={{ zIndex: -1, height: 50, marginTop:10 }}></View>
         </>
       </TouchableWithoutFeedback>
+=======
+            {/* Barra de Pesquisa e filtro / palavras-chave*/}
+            <View style={styles.searchView}>
+              <TextInput
+                placeholder="Pesquisa..."
+                type="text"
+                onChangeText={(text) => alterarFiltro(text)}
+                value={filtro}
+                style={styles.searchInput}
+              />
+              {/* <TouchableOpacity>
+                <FontAwesome5 name={"filter"} style={styles.filterIcon} />
+              </TouchableOpacity> */}
+              <SelectDropdown
+                data={filtros}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item
+                }}
+                renderDropdownIcon={(isOpened) => {
+                  return (
+                    <FontAwesome5 name={"filter"} color={"#444"} size={18} style={styles.filterIcon}/>
+                  )
+                }}
+                defaultValue={"Todos"}
+                defaultButtonText="Todos"
+                dropdownIconPosition="left"
+                rowTextStyle={{ fontWeight: "600" }}
+                buttonStyle={{
+                  borderRadius: 15,
+                  width: "100%",
+                  height: 40,
+                  backgroundColor: "transparent",
+                }}
+                dropdownStyle={{ borderRadius: 15, width: "30%" }}
+              />
+            </View>
+          </>
+        </TouchableWithoutFeedback>
+      </ScrollView>
+>>>>>>> parent of 9a3850d (update)
     </SafeAreaView>
   )
 }
 
+<<<<<<< HEAD
 class ItemLista extends React.PureComponent {
   render() {
     return (
@@ -291,4 +347,6 @@ class ItemLista extends React.PureComponent {
   }
 }
 
+=======
+>>>>>>> parent of 9a3850d (update)
 export default Agenda

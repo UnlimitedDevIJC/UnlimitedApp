@@ -39,6 +39,7 @@ const Login = ({ navigation }) => {
       .then((userCredentials) => {
         const user = userCredentials.user
         navigation.navigate(TabsStack, "HomePageTab")
+        console.log("Logged in with:", user.email)
       })
       .catch((error) => alert(error.message))
   }
@@ -53,8 +54,9 @@ const Login = ({ navigation }) => {
           const uid = user.uid
           if (user.emailVerified) navigation.navigate("HomePage")
           else navigation.navigate("Registo")
+          console.log("User signed in login")
         } else {
-          // console.log("User signed out login")
+          console.log("User signed out login")
         }
       })
     }
@@ -143,6 +145,7 @@ const Login = ({ navigation }) => {
             <TouchableOpacity
               style={styles.loginButton}
               onPress={() => loginFirebase(email, password)}
+              // onPress={() => navigation.navigate(TabsStack, "HomePageTab")}
             >
               <Text style={styles.loginText}>Entrar</Text>
             </TouchableOpacity>

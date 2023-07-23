@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     height: 85,
     alignSelf:'center',
     position:'absolute',
-    top:'3%'
+    top:'2.5%'
   },
 
   tituloView: {

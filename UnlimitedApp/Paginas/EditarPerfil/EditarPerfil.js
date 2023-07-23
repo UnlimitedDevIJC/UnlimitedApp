@@ -17,7 +17,6 @@ import {
   getFirestore,
   collection,
   onSnapshot,
-  updateDoc,
   addDoc,
   deleteDocs,
   getDoc,
@@ -28,9 +27,12 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import styles from "./EditarPerfilStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 import React, { useEffect, useState, useSyncExternalStore } from "react"
+<<<<<<< HEAD
 import PerfilStack from "../../Navigator/PerfilStack"
 import * as ImagePicker from "expo-image-picker"
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage"
+=======
+>>>>>>> parent of 9a3850d (update)
 
 const EditarPerfil = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
@@ -51,9 +53,11 @@ const EditarPerfil = ({ navigation }) => {
             if (doc.exists()) {
               setUtilizador(doc.data())
             } else {
+              console.log("No such document!")
             }
           })
         } else {
+          console.log("User is signed out home")
         }
       })
     }
@@ -73,8 +77,10 @@ const EditarPerfil = ({ navigation }) => {
       curriculo: utilizador.curriculo,
       linkedIn: utilizador.linkedIn,
     }).then(() => {
-      navigation.navigate("Perfil")
+      console.log("User Updated!")
     })
+
+    navigation.navigate("Profile")
   }
 
   return (
