@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
   returnLoginText: {
     fontSize: 22,
     fontWeight: "600",
-    color:'#16508D'
   },
 
   returnArrowLeft: {

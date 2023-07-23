@@ -36,6 +36,7 @@ const DetalheEventos = ({ route, navigation }) => {
 
   let utilizadorRef = null
   useEffect(() => {
+    //verificar se tem login feito
     let isMounted = true
     if (isMounted) {
       const auth = getAuth()
@@ -50,6 +51,7 @@ const DetalheEventos = ({ route, navigation }) => {
             }
           })
         } else {
+          // console.log("User is signed out home")
         }
       })
     }
@@ -71,7 +73,7 @@ const DetalheEventos = ({ route, navigation }) => {
       for (let i = 0; i < listaEventoUtilizador.length; i++) {
         if (
           listaEventoUtilizador[i].idEvento == route.params.item.id &&
-          listaEventoUtilizador[i].utilizador == utilizador.email
+          listaEventoUtilizador[i].utilizador == utilizador.nome
         ) {
           setInscrito(true)
         }
@@ -83,9 +85,10 @@ const DetalheEventos = ({ route, navigation }) => {
   function inscrever() {
     getDocs(ref).then(() => {
       if (inscrito == false) {
+        //REVER
         setDoc(doc(db, "EventoUtilizador", route.params.item.id), {
           idEvento: route.params.item.id,
-          utilizador: utilizador.email,
+          utilizador: utilizador.nome,
         })
       }
     })

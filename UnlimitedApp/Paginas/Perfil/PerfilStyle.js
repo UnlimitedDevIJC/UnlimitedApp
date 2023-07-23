@@ -29,10 +29,10 @@ const styles = StyleSheet.create({
   },
 
   editProfileBtn: {
-    width: "15%",
+    width: "10%",
     position: "absolute",
     top: 50,
-    right: 15,
+    right: 35,
     alignSelf: "flex-end",
   },
 
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
 
   perfilDataContainer: {
     backgroundColor: "white",
-    width: "80%",
+    width: "70%",
     alignSelf: "center",
     position: "absolute",
     top: 130,

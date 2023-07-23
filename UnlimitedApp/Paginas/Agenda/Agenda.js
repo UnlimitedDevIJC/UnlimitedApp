@@ -33,7 +33,6 @@ import SelectDropdown from "react-native-select-dropdown"
 const db = getFirestore()
 const colRef = collection(db, "Evento")
 const academiaRef = collection(db, "Academia")
-const palavraChaveRef = collection(db, "PalavrasChave")
 
 let listaEventos = []
 let listaEventosFiltrada = []
@@ -41,7 +40,7 @@ let filtros = []
 
 let listaAcademia = []
 
-let listaPalavrasChave = []
+let listaUtilizadores = []
 
 onSnapshot(academiaRef, (snapshot) => {
   let existe = true
@@ -53,6 +52,7 @@ onSnapshot(academiaRef, (snapshot) => {
   return () => (existe = false)
 })
 
+<<<<<<< HEAD
 onSnapshot(palavraChaveRef, (snapshot) => {
   let existe = true
   if (existe) {
@@ -63,6 +63,8 @@ onSnapshot(palavraChaveRef, (snapshot) => {
   return () => (existe = false)
 })
 
+=======
+>>>>>>> parent of a24221d (update)
 const Agenda = ({ navigation }) => {
   const [filtro, setFiltro] = useState("") // Barra de pesquisa
   const [utilizador, setUtilizador] = useState("null")
@@ -104,9 +106,7 @@ const Agenda = ({ navigation }) => {
       snapshot.docs.forEach((doc) => {
         listaEventos.push({ ...doc.data(), id: doc.id })
       })
-      filtros = [
-        ...new Set(listaPalavrasChave.map((item) => item.palavraChave)),
-      ]
+      filtros = [...new Set(listaEventos.map((item) => item.palavrasChave))]
       filtros.unshift("Todos") //Vai buscar os valores das areas sem estarem repetidos e acrescenta "Todos" ao inicio
     }
     return () => (mounted = false)
@@ -160,35 +160,26 @@ const Agenda = ({ navigation }) => {
       })
     } else {
       listaEventosFiltrada = listaEventos.filter((evento) => {
-        for (let i = 0; i < listaPalavrasChave.length; i++) {
-          if (listaPalavrasChave[i].idEvento == evento.id) {
-            return (
-              evento.academiaCodigo == utilizador.codigoAcademia &&
-              evento.academiaCodigo == academia.codigo &&
-              listaPalavrasChave[i].palavraChave == item &&
-              evento.anoEscolar <= utilizador.anoEscolar
-            )
-          }
-        }
+        return (
+          evento.academiaCodigo == utilizador.codigoAcademia &&
+          evento.academiaCodigo == academia.codigo &&
+          evento.palavrasChave == item &&
+          evento.anoEscolar <= utilizador.anoEscolar
+        )
       })
     }
   }
 
   function alterarFiltroManual(text) {
+    let listaEventosFiltradaManual = listaEventosFiltrada
     setFiltro(text)
     if (text == "") {
-      listaEventosFiltrada = listaEventos.filter((item) => {
-        return (
-          item.anoEscolar <= utilizador.anoEscolar &&
-          item.academiaCodigo == utilizador.codigoAcademia
-        )
-      })
+      listaEventosFiltradaManual
     } else {
       listaEventosFiltrada = listaEventos.filter((item) => {
         return (
           String(item.tema.toLowerCase()).includes(text.toLowerCase()) &&
-          item.anoEscolar <= utilizador.anoEscolar &&
-          item.academiaCodigo == utilizador.codigoAcademia
+          item.anoEscolar <= utilizador.anoEscolar
         )
       })
     }
