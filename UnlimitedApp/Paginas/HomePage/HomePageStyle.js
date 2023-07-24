@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
 
   editProfileIcon: {
-    fontSize: '35%',
+    fontSize: 35,
     color: "#174162",
   },
 })
