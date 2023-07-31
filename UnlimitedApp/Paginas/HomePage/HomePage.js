@@ -15,8 +15,77 @@ import {
 } from "react-native"
 import React from "react"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
+import {
+  getFirestore,
+  collection,
+  onSnapshot,
+  addDoc,
+  deleteDocs,
+  getDoc,
+  doc,
+  QuerySnapshot,
+} from "firebase/firestore"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
+import { useState, useEffect } from "react"
+
+const db = getFirestore()
+const academiaRef = collection(db, "Academia")
+
+let listaAcademia = []
+
+onSnapshot(academiaRef, (snapshot) => {
+  let existe = true
+  if (existe) {
+    snapshot.docs.forEach((doc) => {
+      listaAcademia.push({ ...doc.data(), id: doc.id })
+    })
+  }
+  return () => (existe = false)
+})
 
 const HomePage = ({ navigation }) => {
+  const [utilizador, setUtilizador] = useState("null")
+
+  const [imageCodigo, setImageCodigo] = useState()
+  const [academia, setAcademia] = useState("")
+
+  const imageData =`${imageCodigo}`;
+
+  let utilizadorRef = null
+  useEffect(() => {
+    //verificar se tem login feito
+    let isMounted = true
+    if (isMounted) {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          utilizadorRef = doc(db, "Utilizador", user.email)
+          onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
+            if (doc.exists()) {
+              setUtilizador(doc.data())
+            } else {
+              console.log("No such document!")
+            }
+          })
+        } else {
+          // console.log("User is signed out home")
+        }
+      })
+    }
+    return () => {
+      isMounted = false
+    }
+  })
+
+  useEffect(() => {
+    for (let i = 0; i < listaAcademia.length; i++) {
+      if (listaAcademia[i].codigo == utilizador.codigoAcademia) {
+        setAcademia(listaAcademia[i])
+      }
+    }
+    setImageCodigo(academia.foto)
+  })
+
   return (
     <SafeAreaView style={{ backgroundColor: "#1A649F", flex: 1 }}>
       <ScrollView
@@ -137,11 +206,13 @@ const HomePage = ({ navigation }) => {
           >
             <Image
               style={{
-                width: "65%",
-                height: "55%",
+                width: "80%",
+                height: "40%",
+                top: '3%',
                 transform: [{ rotateZ: "12deg" }],
               }}
-              source={require("../HomePage/UnlimitedVision.png")}
+              source={{ uri: `data:image/png;base64,${imageData}` }}
+              //style={{ width: 200, height: 200 }}
             />
           </View>
         </View>
@@ -156,7 +227,7 @@ const HomePage = ({ navigation }) => {
             style={{
               width: "140%",
               transform: [{ rotateZ: "-12deg" }],
-              height: "75%",
+              height: "60%",
               left: "-15%",
               top: "-5%",
               backgroundColor: "#174162",
@@ -176,9 +247,9 @@ const HomePage = ({ navigation }) => {
                 height: "100%",
                 transform: [{ rotateZ: "12deg" }],
                 left: "12%",
-                top: "18%",
-                fontSize: 20,
-                lineHeight: 30,
+                top: "20%",
+                fontSize: 16,
+                lineHeight: 25,
                 color: "white",
               }}
             >
@@ -186,7 +257,7 @@ const HomePage = ({ navigation }) => {
               eu sou o Gonçalo Olá eu sou o Gonçalo Olá eu sou o Gonçalo Olá eu
               sou o Gonçalo Olá eu sou o Gonçalo Olá eu sou o Gonçalo Olá eu sou
               o Gonçalo Olá eu sou o Gonçalo Olá eu sou o Gonçalo Olá eu sou o
-              Gonçalo.{" "}
+              Gonçalo Olá eu sou{" "}
             </Text>
           </View>
         </View>
@@ -194,12 +265,12 @@ const HomePage = ({ navigation }) => {
           style={{
             width: "100%",
             padding: 10,
-            top:'-3%',
-            marginBottom: 20,
+            top: "-8%",
+            marginBottom: 10,
             height: 150,
           }}
         >
-          <TouchableOpacity style={{alignItems:'center'}}>
+          <TouchableOpacity style={{ alignItems: "center" }}>
             <Image
               style={{
                 width: "80%",
