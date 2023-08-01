@@ -16,9 +16,13 @@
     "@react-navigation/bottom-tabs": "^6.5.7",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.16",
+    "@types/react": "~18.0.0",
+    "@types/react-native": "~0.69.1",
     "expo": "^46.0.21",
+    "expo-barcode-scanner": "~11.5.0",
     "expo-image-picker": "^14.3.1",
     "expo-status-bar": "~1.4.4",
+    "expo-updates": "~0.14.7",
     "firebase": "^9.22.0",
     "react": "18.2.0",
     "react-native": "^0.71.8",
@@ -26,7 +30,8 @@
     "react-native-document-picker": "^9.0.1",
     "react-native-dropdown": "^0.0.6",
     "react-native-dropdown-select-list": "^2.0.4",
-    "react-native-select-dropdown": "^3.3.4"
+    "react-native-select-dropdown": "^3.3.4",
+    "typescript": "^4.6.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
