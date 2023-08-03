@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
 
   notificationIcon: {
-    fontSize: "35%",
+    fontSize: 35,
     color: "#174162",
   },
 

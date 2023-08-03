@@ -144,7 +144,7 @@ const HomePage = ({ navigation }) => {
           >
             <FontAwesome5
               style={{
-                fontSize: "35%",
+                fontSize: 35,
                 color: "#174162",
               }}
               name="bell"
