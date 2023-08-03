@@ -24,9 +24,92 @@ import {
 } from "firebase/firestore"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import styles from "./QrCodeStyle"
+import { list, listAll } from "@firebase/storage"
+
+let listaEventos = []
+let listaCodigos = []
+
+const db = getFirestore()
+const colRef = collection(db, "Evento")
+
+onSnapshot(colRef, (snapshot) => {
+  let mounted = true
+  if (mounted) {
+    listaEventos = []
+    listaCodigos = []
+    snapshot.docs.forEach((doc) => {
+      listaEventos.push({ ...doc.data(), id: doc.id })
+      listaCodigos.push(doc.data().codigoEvento)
+    })
+  }
+  return () => (mounted = false)
+})
 
 const EscreverQrCode = ({ navigation }) => {
   const [codigo, setCodigo] = useState()
+  const [utilizador, setUtilizador] = useState("null")
+  const [evento, setEvento] = useState()
+  const [utilizadorUtils, setUtilizadorUtils] = useState("null")
+
+  let utilizadorRef = null
+  let utilizadorUtilsRef = null
+  useEffect(() => {
+    //verificar se tem login feito
+    let isMounted = true
+    if (isMounted) {
+      const auth = getAuth()
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          utilizadorRef = doc(db, "Utilizador", user.email)
+          utilizadorUtilsRef = doc(db, "UtilizadorUtils", user.email)
+          onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
+            if (doc.exists()) {
+              setUtilizador(doc.data())
+            } else {
+              console.log("No such document!")
+            }
+          })
+          onSnapshot(utilizadorUtilsRef, { includeMetadataChanges: true }, (doc) => {
+            if (doc.exists()) {
+              setUtilizadorUtils(doc.data())
+            } else {
+              console.log("No such document!")
+            }
+          })
+        } else {
+          // console.log("User is signed out home")
+        }
+      })
+    }
+    return () => {
+      isMounted = false
+    }
+  })
+
+  function getPontos(code) {
+    let aux = listaEventos.filter((item) => {
+        return item.codigoEvento == code
+    })
+    return aux[0].pontosAtribuidos
+  }
+
+  function testarCodigo() {
+    if (listaCodigos.includes(codigo) && !utilizadorUtils.codigosEventos.includes(codigo)) { 
+      let aux = (parseInt(utilizador.pontos) + getPontos(codigo)).toString()
+      Alert.alert("Adicionado")
+      console.log(aux)
+      utilizadorRef = doc(db, "Utilizador", getAuth().currentUser.email)
+        updateDoc(utilizadorRef, {
+            pontos: aux
+        })
+      utilizadorUtilsRef = doc(db, "UtilizadorUtils", getAuth().currentUser.email)
+        updateDoc(utilizadorUtilsRef, {
+            codigosEventos: arrayUnion(codigo)
+        })
+    } else {
+      Alert.alert("Já adicionaste!")
+    } 
+  }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -43,19 +126,21 @@ const EscreverQrCode = ({ navigation }) => {
         <View style={styles.codeContainer}>
           <View style={styles.codeInput}>
             <TextInput
-              keyboardType="text"
               placeholderTextColor="#174162"
               placeholder="Colocar Código"
               autoCapitalize="none"
               type="text"
-              onChangeText={(codigo) => setCodigo(codigo)}
+              onChangeText={(text) => setCodigo(text)}
               value={codigo}
               style={styles.input}
             ></TextInput>
           </View>
         </View>
         <View style={styles.btnBox}>
-          <TouchableOpacity style={styles.btnSubmeter}>
+          <TouchableOpacity
+            style={styles.btnSubmeter}
+            onPress={() => testarCodigo()}
+          >
             <Text style={styles.btnSubmeterText}>Submeter Código</Text>
           </TouchableOpacity>
           <TouchableOpacity

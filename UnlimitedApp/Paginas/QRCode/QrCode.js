@@ -11,7 +11,7 @@ import {
   Image,
   ScrollView,
 } from "react-native"
-import { BarCodeScanner } from "expo-barcode-scanner"
+// import { BarCodeScanner } from "expo-barcode-scanner"
 import {
   doc,
   getDoc,
@@ -65,10 +65,10 @@ const QrCode = ({ navigation }) => {
   const [gamification, setGamification] = useState()
 
   const askForCameraPermission = () => {
-    ;(async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync()
-      setHasPermission(status === "granted")
-    })()
+  //   ;(async () => {
+  //     const { status } = await BarCodeScanner.requestPermissionsAsync()
+  //     setHasPermission(status === "granted")
+  //   })()
   }
 
   function testarCodigo() {
@@ -159,24 +159,24 @@ const QrCode = ({ navigation }) => {
   }
 
   // Check permissions and return the screens
-  if (hasPermission === null) {
-    return (
-      <View style={styles.container}>
-        <Text>Requesting for camera permission</Text>
-      </View>
-    )
-  }
-  if (hasPermission === false) {
-    return (
-      <View style={styles.container}>
-        <Text style={{ margin: 10 }}>No access to camera</Text>
-        <Button
-          title={"Allow Camera"}
-          onPress={() => askForCameraPermission()}
-        />
-      </View>
-    )
-  }
+  // if (hasPermission === null) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Text>Requesting for camera permission</Text>
+  //     </View>
+  //   )
+  // }
+  // if (hasPermission === false) {
+  //   return (
+  //     <View style={styles.container}>
+  //       <Text style={{ margin: 10 }}>No access to camera</Text>
+  //       <Button
+  //         title={"Allow Camera"}
+  //         onPress={() => askForCameraPermission()}
+  //       />
+  //     </View>
+  //   )
+  // }
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -192,10 +192,10 @@ const QrCode = ({ navigation }) => {
         </View>
         <View style={styles.container}>
           <View style={styles.barCodeBox}>
-            <BarCodeScanner
+            {/* <BarCodeScanner
               onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
               style={styles.barCode}
-            />
+            /> */}
           </View>
         </View>
         <View style={styles.buttonsBox}>
