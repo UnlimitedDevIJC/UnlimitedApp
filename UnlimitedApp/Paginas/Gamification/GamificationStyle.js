@@ -49,23 +49,10 @@ const styles = StyleSheet.create({
   },
 
   notificationIcon: {
-    fontSize: 24,
+    fontSize: 35,
     color: "#174162",
   },
-  notificationIcon1: {
-    fontSize: 40,
-    color: "#174162",
-    position: 'absolute',
-     right: 20,
-     top: 140,
-  },
-  notificationIcon2: {
-    fontSize: 40,
-    color: "#174162",
-    position: 'absolute',
-     left: 30,
-     top: 430,
-  },
+
 
   titleView: {
     width: "100%",
