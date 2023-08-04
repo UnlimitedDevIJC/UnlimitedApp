@@ -12,6 +12,7 @@ import {
   Image,
   Alert,
   ImageBackground,
+  Linking,
 } from "react-native"
 import React from "react"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
@@ -47,9 +48,10 @@ const HomePage = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
 
   const [imageCodigo, setImageCodigo] = useState()
+  const [empresaURL, setEmpresaURL] = useState()
   const [academia, setAcademia] = useState("")
 
-  const imageData =`${imageCodigo}`;
+  const imageData = `${imageCodigo}`
 
   let utilizadorRef = null
   useEffect(() => {
@@ -83,6 +85,7 @@ const HomePage = ({ navigation }) => {
         setAcademia(listaAcademia[i])
       }
     }
+    setEmpresaURL(academia.website)
     setImageCodigo(academia.foto)
   })
 
@@ -144,7 +147,7 @@ const HomePage = ({ navigation }) => {
           >
             <FontAwesome5
               style={{
-                fontSize: 24,
+                fontSize: 34,
                 color: "#174162",
               }}
               name="bell"
@@ -208,7 +211,7 @@ const HomePage = ({ navigation }) => {
               style={{
                 width: "80%",
                 height: "40%",
-                top: '3%',
+                top: "3%",
                 transform: [{ rotateZ: "12deg" }],
               }}
               source={{ uri: `data:image/png;base64,${imageData}` }}
@@ -253,11 +256,8 @@ const HomePage = ({ navigation }) => {
                 color: "white",
               }}
             >
-              Olá eu sou o Gonçalo Olá eu sou o Gonçalo Olá eu sou o Gonçalo Olá
-              eu sou o Gonçalo Olá eu sou o Gonçalo Olá eu sou o Gonçalo Olá eu
-              sou o Gonçalo Olá eu sou o Gonçalo Olá eu sou o Gonçalo Olá eu sou
-              o Gonçalo Olá eu sou o Gonçalo Olá eu sou o Gonçalo Olá eu sou o
-              Gonçalo Olá eu sou{" "}
+              <Text style={{ fontWeight: 600 }}>Descrição: {""}</Text>
+              {academia.descricao}
             </Text>
           </View>
         </View>
@@ -270,14 +270,24 @@ const HomePage = ({ navigation }) => {
             height: 150,
           }}
         >
+          <Text
+            style={{
+              alignSelf: "center",
+              padding: 10,
+              fontWeight: 600,
+              fontSize: 14,
+              color: "#174162",
+            }}
+          >
+            Powered By:{" "}
+          </Text>
           <TouchableOpacity style={{ alignItems: "center" }}>
-            <Image
-              style={{
-                width: "80%",
-                height: "100%",
-              }}
-              source={require("../HomePage/UnlimitedVision.png")}
-            />
+            <Text
+              style={{ fontSize: 18, fontWeight: 500, color: "#174162" }}
+              onPress={() => Linking.openURL(empresaURL)}
+            >
+              Vistia a página da empresa {academia.empresa}
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>

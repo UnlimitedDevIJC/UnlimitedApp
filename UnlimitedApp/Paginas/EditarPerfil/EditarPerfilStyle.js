@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   perfilDataContainer: {
     backgroundColor: "white",
     width: "80%",
-    height: 475,
+    height: 530,
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 10,
     backgroundColor: "#174162",
-    marginBottom: 20,
+    marginBottom: 10,
   },
 
   guardarTexto: {

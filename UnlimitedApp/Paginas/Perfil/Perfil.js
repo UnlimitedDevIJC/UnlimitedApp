@@ -12,6 +12,7 @@ import {
   Image,
   Alert,
   ImageBackground,
+  Linking,
 } from "react-native"
 import {
   getFirestore,
@@ -66,7 +67,7 @@ const Perfil = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} bounces={false}>
+      <ScrollView style={styles.scrollView} bounces={true}>
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss()
@@ -120,12 +121,14 @@ const Perfil = ({ navigation }) => {
                 <View style={styles.perfilDetalhesContainer}>
                   <Text style={styles.perfilDetalhes}>
                     {utilizador.curriculo ? utilizador.curriculo : "Curriculo"}
-                    
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>
-                  {utilizador.linkedIn ? utilizador.linkedIn : "LinkedIn"}
+                  <Text
+                    style={styles.perfilDetalhes}
+                    onPress={() => Linking.openURL(utilizador.linkedIn)}
+                  >
+                    {utilizador.linkedIn ? utilizador.linkedIn : "LinkedIn"}
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
@@ -137,7 +140,7 @@ const Perfil = ({ navigation }) => {
                   style={styles.perfilLogout}
                   onPress={() => handleLogout()}
                 >
-                  <FontAwesome5 style={styles.logout} name="sign-out-alt" />
+                  <Text style={styles.logout}>Sair da conta</Text>
                 </TouchableOpacity>
               </View>
             </View>

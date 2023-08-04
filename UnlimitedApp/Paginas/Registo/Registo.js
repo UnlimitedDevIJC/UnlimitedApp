@@ -106,6 +106,27 @@ const Registo = ({ navigation }) => {
         }
       })
   }
+  function adicionarUtilizador() {
+    const ref = collection(db, "UtilizadorUtils")
+    let existe = false
+    getDocs(ref)
+      .then((snapshot) => {
+        snapshot.docs.forEach((doc) => {
+          if (doc.id == email) {
+            existe = true
+            Alert.alert("Esse email já foi utilizado!")
+          }
+        })
+      })
+      .then(() => {
+        if (existe == false) {
+          setDoc(doc(db, "UtilizadorUtils", email), {
+            codigosEventos: [],
+            notificacoes: []
+          })
+        }
+      })
+  }
 
   // Regista na Firebase
   const handleSignUp = () => {

@@ -18,13 +18,14 @@ import {
   collection,
   onSnapshot,
   updateDoc,
+  deleteDoc,
   addDoc,
   deleteDocs,
   getDoc,
   doc,
   QuerySnapshot,
 } from "firebase/firestore"
-import { getAuth, onAuthStateChanged } from "firebase/auth"
+import { getAuth, onAuthStateChanged, deleteUser } from "firebase/auth"
 import styles from "./EditarPerfilStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 import React, { useEffect, useState, useSyncExternalStore } from "react"
@@ -74,6 +75,24 @@ const EditarPerfil = ({ navigation }) => {
     })
   }
 
+  const handleDelete = async () => {
+    const auth = getAuth()
+    const userToDelete = auth.currentUser
+
+    try {
+      user.delete()
+
+      deleteUser(userToDelete).then(() => {
+        utilizadorRef = doc(db, "Utilizador", user.email)
+        deleteDoc(utilizadorRef)
+      })
+
+      navigation.navigate("Login")
+    } catch (error) {
+      console.error("Error deleting user and document:", error)
+    }
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.scrollView} bounces={false}>
@@ -94,7 +113,10 @@ const EditarPerfil = ({ navigation }) => {
 
             <View style={styles.perfilContainer}>
               <TouchableOpacity style={styles.editFotoBtn}>
-                <Image style={styles.perfilImage} source={require("../Perfil/foto.jpeg")} />
+                <Image
+                  style={styles.perfilImage}
+                  source={require("../Perfil/foto.jpeg")}
+                />
                 <View style={styles.editFoto} />
                 <FontAwesome5 name="pen" style={styles.editFotoIcon} />
               </TouchableOpacity>
@@ -166,6 +188,12 @@ const EditarPerfil = ({ navigation }) => {
                   onPress={() => handleUpdate()}
                 >
                   <Text style={styles.guardarTexto}>Guardar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.guardarBtn}
+                  onPress={() => handleDelete()}
+                >
+                  <Text style={styles.guardarTexto}>Apagar Conta</Text>
                 </TouchableOpacity>
               </View>
             </View>

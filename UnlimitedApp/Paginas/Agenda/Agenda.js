@@ -112,14 +112,39 @@ const Agenda = ({ navigation }) => {
     return () => (mounted = false)
   })
 
+  function compararData(evento) {
+    const currentDay = new Date().getDate()
+    const currentMonth = new Date().getMonth() + 1
+    const currentYear = new Date().getFullYear()
+
+    const currentDate = new Date(
+      currentYear + "-" + currentMonth + "-" + currentDay
+    )
+
+    const eventoData = new Date(evento.data)
+
+    if (eventoData.getTime() > currentDate.getTime()) {
+      return true
+    } else if (eventoData.getTime() === currentDate.getTime()) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   useEffect(() => {
     const data = onSnapshot(colRef, (snapshot) => {
       let mounted = true
+
       if (mounted) {
         listaEventosFiltrada = listaEventos.filter((item) => {
           return (
             item.academiaCodigo == utilizador.codigoAcademia &&
-            item.anoEscolar <= utilizador.anoEscolar
+            item.anoEscolar <= utilizador.anoEscolar &&
+            compararData(item) &&
+            item.visivel === "true" &&
+            item.pontosVisiveis <= utilizador.pontos &&
+            item.local == utilizador.universidade
           )
         })
       }
@@ -150,12 +175,17 @@ const Agenda = ({ navigation }) => {
   function alterarFiltro(item) {
     alterarAcademias()
     setValue(item)
+
     if (item == "Todos") {
       listaEventosFiltrada = listaEventos.filter((evento) => {
         return (
           evento.academiaCodigo == utilizador.codigoAcademia &&
           evento.academiaCodigo == academia.codigo &&
-          evento.anoEscolar <= utilizador.anoEscolar
+          evento.anoEscolar <= utilizador.anoEscolar &&
+          compararData(evento) &&
+          evento.visivel === "true" &&
+          evento.pontosVisiveis <= utilizador.pontos &&
+          evento.local == utilizador.universidade
         )
       })
     } else {
@@ -166,7 +196,11 @@ const Agenda = ({ navigation }) => {
               evento.academiaCodigo == utilizador.codigoAcademia &&
               evento.academiaCodigo == academia.codigo &&
               listaPalavrasChave[i].palavraChave == item &&
-              evento.anoEscolar <= utilizador.anoEscolar
+              evento.anoEscolar <= utilizador.anoEscolar &&
+              compararData(evento) &&
+              evento.visivel === "true" &&
+              evento.pontosVisiveis <= utilizador.pontos &&
+              evento.local == utilizador.universidade
             )
           }
         }
@@ -176,11 +210,16 @@ const Agenda = ({ navigation }) => {
 
   function alterarFiltroManual(text) {
     setFiltro(text)
+
     if (text == "") {
       listaEventosFiltrada = listaEventos.filter((item) => {
         return (
           item.anoEscolar <= utilizador.anoEscolar &&
-          item.academiaCodigo == utilizador.codigoAcademia
+          item.academiaCodigo == utilizador.codigoAcademia &&
+          compararData(item) &&
+          item.visivel === "true" &&
+          item.pontosVisiveis <= utilizador.pontos &&
+          item.local == utilizador.universidade
         )
       })
     } else {
@@ -188,7 +227,11 @@ const Agenda = ({ navigation }) => {
         return (
           String(item.tema.toLowerCase()).includes(text.toLowerCase()) &&
           item.anoEscolar <= utilizador.anoEscolar &&
-          item.academiaCodigo == utilizador.codigoAcademia
+          item.academiaCodigo == utilizador.codigoAcademia &&
+          compararData(item) &&
+          item.visivel === "true" &&
+          item.pontosVisiveis <= utilizador.pontos &&
+          item.local == utilizador.universidade
         )
       })
     }
@@ -266,7 +309,7 @@ const Agenda = ({ navigation }) => {
               return item.id
             }}
           />
-          <View style={{ zIndex: -1, height: 50, marginTop:10 }}></View>
+          <View style={{ zIndex: -1, height: 50, marginTop: 10 }}></View>
         </>
       </TouchableWithoutFeedback>
     </SafeAreaView>

@@ -44,15 +44,14 @@ const styles = StyleSheet.create({
     width: "15%",
     position: "absolute",
     top: "40%",
-    right: "5%",
+    right: "2%",
     alignSelf: "flex-end",
   },
 
   notificationIcon: {
-    fontSize: 35,
+    fontSize: 45,
     color: "#174162",
   },
-
 
   titleView: {
     width: "100%",
@@ -65,7 +64,7 @@ const styles = StyleSheet.create({
     color: "#174162",
     fontSize: 30,
     fontWeight: "600",
-    textAlign:'center'
+    textAlign: "center",
   },
 
   academiaLogoRetangulo: {
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
   },
 
   academiaDescricaoRetangulo: {
-    width: "70%%",
+    width: "70%",
     transform: [{ rotateZ: "-192deg" }],
     height: "180%",
     right: "-40%",
@@ -113,20 +112,35 @@ const styles = StyleSheet.create({
   },
 
   empresaLogoBtnView: {
-    backgroundColor:'orange',
-    width:'100%',
-    height:'100%',
-    top:'100%',
+    backgroundColor: "orange",
+    width: "100%",
+    height: "100%",
+    top: "100%",
   },
 
   empresaBtn: {
-    width:'100%',
-    height:'100%',
+    width: "100%",
+    height: "100%",
   },
 
   empresaLogoBtn: {
-    height:'100%',
-    width:'100%',
+    height: "100%",
+    width: "100%",
+  },
+
+  notificationIcon1: {
+    fontSize: 90,
+    color: "#174162",
+    position: "absolute",
+    right: "10%",
+    top: "105%",
+  },
+  notificationIcon2: {
+    fontSize: 100,
+    color: "#174162",
+    position: "absolute",
+    left: 30,
+    top: 500,
   },
 })
 

@@ -50,6 +50,7 @@ const EscreverQrCode = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
   const [evento, setEvento] = useState()
   const [utilizadorUtils, setUtilizadorUtils] = useState("null")
+  const [user, setUser] = useState()
 
   let utilizadorRef = null
   let utilizadorUtilsRef = null
@@ -58,57 +59,63 @@ const EscreverQrCode = ({ navigation }) => {
     let isMounted = true
     if (isMounted) {
       const auth = getAuth()
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          utilizadorRef = doc(db, "Utilizador", user.email)
-          utilizadorUtilsRef = doc(db, "UtilizadorUtils", user.email)
+      onAuthStateChanged(auth, (user1) => {
+        if (user1) {
+          utilizadorRef = doc(db, "Utilizador", user1.email)
+          utilizadorUtilsRef = doc(db, "UtilizadorUtils", user1.email)
+          setUser(user1)
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
               setUtilizador(doc.data())
             } else {
-              console.log("No such document!")
             }
           })
-          onSnapshot(utilizadorUtilsRef, { includeMetadataChanges: true }, (doc) => {
-            if (doc.exists()) {
-              setUtilizadorUtils(doc.data())
-            } else {
-              console.log("No such document!")
+          onSnapshot(
+            utilizadorUtilsRef,
+            { includeMetadataChanges: true },
+            (doc) => {
+              if (doc.exists()) {
+                setUtilizadorUtils(doc.data())
+              } else {
+              }
             }
-          })
+          )
         } else {
-          // console.log("User is signed out home")
         }
       })
     }
     return () => {
       isMounted = false
     }
-  })
+  }, [])
 
   function getPontos(code) {
     let aux = listaEventos.filter((item) => {
-        return item.codigoEvento == code
+      return item.codigoEvento == code
     })
     return aux[0].pontosAtribuidos
   }
 
   function testarCodigo() {
-    if (listaCodigos.includes(codigo) && !utilizadorUtils.codigosEventos.includes(codigo)) { 
-      let aux = (parseInt(utilizador.pontos) + getPontos(codigo))
+    if (
+      listaCodigos.includes(codigo) &&
+      !utilizadorUtils.codigosEventos.includes(codigo)
+    ) {
+      let aux = (
+        parseInt(utilizador.pontos) + parseInt(getPontos(codigo))
+      ).toString()
       Alert.alert("Adicionado")
-      console.log(aux)
-      utilizadorRef = doc(db, "Utilizador", getAuth().currentUser.email)
-        updateDoc(utilizadorRef, {
-            pontos: aux
-        })
-      utilizadorUtilsRef = doc(db, "UtilizadorUtils", getAuth().currentUser.email)
-        updateDoc(utilizadorUtilsRef, {
-            codigosEventos: arrayUnion(codigo)
-        })
+      utilizadorRef = doc(db, "Utilizador", user.email)
+      updateDoc(utilizadorRef, {
+        pontos: aux,
+      })
+      utilizadorUtilsRef = doc(db, "UtilizadorUtils", user.email)
+      updateDoc(utilizadorUtilsRef, {
+        codigosEventos: arrayUnion(codigo),
+      })
     } else {
       Alert.alert("Já adicionaste!")
-    } 
+    }
   }
 
   return (

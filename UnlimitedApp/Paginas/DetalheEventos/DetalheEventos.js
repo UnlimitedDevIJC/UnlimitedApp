@@ -26,6 +26,7 @@ import {
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import React, { useState, useEffect } from "react"
 import styles from "./DetalheEventosStyle"
+import GamificationStack from "../../Navigator/GamificationStack"
 
 const DetalheEventos = ({ route, navigation }) => {
   const db = getFirestore()
@@ -143,7 +144,7 @@ const DetalheEventos = ({ route, navigation }) => {
                 >
                   <Text style={styles.inscreverText}>Inscrever</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.inscreverBotao}>
+                <TouchableOpacity style={styles.inscreverBotao} onPress={() => navigation.navigate("QrCode")}>
                   <Text style={styles.inscreverText}>Ler Qr Code</Text>
                 </TouchableOpacity>
               </View>

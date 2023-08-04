@@ -116,15 +116,21 @@ const styles = StyleSheet.create({
   },
 
   perfilLogout: {
-    width: "20%",
-    alignSelf:'flex-end',
+    width: "80%",
+    height: "11%",
+    justifyContent: "center",
+    alignItems:'center',
+    backgroundColor: "#174162",
+    marginTop: "3%",
+    alignSelf: "center",
+    marginBottom:'5%',
+    padding: '5%'
   },
 
   logout: {
-    marginRight: 20,
-    fontSize: 40,
-    color: '#FF0000',
-    marginBottom: 10,
+    fontSize: 22,
+    fontWeight: 600,
+    color: 'white',
   }
 })
 
