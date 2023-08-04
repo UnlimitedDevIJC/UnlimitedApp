@@ -95,7 +95,7 @@ const EscreverQrCode = ({ navigation }) => {
 
   function testarCodigo() {
     if (listaCodigos.includes(codigo) && !utilizadorUtils.codigosEventos.includes(codigo)) { 
-      let aux = (parseInt(utilizador.pontos) + getPontos(codigo)).toString()
+      let aux = (parseInt(utilizador.pontos) + getPontos(codigo))
       Alert.alert("Adicionado")
       console.log(aux)
       utilizadorRef = doc(db, "Utilizador", getAuth().currentUser.email)

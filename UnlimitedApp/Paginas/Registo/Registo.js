@@ -64,7 +64,6 @@ const Registo = ({ navigation }) => {
   const [telemovel, setTelemovel] = useState("")
   const [universidade, setUniversidade] = useState("")
   const [anoEscolar, setAnoEscolar] = useState("")
-  const [pontos, setPontos] = useState(0)
   const [linkedIn, setLinkedIn] = useState("")
   const [curriculo, setCurriculo] = useState("")
   const [errorRegisterPassword, setErrorRegisterPassword] = useState(true)
@@ -99,7 +98,7 @@ const Registo = ({ navigation }) => {
             telemovel: telemovel,
             universidade: universidade,
             anoEscolar: anoEscolar,
-            pontos: pontos,
+            pontos: 0,
             linkedIn: linkedIn,
             curriculo: curriculo,
             codigoAcademia: codigo,
