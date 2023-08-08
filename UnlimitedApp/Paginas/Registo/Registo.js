@@ -106,7 +106,8 @@ const Registo = ({ navigation }) => {
         }
       })
   }
-  function adicionarUtilizador() {
+
+  function adicionarUtilizadorUtils() {
     const ref = collection(db, "UtilizadorUtils")
     let existe = false
     getDocs(ref)
@@ -122,7 +123,8 @@ const Registo = ({ navigation }) => {
         if (existe == false) {
           setDoc(doc(db, "UtilizadorUtils", email), {
             codigosEventos: [],
-            notificacoes: []
+            notificacoes: [],
+            notificacoesDelete: []
           })
         }
       })
@@ -135,6 +137,7 @@ const Registo = ({ navigation }) => {
         .then((userCredentials) => {
           const user = userCredentials.user
           adicionarUtilizador()
+          adicionarUtilizadorUtils()
           navigation.navigate("Login")
           Alert.alert("Inicia sessão para entrares na tua conta")
         })

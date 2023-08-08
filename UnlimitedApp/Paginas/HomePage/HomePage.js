@@ -144,6 +144,7 @@ const HomePage = ({ navigation }) => {
               right: "3%",
               alignSelf: "flex-end",
             }}
+            onPress={() => navigation.navigate("Notificacoes")}
           >
             <FontAwesome5
               style={{

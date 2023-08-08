@@ -40,39 +40,52 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
   notificationContainer: {
-    backgroundColor: 'white',
+    backgroundColor: "white",
     borderRadius: 8,
-    padding: 16,
+    padding: 24,
     marginBottom: 16,
-    marginLeft:20,
-    marginRight:20,
+    marginLeft: 20,
+    marginRight: 20,
+    flexDirection: "row",
   },
+
   expandedContainer: {
-    maxHeight: 200, // Set a maximum height when expanded
-  },
-  notificationTitle: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    flex: 1,
-   
-   
-  },
-    trashIcon: {
-    color: '#FF0000',
-    marginRight: 22,   
-    fontSize:18,
+    height: 150,
+    maxHeight: 300,
   },
 
   notificationTitle: {
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: "bold",
+    flex: 1,
   },
+
+  trashIcon: {
+    color: "#FF0000",
+    fontSize: 18,
+  },
+
+  container: {
+    width: "100%",
+    marginTop: 30,
+  },
+
+  deleteIconContainer: {
+    marginLeft: "50%",
+  },
+
+  notificationTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+
   notificationContent: {
     marginTop: 8,
     fontSize: 16,
+    left: 20,
+    top: 70,
+    position:'absolute'
   },
-
-  
 })
 
 export default styles

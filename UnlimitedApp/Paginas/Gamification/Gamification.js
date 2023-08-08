@@ -84,10 +84,7 @@ const Gamification = ({ navigation }) => {
                   color: "white",
                 }}
               >
-                {/* {descricao.descricaoPremio} */}
-                Olá eu sou o Goçalo Olá eu sou o Goçalo Olá eu sou o Goçalo Olá
-                eu sou o Goçalo Olá eu sou o Goçalo Olá eu sou o Goçalo Olá eu
-                sou o Goçalo Olá eu sou o Goçalo Olá eu sou o Goçalo Olá eu sou o aaaaaaaa.
+                {descricao.descricaoPremio}
               </Text>
             </View>
             <FontAwesome5 style={styles.notificationIcon1} name="trophy" />
@@ -105,9 +102,7 @@ const Gamification = ({ navigation }) => {
                   color: "white",
                 }}
               >
-                Olá eu sou o Goçalo Olá eu sou o Goçalo Olá eu sou o Goçalo Olá
-                eu sou o Goçalo Olá eu sou o Goçalo Olá eu sou o Goçalo Olá eu
-                sou o Goçalo Olá eu sou o Goçalo Olá eu sou o Goçalo Olá eu sou o aaaa.
+                {descricao.instrucoes}
               </Text>
             </View>
             <FontAwesome5

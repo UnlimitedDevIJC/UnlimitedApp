@@ -106,23 +106,20 @@ const QrCode = ({ navigation }) => {
       let aux = (
         parseInt(utilizador.pontos) + parseInt(getPontos(codigo))
       ).toString()
+      console.log(aux)
       Alert.alert("Adicionado")
       utilizadorRef = doc(db, "Utilizador", user.email)
       updateDoc(utilizadorRef, {
         pontos: aux,
       })
+      console.log(utilizador.pontos)
       utilizadorUtilsRef = doc(db, "UtilizadorUtils", user.email)
       updateDoc(utilizadorUtilsRef, {
         codigosEventos: arrayUnion(codigo),
       })
     } else {
-      console.log("Codigo invalido ou já foi utilizado")
-      Alert.alert(
-        "Código inválido ou já utilizado!",
-        "O código inserido não foi aceite pois já foi utilizado ou encontra-se incorreto. Por favor, tenta outra vez. "
-      )
+      Alert.alert("Já adicionaste!")
     }
-    setCodigo("")
   }
 
   function getPontos(code) {

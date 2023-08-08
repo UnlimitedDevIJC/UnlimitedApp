@@ -36,7 +36,7 @@ const academiaRef = collection(db, "Academia")
 const palavraChaveRef = collection(db, "PalavrasChave")
 
 let listaEventos = []
-let listaEventosFiltrada = []
+let listaEventosFiltradaPrimeira = []
 let filtros = []
 
 let listaAcademia = []
@@ -63,54 +63,52 @@ onSnapshot(palavraChaveRef, (snapshot) => {
   return () => (existe = false)
 })
 
+onSnapshot(colRef, (snapshot) => {
+  let mounted = true
+  if (mounted) {
+    listaEventos = []
+    snapshot.docs.forEach((doc) => {
+      listaEventos.push({ ...doc.data(), id: doc.id })
+    })
+    filtros = [...new Set(listaPalavrasChave.map((item) => item.palavraChave))]
+    filtros.unshift("Todos")
+  }
+  return () => (mounted = false)
+})
+
 const Agenda = ({ navigation }) => {
-  const [filtro, setFiltro] = useState("") // Barra de pesquisa
+  const [filtro, setFiltro] = useState("")
   const [utilizador, setUtilizador] = useState("null")
   const [academia, setAcademia] = useState("")
   const [value, setValue] = useState("")
-
-  const [utilizadorCodigo, setUtilizadorCodigo] = useState("")
+  const [user, setUser] = useState()
+  const [listaEventosFiltrada, setListaEventosFiltrada] = useState([])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   let utilizadorRef = null
   useEffect(() => {
-    //verificar se tem login feito
     let isMounted = true
     if (isMounted) {
       const auth = getAuth()
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          utilizadorRef = doc(db, "Utilizador", user.email)
+      onAuthStateChanged(auth, (user1) => {
+        if (user1) {
+          utilizadorRef = doc(db, "Utilizador", user1.email)
+          setUser(user1)
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
               setUtilizador(doc.data())
+              setIsLoggedIn(true)
             } else {
-              console.log("No such document!")
             }
           })
         } else {
-          // console.log("User is signed out home")
         }
       })
     }
     return () => {
       isMounted = false
     }
-  })
-
-  onSnapshot(colRef, (snapshot) => {
-    let mounted = true
-    if (mounted) {
-      listaEventos = []
-      snapshot.docs.forEach((doc) => {
-        listaEventos.push({ ...doc.data(), id: doc.id })
-      })
-      filtros = [
-        ...new Set(listaPalavrasChave.map((item) => item.palavraChave)),
-      ]
-      filtros.unshift("Todos") //Vai buscar os valores das areas sem estarem repetidos e acrescenta "Todos" ao inicio
-    }
-    return () => (mounted = false)
-  })
+  }, [])
 
   function compararData(evento) {
     const currentDay = new Date().getDate()
@@ -133,26 +131,23 @@ const Agenda = ({ navigation }) => {
   }
 
   useEffect(() => {
-    const data = onSnapshot(colRef, (snapshot) => {
-      let mounted = true
-
-      if (mounted) {
-        listaEventosFiltrada = listaEventos.filter((item) => {
-          return (
-            item.academiaCodigo == utilizador.codigoAcademia &&
-            item.anoEscolar <= utilizador.anoEscolar &&
-            compararData(item) &&
-            item.visivel === "true" &&
-            item.pontosVisiveis <= utilizador.pontos &&
-            item.local == utilizador.universidade
-          )
-        })
-      }
-      return () => (mounted = false)
+    const unsubscribe = onSnapshot(colRef, (snapshot) => {
+      const data = snapshot.docs.map((doc) => doc.data())
+      const filteredEvents = data.filter((item) => {
+        return (
+          item.pontosVisiveis <= utilizador.pontos &&
+          item.academiaCodigo === utilizador.codigoAcademia &&
+          item.anoEscolar <= utilizador.anoEscolar &&
+          compararData(item) &&
+          item.visivel === "true" &&
+          item.local === utilizador.universidade
+        )
+      })
+      setListaEventosFiltrada(filteredEvents)
     })
 
-    return () => data()
-  })
+    return () => unsubscribe()
+  }, [isLoggedIn])
 
   function _renderItem(item) {
     return (
@@ -176,35 +171,37 @@ const Agenda = ({ navigation }) => {
     alterarAcademias()
     setValue(item)
 
-    if (item == "Todos") {
-      listaEventosFiltrada = listaEventos.filter((evento) => {
+    if (isLoggedIn && item == "Todos") {
+      const filteredList = listaEventos.filter((evento) => {
         return (
+          evento.pontosVisiveis <= utilizador.pontos &&
           evento.academiaCodigo == utilizador.codigoAcademia &&
           evento.academiaCodigo == academia.codigo &&
           evento.anoEscolar <= utilizador.anoEscolar &&
           compararData(evento) &&
           evento.visivel === "true" &&
-          evento.pontosVisiveis <= utilizador.pontos &&
           evento.local == utilizador.universidade
         )
       })
+      setListaEventosFiltrada(filteredList)
     } else {
-      listaEventosFiltrada = listaEventos.filter((evento) => {
+      const filteredList = listaEventos.filter((evento) => {
         for (let i = 0; i < listaPalavrasChave.length; i++) {
           if (listaPalavrasChave[i].idEvento == evento.id) {
             return (
+              evento.pontosVisiveis <= utilizador.pontos &&
               evento.academiaCodigo == utilizador.codigoAcademia &&
               evento.academiaCodigo == academia.codigo &&
               listaPalavrasChave[i].palavraChave == item &&
               evento.anoEscolar <= utilizador.anoEscolar &&
               compararData(evento) &&
               evento.visivel === "true" &&
-              evento.pontosVisiveis <= utilizador.pontos &&
               evento.local == utilizador.universidade
             )
           }
         }
       })
+      setListaEventosFiltrada(filteredList)
     }
   }
 
@@ -212,28 +209,30 @@ const Agenda = ({ navigation }) => {
     setFiltro(text)
 
     if (text == "") {
-      listaEventosFiltrada = listaEventos.filter((item) => {
+      const filteredList = listaEventos.filter((item) => {
         return (
+          item.pontosVisiveis <= utilizador.pontos &&
           item.anoEscolar <= utilizador.anoEscolar &&
           item.academiaCodigo == utilizador.codigoAcademia &&
           compararData(item) &&
           item.visivel === "true" &&
-          item.pontosVisiveis <= utilizador.pontos &&
           item.local == utilizador.universidade
         )
       })
+      setListaEventosFiltrada(filteredList)
     } else {
-      listaEventosFiltrada = listaEventos.filter((item) => {
+      const filteredList = listaEventos.filter((item) => {
         return (
+          item.pontosVisiveis <= utilizador.pontos &&
           String(item.tema.toLowerCase()).includes(text.toLowerCase()) &&
           item.anoEscolar <= utilizador.anoEscolar &&
           item.academiaCodigo == utilizador.codigoAcademia &&
           compararData(item) &&
           item.visivel === "true" &&
-          item.pontosVisiveis <= utilizador.pontos &&
           item.local == utilizador.universidade
         )
       })
+      setListaEventosFiltrada(filteredList)
     }
   }
 
