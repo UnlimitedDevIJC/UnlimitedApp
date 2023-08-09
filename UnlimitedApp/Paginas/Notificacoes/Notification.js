@@ -38,7 +38,7 @@ const Notification = ({ navigation }) => {
   const [expandedIndex, setExpandedIndex] = useState(-1)
   const [utilizador, setUtilizador] = useState("null")
   const [utilizadorUtils, setUtilizadorUtils] = useState("null")
-  const [notification, setNotification] = useState([])
+  const [userNotification, setUserNotification] = useState([])
   const [notificationIds, setNotificationIds] = useState([])
   const [notificacoesDeleted, setNotificacoesDeleted] = useState([])
   const [user, setUser] = useState()
@@ -93,44 +93,33 @@ const Notification = ({ navigation }) => {
   }, [])
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(notificationRef, (snapshot) => {
-      const data = snapshot.docs.map((doc) => doc.data())
-      const filteredNotifications = data.filter((item) => {
-        // console.log(!notificacoesDeleted.includes(item.id))
-        return (
-          (item.anos === utilizador.anoEscolar || item.anos === "all") &&
-          !notificacoesDeleted.includes(item.id)
-        )
+    if (utilizadorUtils) {
+      const unsubscribe = onSnapshot(notificationRef, (snapshot) => {
+        const data = snapshot.docs.map((doc) => doc.data())
+        const filteredNotifications = data.filter((item) => {
+          return (
+            (item.anos === "all" &&
+              utilizadorUtils.notificacoesDelete &&
+              !utilizadorUtils.notificacoesDelete.includes(item.id)) ||
+            (item.anos === utilizador.anoEscolar &&
+              utilizadorUtils.notificacoesDelete &&
+              !utilizadorUtils.notificacoesDelete.includes(item.id))
+          )
+        })
+        setUserNotification(filteredNotifications)
+
+        userNotification.forEach((item) => {
+          if (!utilizadorUtils.notificacoes.includes(item.id)) {
+            const utilizadorUtilsRef = doc(db, "UtilizadorUtils", user.email)
+            updateDoc(utilizadorUtilsRef, {
+              notificacoes: arrayUnion(item.id),
+            })
+          }
+        })
       })
-      setNotification(filteredNotifications)
-      handleUpdate(filteredNotifications)
-    })
-    return () => unsubscribe()
-  }, [])
-
-  async function handleUpdate(filteredNotifications) {
-    let userNotificationsIds = [] // Códigos notificações utilizador
-
-    filteredNotifications.forEach((item) => {
-      if (!userNotificationsIds.includes(item.id)) {
-        userNotificationsIds.push(item.id)
-      }
-    })
-
-    setNotificationIds(userNotificationsIds)
-
-    const utilizadorRef = doc(db, "UtilizadorUtils", utilizador.email)
-    const docSnap = await getDoc(utilizadorRef)
-    const currentNotificacoes = docSnap.data()?.notificacoes || []
-
-    const updatedNotificacoes = currentNotificacoes.filter((id) =>
-      userNotificationsIds.includes(id)
-    )
-
-    await updateDoc(utilizadorRef, {
-      notificacoes: updatedNotificacoes,
-    })
-  }
+      return () => unsubscribe()
+    }
+  }, [utilizadorUtils])
 
   const handleNotificationPress = (index) => {
     setExpandedIndex((prevIndex) => (prevIndex === index ? -1 : index))
@@ -162,7 +151,7 @@ const Notification = ({ navigation }) => {
 
     // console.log(notificationIds)
 
-    setNotification((prevNotifications) => {
+    setUserNotification((prevNotifications) => {
       const updatedNotifications = [...prevNotifications]
       updatedNotifications.splice(index, 1)
       return updatedNotifications
@@ -184,7 +173,7 @@ const Notification = ({ navigation }) => {
           </View>
 
           <View style={styles.container}>
-            {notification.map((notification, index) => (
+            {userNotification.map((notification, index) => (
               <View key={notification.id}>
                 <TouchableOpacity
                   style={[

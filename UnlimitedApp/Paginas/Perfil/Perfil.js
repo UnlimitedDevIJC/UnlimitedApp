@@ -28,11 +28,18 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import styles from "./PerfilStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 import React, { useEffect, useState } from "react"
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage"
 
 const Perfil = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
+  const [image, setImage] = useState(null)
+  const [uploading, setUploading] = useState(null)
+  const [image2, setImage2] = useState(null)
+  const [document, setDocument] = useState(null)
+  const [isLogin, setIsLogin] = useState(false)
 
   const db = getFirestore()
+  const storage = getStorage()
 
   let utilizadorRef = null
   useEffect(() => {
@@ -46,6 +53,7 @@ const Perfil = ({ navigation }) => {
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
               setUtilizador(doc.data())
+              setIsLogin(true)
             } else {
               console.log("No such document!")
             }
@@ -63,6 +71,51 @@ const Perfil = ({ navigation }) => {
   function handleLogout() {
     const auth = getAuth()
     auth.signOut().then(() => navigation.navigate("Login"))
+  }
+
+  useEffect(() => {
+    getImage()
+    getDocument()
+  }, [isLogin])
+
+  async function getImage() {
+    getDownloadURL(ref(storage, "imagens/" + utilizador.email))
+      .then((url) => {
+        setImage2(url)
+        const xhr = new XMLHttpRequest()
+        xhr.responseType = "blob"
+        xhr.onload = (event) => {
+          const blob = xhr.response
+        }
+        xhr.open("GET", url)
+        xhr.send()
+
+        const img = document.getElementById("myimg")
+        img.setAttribute("src", url)
+      })
+      .catch((error) => {})
+  }
+
+  async function getDocument() {
+    getDownloadURL(ref(storage, "cvs/" + utilizador.email))
+      .then((url) => {
+        setDocument(url)
+
+        const xhr = new XMLHttpRequest()
+        xhr.responseType = "blob"
+        xhr.onload = (event) => {
+          const blob = xhr.response
+        }
+        xhr.open("GET", url)
+        xhr.send()
+
+        // Or inserted into an <img> element
+        const img = document.getElementById("myimg")
+        img.setAttribute("src", url)
+      })
+      .catch((error) => {
+        // Handle any errors
+      })
   }
 
   return (
@@ -91,10 +144,9 @@ const Perfil = ({ navigation }) => {
             </TouchableOpacity>
             <View style={styles.perfilContainer}>
               <View style={styles.perfilImageContainer}>
-                <Image
-                  style={styles.perfilImage}
-                  source={require("./foto.jpeg")}
-                />
+                {image2 && (
+                  <Image style={styles.perfilImage} source={{ uri: image2 }} />
+                )}
               </View>
               <View style={styles.perfilDataContainer}>
                 <View style={styles.perfilNomeContainer}>
@@ -119,9 +171,9 @@ const Perfil = ({ navigation }) => {
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>
-                    {utilizador.curriculo ? utilizador.curriculo : "Curriculo"}
-                  </Text>
+                  {document && (
+                    <Text style={styles.perfilDetalhes}>{document}</Text>
+                  )}
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
                   <Text

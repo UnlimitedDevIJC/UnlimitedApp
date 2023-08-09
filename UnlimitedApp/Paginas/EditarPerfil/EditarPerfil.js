@@ -29,11 +29,21 @@ import { getAuth, onAuthStateChanged, deleteUser } from "firebase/auth"
 import styles from "./EditarPerfilStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 import React, { useEffect, useState, useSyncExternalStore } from "react"
+import * as ImagePicker from "expo-image-picker"
+import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage"
+import * as DocumentPicker from "expo-document-picker"
 
 const EditarPerfil = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
   const [user, setUser] = useState()
+  const [image, setImage] = useState(null)
+  const [uploading, setUploading] = useState(null)
+  const [document, setDocument] = useState(null)
+  const [file, setFile] = useState(null)
   const db = getFirestore()
+  const storage = getStorage()
+  const storageRef = ref(storage, "imagens/" + utilizador.email)
+  const cvsStorageRef = ref(storage, "cvs/" + utilizador.email)
 
   let utilizadorRef = null
   useEffect(() => {
@@ -73,6 +83,8 @@ const EditarPerfil = ({ navigation }) => {
     }).then(() => {
       navigation.navigate("Perfil")
     })
+    uploadImage()
+    uploadDocument()
   }
 
   const handleDelete = async () => {
@@ -91,6 +103,63 @@ const EditarPerfil = ({ navigation }) => {
     } catch (error) {
       console.error("Error deleting user and document:", error)
     }
+  }
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [3, 3],
+      quality: 1,
+    })
+
+    const source = { uri: result.assets[0].uri }
+    console.log(source)
+    setImage(source)
+    console.log(storageRef)
+  }
+
+  const uploadImage = async () => {
+    setUploading(true)
+    const response = await fetch(image.uri)
+    const blob = await response.blob()
+    var ref = uploadBytes(storageRef, blob).then((snapshot) => {})
+    try {
+      await ref
+    } catch (e) {
+      console.log(e)
+    }
+
+    setUploading(false)
+
+    Alert.alert("Photo Uploaded!")
+    setImage(null)
+  }
+
+  const pickDocument = async () => {
+    let result = await DocumentPicker.getDocumentAsync({})
+    if (result != null) {
+      setDocument(result.uri)
+    }
+  }
+
+  const uploadDocument = async () => {
+    setUploading(true)
+    const response = await fetch(document)
+    const blob = await response.blob()
+    var ref = uploadBytes(cvsStorageRef, blob).then((snapshot) => {
+      console.log("Uploaded a blob or file!")
+    })
+    try {
+      await ref
+    } catch (e) {
+      console.log(e)
+    }
+
+    setUploading(false)
+
+    Alert.alert("Photo Uploaded!")
+    setFile(null)
   }
 
   return (
@@ -112,11 +181,13 @@ const EditarPerfil = ({ navigation }) => {
             />
 
             <View style={styles.perfilContainer}>
-              <TouchableOpacity style={styles.editFotoBtn}>
-                <Image
-                  style={styles.perfilImage}
-                  source={require("../Perfil/foto.jpeg")}
-                />
+              <TouchableOpacity style={styles.editFotoBtn} onPress={pickImage}>
+                {image && (
+                  <Image
+                    style={styles.perfilImage}
+                    source={{ uri: image.uri }}
+                  />
+                )}
                 <View style={styles.editFoto} />
                 <FontAwesome5 name="pen" style={styles.editFotoIcon} />
               </TouchableOpacity>
@@ -161,17 +232,14 @@ const EditarPerfil = ({ navigation }) => {
                     {utilizador ? utilizador.anoEscolar : ""}
                   </Text>
                 </TextInput>
-                <TextInput
+                <TouchableOpacity
                   style={styles.perfilDetalhesContainer}
-                  onChangeText={(text) =>
-                    setUtilizador({ ...utilizador, curriculo: text })
-                  }
-                  placeholder="Insere o teu Curriculo"
+                  onPress={pickDocument}
                 >
-                  <Text style={styles.perfilDetalhes}>
-                    {utilizador ? utilizador.curriculo : ""}
-                  </Text>
-                </TextInput>
+                  {document && (
+                    <Text style={styles.perfilDetalhes}>{document}</Text>
+                  )}
+                </TouchableOpacity>
                 <TextInput
                   style={styles.perfilDetalhesContainer}
                   onChangeText={(text) =>

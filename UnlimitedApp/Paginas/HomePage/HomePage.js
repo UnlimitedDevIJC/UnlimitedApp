@@ -210,8 +210,8 @@ const HomePage = ({ navigation }) => {
           >
             <Image
               style={{
-                width: "80%",
-                height: "40%",
+                width: 400,
+                height: 75,
                 top: "3%",
                 transform: [{ rotateZ: "12deg" }],
               }}
@@ -287,7 +287,7 @@ const HomePage = ({ navigation }) => {
               style={{ fontSize: 18, fontWeight: 500, color: "#174162" }}
               onPress={() => Linking.openURL(empresaURL)}
             >
-              Vistia a página da empresa {academia.empresa}
+              {academia.empresa}
             </Text>
           </TouchableOpacity>
         </View>

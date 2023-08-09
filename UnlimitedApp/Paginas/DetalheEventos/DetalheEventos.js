@@ -34,6 +34,9 @@ const DetalheEventos = ({ route, navigation }) => {
 
   const [utilizador, setUtilizador] = useState("null")
   const [inscrito, setInscrito] = useState(false)
+  const [imageCodigo, setImageCodigo] = useState()
+
+  const imageData = `${imageCodigo}`
 
   let utilizadorRef = null
   useEffect(() => {
@@ -46,6 +49,7 @@ const DetalheEventos = ({ route, navigation }) => {
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
               setUtilizador(doc.data())
+              setImageCodigo(route.params.item.foto)
             } else {
               console.log("No such document!")
             }
@@ -120,8 +124,8 @@ const DetalheEventos = ({ route, navigation }) => {
 
             <View style={styles.eventoLogo}>
               <Image
-                style={{ height: "100%", width: "100%" }}
-                source={require("../Login/ULTeam.png")}
+                style={{ height: 200, width: 430 }}
+                source={{ uri: `data:image/png;base64,${imageData}` }}
               />
             </View>
 

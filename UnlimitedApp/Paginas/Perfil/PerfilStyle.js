@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 15,
+    height: 40
   },
 
   perfilDetalhes: {
