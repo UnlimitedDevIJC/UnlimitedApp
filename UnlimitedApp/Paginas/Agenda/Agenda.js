@@ -140,7 +140,7 @@ const Agenda = ({ navigation }) => {
           item.anoEscolar <= utilizador.anoEscolar &&
           compararData(item) &&
           item.visivel === "true" &&
-          item.local === utilizador.universidade
+          item.universidade === utilizador.universidade
         )
       })
       setListaEventosFiltrada(filteredEvents)
@@ -180,7 +180,7 @@ const Agenda = ({ navigation }) => {
           evento.anoEscolar <= utilizador.anoEscolar &&
           compararData(evento) &&
           evento.visivel === "true" &&
-          evento.local == utilizador.universidade
+          evento.universidade == utilizador.universidade
         )
       })
       setListaEventosFiltrada(filteredList)
@@ -196,7 +196,7 @@ const Agenda = ({ navigation }) => {
               evento.anoEscolar <= utilizador.anoEscolar &&
               compararData(evento) &&
               evento.visivel === "true" &&
-              evento.local == utilizador.universidade
+              evento.universidade == utilizador.universidade
             )
           }
         }
@@ -216,7 +216,7 @@ const Agenda = ({ navigation }) => {
           item.academiaCodigo == utilizador.codigoAcademia &&
           compararData(item) &&
           item.visivel === "true" &&
-          item.local == utilizador.universidade
+          item.universidade == utilizador.universidade
         )
       })
       setListaEventosFiltrada(filteredList)
@@ -229,7 +229,7 @@ const Agenda = ({ navigation }) => {
           item.academiaCodigo == utilizador.codigoAcademia &&
           compararData(item) &&
           item.visivel === "true" &&
-          item.local == utilizador.universidade
+          item.universidade == utilizador.universidade
         )
       })
       setListaEventosFiltrada(filteredList)
