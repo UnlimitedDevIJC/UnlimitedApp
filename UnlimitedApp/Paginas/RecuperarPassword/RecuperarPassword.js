@@ -16,7 +16,7 @@ import {
   getAuth,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
 } from "firebase/auth"
 import { auth } from "../../Config/firebase"
 import {
@@ -79,7 +79,7 @@ const RecuperarPassword = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollView} bounces={false}>
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss()
@@ -87,12 +87,16 @@ const RecuperarPassword = ({ navigation }) => {
         >
           <>
             {/* Retangulo de fundo */}
-            <View style={styles.retanguloFundo} />
-            {/* Logo pequneo */}
-            <Image
-              style={styles.logo}
-              source={require("../Login/unlimitedLogo.png")}
-            />
+            <View style={{ height: 130, backgroundColor: "#F2F3F5" }}>
+              {/* Logo pequneo */}
+              <View style={styles.retanguloFundo} />
+              <View style={styles.logoView}>
+                <Image
+                  style={styles.logo}
+                  source={require("../Login/unlimitedLogo.png")}
+                />
+              </View>
+            </View>
             {/* Registar */}
             <View style={styles.tituloView}>
               <Text style={styles.alterarTitulo}>Alterar Palavra-Passe</Text>

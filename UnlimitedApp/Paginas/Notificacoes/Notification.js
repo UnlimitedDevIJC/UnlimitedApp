@@ -25,7 +25,6 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import React, { useState, useEffect } from "react"
 import styles from "./NotificationStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
-import { setLogLevel } from "@firebase/app"
 
 const db = getFirestore()
 const notificationRef = collection(db, "Notificacoes")
@@ -42,19 +41,6 @@ const Notification = ({ navigation }) => {
   const [notificationIds, setNotificationIds] = useState([])
   const [notificacoesDeleted, setNotificacoesDeleted] = useState([])
   const [user, setUser] = useState()
-
-  onSnapshot(notificationRef, (snapshot) => {
-    let existe = true
-    if (existe) {
-      snapshot.docs.forEach((doc) => {
-        listaNotificacoes.push({ ...doc.data(), id: doc.id })
-        if (!listaNotificationIds.includes(doc.data().id)) {
-          listaNotificationIds.push(doc.data().id)
-        }
-      })
-    }
-    return () => (existe = false)
-  })
 
   let utilizadorRef = null
   let utilizadorUtilsRef = null
@@ -119,7 +105,7 @@ const Notification = ({ navigation }) => {
       })
       return () => unsubscribe()
     }
-  }, [utilizadorUtils])
+  })
 
   const handleNotificationPress = (index) => {
     setExpandedIndex((prevIndex) => (prevIndex === index ? -1 : index))
@@ -158,12 +144,19 @@ const Notification = ({ navigation }) => {
     })
   }
 
+  const goBack = () => {
+    navigation.goBack()
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} bounces={true}>
+      <ScrollView style={styles.scrollView} bounces={false}>
         <View style={{ width: "100%", height: 130 }}>
           <View style={{ width: "100%", height: "100%" }}>
             <View style={styles.retanguloFundo} />
+            <TouchableOpacity style={styles.goBackBtn} onPress={goBack}>
+              <FontAwesome5 name="arrow-left" style={styles.goBackIcon} />
+            </TouchableOpacity>
             <View style={styles.logoView}>
               <Image
                 style={styles.logo}
@@ -172,35 +165,39 @@ const Notification = ({ navigation }) => {
             </View>
           </View>
 
-          <View style={styles.container}>
-            {userNotification.map((notification, index) => (
-              <View key={notification.id}>
-                <TouchableOpacity
-                  style={[
-                    styles.notificationContainer,
-                    expandedIndex === index && styles.expandedContainer,
-                  ]}
-                  onPress={() => handleNotificationPress(index)}
-                >
-                  <Text style={styles.notificationTitle}>
-                    {notification.titulo}
-                  </Text>
+          {userNotification.length != 0 ? (
+            <View style={styles.container}>
+              {userNotification.map((notification, index) => (
+                <View key={notification.id}>
                   <TouchableOpacity
-                    style={styles.deleteIconContainer}
-                    onPress={() => handleDeleteNotification(notification.id)}
+                    style={[
+                      styles.notificationContainer,
+                      expandedIndex === index && styles.expandedContainer,
+                    ]}
+                    onPress={() => handleNotificationPress(index)}
                   >
-                    <FontAwesome5 style={styles.trashIcon} name="trash" />
-                  </TouchableOpacity>
-
-                  {expandedIndex === index && (
-                    <Text style={styles.notificationContent}>
-                      {notification.corpo}
+                    <Text style={styles.notificationTitle}>
+                      {notification.titulo}
                     </Text>
-                  )}
-                </TouchableOpacity>
-              </View>
-            ))}
-          </View>
+                    <TouchableOpacity
+                      style={styles.deleteIconContainer}
+                      onPress={() => handleDeleteNotification(notification.id)}
+                    >
+                      <FontAwesome5 style={styles.trashIcon} name="trash" />
+                    </TouchableOpacity>
+
+                    {expandedIndex === index && (
+                      <Text style={styles.notificationContent}>
+                        {notification.corpo}
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          ) : (
+            <Text style={{alignSelf:'center', fontSize: 16}}>Não tens notificações...</Text>
+          )}
         </View>
       </ScrollView>
     </SafeAreaView>

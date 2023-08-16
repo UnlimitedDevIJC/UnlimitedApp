@@ -2,30 +2,43 @@ import { Platform, StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
     backgroundColor: "#1A649F",
+    flex: 1,
   },
 
   scrollView: {
-    height: "100%",
+    flex: 1,
+    marginBottom: 45,
     backgroundColor: "#F2F3F5",
   },
 
-  retanguloFundo: {
-    backgroundColor: "#1A649F",
-    width: "110%",
-    height: 130,
+  retanguloFundo:{
+    width: "120%",
     transform: [{ rotateZ: "-15deg" }],
-    left: -25,
-    top: -70,
+    height: "118%",
+    left: "-10%",
+    top: "-70%",
+    backgroundColor: "#1A649F",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 5,
+      height: 8,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 3.84,
+    elevation: 40,
+  },
+
+  logoView: {
+    width: "100%",
+    position: "absolute",
+    top: "17%",
   },
 
   logo: {
     width: 85,
     height: 85,
     alignSelf: "center",
-    position: "absolute",
-    top: "2.5%",
   },
 
   registarTitulo: {

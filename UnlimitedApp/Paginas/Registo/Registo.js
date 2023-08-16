@@ -30,7 +30,7 @@ import {
 } from "firebase/auth"
 import { auth } from "../../Config/firebase"
 import { firebase } from "../../Config/firebase"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styles from "./RegistoStyle"
 import { FontAwesome5 } from "@expo/vector-icons"
 import TabsStack from "../../Navigator/TabsStack"
@@ -40,35 +40,27 @@ const db = getFirestore()
 const universidadeRef = collection(db, "Universidade")
 
 let listaUniversidadesData = []
-let listaUniversidades = []
-
-onSnapshot(universidadeRef, (snapshot) => {
-  let existe = true
-  if (existe) {
-    snapshot.docs.forEach((doc) => {
-      listaUniversidadesData.push({ ...doc.data(), id: doc.id })
-    })
-    listaUniversidades = listaUniversidadesData.map((item) => item.nome)
-  }
-  return () => (existe = false)
-})
+let listaUniversidades = new Set()
 
 const Registo = ({ navigation }) => {
-  //Firebase
-
-  //Constantes
   const [nome, setNome] = useState("")
+  const nomeRef = useRef(null)
   const [email, setEmail] = useState("")
+  const emailRef = useRef(null)
   const [password, setPassword] = useState("")
+  const passwordRef = useRef(null)
   const [checkPassword, setCheckPassword] = useState("")
+  const checkPasswordRef = useRef(null)
   const [telemovel, setTelemovel] = useState("")
+  const telemovelRef = useRef(null)
   const [universidade, setUniversidade] = useState("")
+  const universidadeRef = useRef(null)
   const [anoEscolar, setAnoEscolar] = useState("")
+  const anoEscolarRef = useRef(null)
   const [linkedIn, setLinkedIn] = useState("")
   const [curriculo, setCurriculo] = useState("")
   const [errorRegisterPassword, setErrorRegisterPassword] = useState(true)
   const [verPalavraPasse, setVerPalavraPasse] = useState(true)
-  const [verCheckPalavraPasse, setVerCheckPalavraPasse] = useState(true)
   const [codigo, setCodigo] = useState("")
   const [paginaRegister, setPaginaRegister] = useState(1)
 
@@ -76,6 +68,17 @@ const Registo = ({ navigation }) => {
   let anos = ["1", "2", "3", "4", "5"]
 
   //Funções
+  onSnapshot(universidadeRef, (snapshot) => {
+    snapshot.docs.forEach((doc) => {
+      listaUniversidadesData.push({ ...doc.data(), id: doc.id })
+    })
+
+    listaUniversidadesData.forEach((item) => {
+      listaUniversidades.add(item.nome)
+    })
+
+    listaUniversidades = Array.from(listaUniversidades)
+  })
 
   // Criar Utilizador - Chave primária "Email"
   function adicionarUtilizador() {
@@ -124,7 +127,7 @@ const Registo = ({ navigation }) => {
           setDoc(doc(db, "UtilizadorUtils", email), {
             codigosEventos: [],
             notificacoes: [],
-            notificacoesDelete: []
+            notificacoesDelete: [],
           })
         }
       })
@@ -185,23 +188,29 @@ const Registo = ({ navigation }) => {
     }
   }
 
+  const focusNextInput = (nextInputRef) => {
+    nextInputRef.current.focus()
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} bounces={true}>
+      <ScrollView style={styles.scrollView} bounces={false}>
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss()
           }}
         >
           <>
-            {/* Retangulo de fundo */}
-            <View style={styles.retanguloFundo} />
+            <View style={{ height: 130, backgroundColor: "#F2F3F5" }}>
+              <View style={styles.retanguloFundo} />
+              <View style={styles.logoView}>
+                <Image
+                  style={styles.logo}
+                  source={require("../Login/unlimitedLogo.png")}
+                />
+              </View>
+            </View>
 
-            {/* Logo pequneo */}
-            <Image
-              style={styles.logo}
-              source={require("../Login/unlimitedLogo.png")}
-            />
             {paginaRegister == 1 ? (
               <View>
                 {/* Registar */}
@@ -212,6 +221,9 @@ const Registo = ({ navigation }) => {
                   <TextInput
                     style={styles.nomeInput}
                     placeholderTextColor="white"
+                    returnKeyType="next"
+                    onSubmitEditing={() => focusNextInput(emailRef)}
+                    ref={nomeRef}
                     placeholder="Nome"
                     type="text"
                     onChangeText={(text) => setNome(text)}
@@ -225,6 +237,9 @@ const Registo = ({ navigation }) => {
                   <TextInput
                     style={styles.emailInput}
                     placeholderTextColor="white"
+                    returnKeyType="next"
+                    onSubmitEditing={() => focusNextInput(telemovelRef)}
+                    ref={emailRef}
                     placeholder="Email"
                     autoCapitalize="none"
                     type="text"
@@ -239,6 +254,9 @@ const Registo = ({ navigation }) => {
                   <TextInput
                     style={styles.telemovelInput}
                     placeholderTextColor="white"
+                    returnKeyType="next"
+                    onSubmitEditing={() => focusNextInput(passwordRef)}
+                    ref={telemovelRef}
                     placeholder="Número de Telemóvel"
                     type="text"
                     onChangeText={(text) => setTelemovel(text)}
@@ -254,6 +272,9 @@ const Registo = ({ navigation }) => {
                     placeholderTextColor="white"
                     placeholder="Palavra-Passe"
                     type="text"
+                    returnKeyType="next"
+                    onSubmitEditing={() => focusNextInput(checkPasswordRef)}
+                    ref={passwordRef}
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     secureTextEntry={verPalavraPasse}
@@ -285,27 +306,12 @@ const Registo = ({ navigation }) => {
                     placeholderTextColor="white"
                     placeholder="Confirmar Palavra-Passe"
                     type="text"
+                    returnKeyType="next"
+                    ref={checkPasswordRef}
                     onChangeText={(text) => setCheckPassword(text)}
                     value={checkPassword}
-                    secureTextEntry={verCheckPalavraPasse}
+                    secureTextEntry={verPalavraPasse}
                   ></TextInput>
-                  <TouchableOpacity style={styles.verPassBtn}>
-                    {verCheckPalavraPasse ? (
-                      <FontAwesome5
-                        name="eye"
-                        onPress={() => setVerCheckPalavraPasse(false)}
-                        color={"white"}
-                        size={18}
-                      />
-                    ) : (
-                      <FontAwesome5
-                        name="eye-slash"
-                        onPress={() => setVerCheckPalavraPasse(true)}
-                        color={"red"}
-                        size={18}
-                      />
-                    )}
-                  </TouchableOpacity>
                 </View>
 
                 {/* Instituicao de ensino */}
@@ -408,37 +414,56 @@ const Registo = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
             ) : (
-              <View style={{ top: 200 }}>
-                <TextInput
-                  keyboardType="text"
-                  placeholderTextColor="#174162"
-                  placeholder="Colocar Código"
-                  autoCapitalize="none"
-                  type="text"
-                  onChangeText={(codigo) => setCodigo(codigo)}
-                  value={codigo}
-                  style={styles.codigoInput}
-                ></TextInput>
-
-                {/* Butão para Registar novo utilizador */}
-                <View style={styles.registarView}>
-                  <TouchableOpacity
-                    style={styles.registarButton}
-                    onPress={() => handleSignUp()}
+              <View>
+                <View
+                  style={{
+                    top: 75,
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#174162",
+                      fontSize: 30,
+                      fontWeight: "600",
+                    }}
                   >
-                    <Text style={styles.registarText}>Entrar</Text>
+                    Já podes pedir o código!
+                  </Text>
+                </View>
+                <View style={{ top: 200 }}>
+                  <TextInput
+                    keyboardType="text"
+                    placeholderTextColor="#174162"
+                    placeholder="Colocar Código"
+                    autoCapitalize="none"
+                    type="text"
+                    onChangeText={(codigo) => setCodigo(codigo)}
+                    value={codigo}
+                    style={styles.codigoInput}
+                  ></TextInput>
+
+                  {/* Butão para Registar novo utilizador */}
+                  <View style={styles.registarView}>
+                    <TouchableOpacity
+                      style={styles.registarButton}
+                      onPress={() => handleSignUp()}
+                    >
+                      <Text style={styles.registarText}>Entrar</Text>
+                    </TouchableOpacity>
+                  </View>
+                  {/* Retornar a login */}
+                  <TouchableOpacity
+                    style={styles.returnLoginBtnCodigo}
+                    onPress={() => navigation.navigate("Login")}
+                  >
+                    <Text style={styles.returnLoginText}>
+                      Já tens uma conta?{" "}
+                      <Text style={{ color: "#16508D" }}>Inicia Sessão</Text>
+                    </Text>
                   </TouchableOpacity>
                 </View>
-                {/* Retornar a login */}
-                <TouchableOpacity
-                  style={styles.returnLoginBtnCodigo}
-                  onPress={() => navigation.navigate("Login")}
-                >
-                  <Text style={styles.returnLoginText}>
-                    Já tens uma conta?{" "}
-                    <Text style={{ color: "#16508D" }}>Inicia Sessão</Text>
-                  </Text>
-                </TouchableOpacity>
               </View>
             )}
           </>

@@ -22,17 +22,27 @@ import {
   onSnapshot,
   addDoc,
   deleteDocs,
-  getDoc,
+  setDoc,
   doc,
-  QuerySnapshot,
+  getDoc,
+  updateDoc,
+  arrayUnion,
+  getDocs,
 } from "firebase/firestore"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useState, useEffect } from "react"
+import styles from "./HomePageStyle"
 
 const db = getFirestore()
 const academiaRef = collection(db, "Academia")
+const utilizadorUtilsRef = collection(db, "UtilizadorUtils")
+const notificationRef = collection(db, "Notificacoes")
 
 let listaAcademia = []
+let listaNotificacoes = []
+let listaNotificacoesUser = []
+let notificaoes = []
+let listaNotificationIds = [] //Todos os Ids não repetido
 
 onSnapshot(academiaRef, (snapshot) => {
   let existe = true
@@ -44,38 +54,97 @@ onSnapshot(academiaRef, (snapshot) => {
   return () => (existe = false)
 })
 
+onSnapshot(utilizadorUtilsRef, (snapshot) => {
+  let existe = true
+  if (existe) {
+    snapshot.docs.forEach((doc) => {
+      listaNotificacoesUser.push({ ...doc.data(), id: doc.id })
+    })
+  }
+
+  return () => (existe = false)
+})
+
+onSnapshot(notificationRef, (snapshot) => {
+  let existe = true
+  if (existe) {
+    snapshot.docs.forEach((doc) => {
+      listaNotificacoes.push({ ...doc.data(), id: doc.id })
+      if (!listaNotificationIds.includes(doc.data().id)) {
+        listaNotificationIds.push(doc.data().id)
+      }
+    })
+  }
+  return () => (existe = false)
+})
+
 const HomePage = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
-
+  const [utilizadorUtils, setUtilizadorUtils] = useState("null")
   const [imageCodigo, setImageCodigo] = useState()
   const [empresaURL, setEmpresaURL] = useState()
   const [academia, setAcademia] = useState("")
+  const [user, setUser] = useState()
+  const [utils, setUtils] = useState()
+  const [notificacoesOn, setNotificacoesOn] = useState([])
+  const [userNotification, setUserNotification] = useState([])
+  const [notificationIds, setNotificationIds] = useState([])
 
   const imageData = `${imageCodigo}`
 
   let utilizadorRef = null
+  let utilizadorUtilsRef = null
   useEffect(() => {
-    //verificar se tem login feito
     let isMounted = true
     if (isMounted) {
       const auth = getAuth()
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          utilizadorRef = doc(db, "Utilizador", user.email)
+      onAuthStateChanged(auth, (user1) => {
+        if (user1) {
+          utilizadorRef = doc(db, "Utilizador", user1.email)
+          utilizadorUtilsRef = doc(db, "UtilizadorUtils", user1.email)
+          setUser(user1)
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
               setUtilizador(doc.data())
             } else {
-              console.log("No such document!")
             }
           })
+          onSnapshot(
+            utilizadorUtilsRef,
+            { includeMetadataChanges: true },
+            (doc) => {
+              if (doc.exists()) {
+                setUtilizadorUtils(doc.data())
+              } else {
+              }
+            }
+          )
         } else {
-          // console.log("User is signed out home")
         }
       })
     }
     return () => {
       isMounted = false
+    }
+  }, [])
+
+  useEffect(() => {
+    if (utilizadorUtils) {
+      const unsubscribe = onSnapshot(notificationRef, (snapshot) => {
+        const data = snapshot.docs.map((doc) => doc.data())
+        const filteredNotifications = data.filter((item) => {
+          return (
+            (item.anos === "all" &&
+              utilizadorUtils.notificacoesDelete &&
+              !utilizadorUtils.notificacoesDelete.includes(item.id)) ||
+            (item.anos === utilizador.anoEscolar &&
+              utilizadorUtils.notificacoesDelete &&
+              !utilizadorUtils.notificacoesDelete.includes(item.id))
+          )
+        })
+        setUserNotification(filteredNotifications)
+      })
+      return () => unsubscribe()
     }
   })
 
@@ -89,52 +158,29 @@ const HomePage = ({ navigation }) => {
     setImageCodigo(academia.foto)
   })
 
+  useEffect(() => {
+    for (let i = 0; i < listaNotificacoesUser.length; i++) {
+      if (listaNotificacoesUser[i].id == utilizador.email) {
+        setUtils(listaNotificacoesUser[i])
+      }
+    }
+    if (utils) {
+      setNotificacoesOn(utils.notificacoes)
+    }
+  })
+
   return (
-    <SafeAreaView style={{ backgroundColor: "#1A649F", flex: 1 }}>
-      <ScrollView
-        style={{ flex: 1, marginBottom: 45, backgroundColor: "#F2F3F5" }}
-      >
-        <View
-          style={{
-            width: "100%",
-            padding: 10,
-            marginBottom: 20,
-            height: 125,
-          }}
-        >
-          <View
-            style={{
-              width: "120%",
-              transform: [{ rotateZ: "-15deg" }],
-              height: "120%",
-              left: "-10%",
-              top: "-70%",
-              backgroundColor: "#1A649F",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 5,
-                height: 8,
-              },
-              shadowOpacity: 0.35,
-              shadowRadius: 3.84,
-              elevation: 40,
-            }}
-          ></View>
-          <View
-            style={{
-              width: "100%",
-              position: "absolute",
-              top: "24%",
-            }}
-          >
-            <Image
-              style={{
-                width: 85,
-                height: 85,
-                alignSelf: "center",
-              }}
-              source={require("../Login/unlimitedLogo.png")}
-            />
+    <SafeAreaView style={styles.safeArea}>
+      <ScrollView style={styles.scrollView} bounces={false}>
+        <View style={{ width: "100%", height: 130 }}>
+          <View style={{ width: "100%", height: "100%" }}>
+            <View style={styles.retanguloFundo} />
+            <View style={styles.logoView}>
+              <Image
+                style={styles.logo}
+                source={require("../Login/unlimitedLogo.png")}
+              />
+            </View>
           </View>
           <TouchableOpacity
             style={{
@@ -154,6 +200,28 @@ const HomePage = ({ navigation }) => {
               name="bell"
             />
           </TouchableOpacity>
+          {notificacoesOn.length != 0 ? (
+            <TouchableOpacity
+              style={{
+                width: 20,
+                top: 20,
+                position: "absolute",
+                top: "60%",
+                right: "9%",
+                alignSelf: "flex-end",
+              }}
+              onPress={() => navigation.navigate("Notificacoes")}
+            >
+              <FontAwesome5
+                solid
+                style={{
+                  fontSize: 15,
+                  color: "red",
+                }}
+                name="circle"
+              />
+            </TouchableOpacity>
+          ) : null}
         </View>
         <View
           style={{
@@ -191,10 +259,9 @@ const HomePage = ({ navigation }) => {
           <View
             style={{
               width: "120%",
-              transform: [{ rotateZ: "-12deg" }],
               left: "-10%",
-              height: "60%",
-              top: "15%",
+              height: "80%",
+              top: "10%",
               backgroundColor: "#DADBDB",
               alignItems: "center",
               justifyContent: "center",
@@ -213,7 +280,6 @@ const HomePage = ({ navigation }) => {
                 width: 400,
                 height: 75,
                 top: "3%",
-                transform: [{ rotateZ: "12deg" }],
               }}
               source={{ uri: `data:image/png;base64,${imageData}` }}
               //style={{ width: 200, height: 200 }}
@@ -231,9 +297,9 @@ const HomePage = ({ navigation }) => {
             style={{
               width: "140%",
               transform: [{ rotateZ: "-12deg" }],
-              height: "60%",
+              height: "70%",
               left: "-15%",
-              top: "-5%",
+              top: "10%",
               backgroundColor: "#174162",
               shadowColor: "#000",
               shadowOffset: {
@@ -250,7 +316,7 @@ const HomePage = ({ navigation }) => {
                 width: "65%",
                 height: "100%",
                 transform: [{ rotateZ: "12deg" }],
-                left: "12%",
+                left: "13%",
                 top: "20%",
                 fontSize: 16,
                 lineHeight: 25,
@@ -267,29 +333,62 @@ const HomePage = ({ navigation }) => {
             width: "100%",
             padding: 10,
             top: "-8%",
-            marginBottom: 10,
             height: 150,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          <Text
-            style={{
-              alignSelf: "center",
-              padding: 10,
-              fontWeight: 600,
-              fontSize: 14,
-              color: "#174162",
-            }}
-          >
-            Powered By:{" "}
-          </Text>
-          <TouchableOpacity style={{ alignItems: "center" }}>
+          <View>
             <Text
-              style={{ fontSize: 18, fontWeight: 500, color: "#174162" }}
+              style={{
+                alignSelf: "center",
+                fontWeight: 600,
+                fontSize: 14,
+                color: "#174162",
+              }}
+            >
+              Powered By:{" "}
+            </Text>
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
               onPress={() => Linking.openURL(empresaURL)}
             >
-              {academia.empresa}
+              <Image
+                style={{
+                  width: 200,
+                  height: 60,
+                }}
+                source={{ uri: `data:image/png;base64,${imageData}` }}
+                //style={{ width: 200, height: 200 }}
+              />
+            </TouchableOpacity>
+          </View>
+          <View>
+            <Text
+              style={{
+                alignSelf: "center",
+                fontWeight: 600,
+                fontSize: 14,
+                color: "#174162",
+              }}
+            >
+              Made By:{" "}
             </Text>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
+              onPress={() => Linking.openURL(empresaURL)}
+            >
+              <Image
+                style={{
+                  width: 200,
+                  height: 60,
+                }}
+                source={{ uri: `data:image/png;base64,${imageData}` }}
+                //style={{ width: 200, height: 200 }}
+              />
+            </TouchableOpacity>
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>

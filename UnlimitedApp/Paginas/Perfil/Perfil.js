@@ -120,21 +120,22 @@ const Perfil = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} bounces={true}>
+      <ScrollView style={styles.scrollView} bounces={false}>
         <TouchableWithoutFeedback
           onPress={() => {
             Keyboard.dismiss()
           }}
         >
           <>
-            {/* Retangulo de fundo */}
-            <View style={styles.retanguloFundo} />
-
-            {/* Logo pequneo */}
-            <Image
-              style={styles.logo}
-              source={require("../Login/unlimitedLogo.png")}
-            />
+            <View style={{ height: 130, backgroundColor: "#F2F3F5" }}>
+              <View style={styles.retanguloFundo} />
+              <View style={styles.logoView}>
+                <Image
+                  style={styles.logo}
+                  source={require("../Login/unlimitedLogo.png")}
+                />
+              </View>
+            </View>
 
             <TouchableOpacity
               style={styles.editProfileBtn}
@@ -153,26 +154,10 @@ const Perfil = ({ navigation }) => {
                   <Text style={styles.perfilNome}>{utilizador.nome}</Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>{utilizador.email}</Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>
-                    {utilizador.telemovel}
-                  </Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>
-                    {utilizador.universidade}
-                  </Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
-                  <Text style={styles.perfilDetalhes}>
-                    {utilizador.anoEscolar}º Ano
-                  </Text>
-                </View>
-                <View style={styles.perfilDetalhesContainer}>
-                  {document && (
+                  {document ? (
                     <Text style={styles.perfilDetalhes}>{document}</Text>
+                  ) : (
+                    <Text style={styles.perfilDetalhes}>Inserir Currículo</Text>
                   )}
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
@@ -180,7 +165,9 @@ const Perfil = ({ navigation }) => {
                     style={styles.perfilDetalhes}
                     onPress={() => Linking.openURL(utilizador.linkedIn)}
                   >
-                    {utilizador.linkedIn ? utilizador.linkedIn : "LinkedIn"}
+                    {utilizador.linkedIn
+                      ? utilizador.linkedIn
+                      : "Inserir LinkedIn"}
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>

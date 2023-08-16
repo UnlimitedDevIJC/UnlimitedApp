@@ -162,6 +162,10 @@ const EditarPerfil = ({ navigation }) => {
     setFile(null)
   }
 
+  const goBack = () => {
+    navigation.goBack()
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.scrollView} bounces={false}>
@@ -172,13 +176,16 @@ const EditarPerfil = ({ navigation }) => {
         >
           <>
             {/* Retangulo de fundo */}
-            <View style={styles.retanguloFundo} />
-
-            {/* Logo pequneo */}
-            <Image
-              style={styles.logo}
-              source={require("../Login/unlimitedLogo.png")}
-            />
+            <View style={{ height: 130, backgroundColor: "#F2F3F5" }}>
+              {/* Logo pequneo */}
+              <View style={styles.retanguloFundo} />
+              <View style={styles.logoView}>
+                <Image
+                  style={styles.logo}
+                  source={require("../Login/unlimitedLogo.png")}
+                />
+              </View>
+            </View>
 
             <View style={styles.perfilContainer}>
               <TouchableOpacity style={styles.editFotoBtn} onPress={pickImage}>
@@ -259,8 +266,11 @@ const EditarPerfil = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.guardarBtn}
-                  onPress={() => handleDelete()}
+                  onPress={() => handleUpdate()}
                 >
+                  <Text style={styles.guardarTexto}>Cancelar</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.guardarBtn} onPress={goBack}>
                   <Text style={styles.guardarTexto}>Apagar Conta</Text>
                 </TouchableOpacity>
               </View>

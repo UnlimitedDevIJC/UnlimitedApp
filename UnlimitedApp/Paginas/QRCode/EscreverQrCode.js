@@ -120,7 +120,7 @@ const EscreverQrCode = ({ navigation }) => {
 
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollView} bounces={false}>
         <View style={styles.headerContainer}>
           <View style={styles.headerRetangulo}></View>
           <View style={styles.headerLogoContainer}>

@@ -1,90 +1,67 @@
 import { Platform, StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: "#1A649F",
-  },
-
-  scrollView: {
-    height: "100%",
-    backgroundColor: "#F2F3F5",
-  },
-
-  retanguloFundo: {
-    backgroundColor: "#1A649F",
-    width: "110%",
-    height:'45%',
-    // height: 130,
-    transform: [{ rotateZ: "-15deg" }],
-    left: -25,
-    top: '-20%',
-  },
-
-  logo: {
-    width: '15%',
-    height:'22%',
-    alignSelf: "center",
-    top: "-30%",
-  },
-
   eventoLogo: {
     width: "100%",
-    height: "70%",
-    position:'absolute',
+    height: "100%",
+    // transform: [{ rotateZ: "-15deg" }],
+    // position:'absolute',
+    top: -140,
     zIndex: -1,
   },
 
   detalhesEvento: {
     width: "100%",
     height: "100%",
+    backgroundColor: "black",
   },
 
   eventoTituloBox: {
-    width:'100%',
-    marginTop: '3%',
+    width: "100%",
   },
 
   eventoTitulo: {
-    alignSelf:'center',
-    color:'#174162',
+    alignSelf: "center",
+    color: "#174162",
     fontSize: 35,
-    fontWeight: '600',
+    fontWeight: "600",
     letterSpacing: 1.5,
-    padding:'3%'
+    padding: "3%",
   },
 
   descricaoEventoBox: {
-    width: '100%',
-    height:'55%',
-    flexDirection: 'row',
-    padding:'3%',
+    width: "100%",
+    height: "55%",
   },
 
   descricao: {
-    fontSize: 20,
-    lineHeight: 35,
-    letterSpacing: 1
-  }, 
+    fontSize: 16,
+    lineHeight: 25,
+    padding: "2%",
+  },
 
   descricaoEvento: {
     fontSize: 20,
-    fontWeight:'700'
+    fontWeight: "700",
   },
 
   inscreverBotaoBox: {
-    alignItems:'center',
-    width:'100%',
-    height:'60%',
-    top:'35%',
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    height: '15%',
+    flexDirection: "row",
+    top: -100,
   },
 
   inscreverBotao: {
-    width: "75%",
-    alignItems: "center",
-    justifyContent: "center",
+    width: "35%",
+    height: "50%",
     backgroundColor: "#174162",
-    marginTop:'5%'
+    padding: "2%",
+    marginRight: 30,
+    alignItems:'center',
+    justifyContent:'center'
   },
 
   inscreverText: {
@@ -92,8 +69,19 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "white",
     textAlign: "center",
-    padding:'4%'
-  }
+  },
+
+  goBackBtn: {
+    position: "absolute",
+    left: 30,
+    top: 30,
+    zIndex: 100,
+  },
+
+  goBackIcon: {
+    color: "white",
+    fontSize: 30,
+  },
 })
 
 export default styles

@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#174162",
     alignSelf: "center",
-    marginTop:'5%'
+    marginTop: "5%",
   },
 
   btnSubmeterText: {
@@ -131,6 +131,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 20,
     alignSelf: "center",
+  },
+
+  goBackBtn: {
+    position: "absolute",
+    left: 30,
+    top: 30,
+    zIndex: 100,
+  },
+
+  goBackIcon: {
+    color: "white",
+    fontSize: 30,
   },
 })
 

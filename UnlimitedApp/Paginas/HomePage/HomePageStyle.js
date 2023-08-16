@@ -2,21 +2,29 @@ import { Platform, StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
     backgroundColor: "#1A649F",
+    flex: 1,
   },
 
   scrollView: {
     flex: 1,
+    marginBottom: 45,
     backgroundColor: "#F2F3F5",
+  },
+
+  headerView: {
+    width: "100%",
+    padding: 10,
+    marginBottom: 20,
+    height: 125,
   },
 
   retanguloFundo: {
     width: "120%",
     transform: [{ rotateZ: "-15deg" }],
-    height: "100%",
+    height: "118%",
     left: "-10%",
-    top: "-55%",
+    top: "-70%",
     backgroundColor: "#1A649F",
     shadowColor: "#000",
     shadowOffset: {
@@ -31,7 +39,7 @@ const styles = StyleSheet.create({
   logoView: {
     width: "100%",
     position: "absolute",
-    top: "15%",
+    top: "17%",
   },
 
   logo: {
@@ -109,20 +117,20 @@ const styles = StyleSheet.create({
   },
 
   empresaLogoBtnView: {
-    backgroundColor:'orange',
-    width:'100%',
-    height:'100%',
-    top:'100%',
+    backgroundColor: "orange",
+    width: "100%",
+    height: "100%",
+    top: "100%",
   },
 
   empresaBtn: {
-    width:'100%',
-    height:'100%',
+    width: "100%",
+    height: "100%",
   },
 
   empresaLogoBtn: {
-    height:'100%',
-    width:'100%',
+    height: "100%",
+    width: "100%",
   },
 })
 

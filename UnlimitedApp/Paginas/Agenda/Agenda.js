@@ -135,7 +135,7 @@ const Agenda = ({ navigation }) => {
       const data = snapshot.docs.map((doc) => doc.data())
       const filteredEvents = data.filter((item) => {
         return (
-          item.pontosVisiveis <= utilizador.pontos &&
+          parseInt(item.pontosVisiveis) <= parseInt(utilizador.pontos) &&
           item.academiaCodigo === utilizador.codigoAcademia &&
           item.anoEscolar <= utilizador.anoEscolar &&
           compararData(item) &&
@@ -174,7 +174,7 @@ const Agenda = ({ navigation }) => {
     if (isLoggedIn && item == "Todos") {
       const filteredList = listaEventos.filter((evento) => {
         return (
-          evento.pontosVisiveis <= utilizador.pontos &&
+          parseInt(item.pontosVisiveis) <= parseInt(utilizador.pontos) &&
           evento.academiaCodigo == utilizador.codigoAcademia &&
           evento.academiaCodigo == academia.codigo &&
           evento.anoEscolar <= utilizador.anoEscolar &&
@@ -189,7 +189,7 @@ const Agenda = ({ navigation }) => {
         for (let i = 0; i < listaPalavrasChave.length; i++) {
           if (listaPalavrasChave[i].idEvento == evento.id) {
             return (
-              evento.pontosVisiveis <= utilizador.pontos &&
+              parseInt(item.pontosVisiveis) <= parseInt(utilizador.pontos) &&
               evento.academiaCodigo == utilizador.codigoAcademia &&
               evento.academiaCodigo == academia.codigo &&
               listaPalavrasChave[i].palavraChave == item &&
@@ -211,7 +211,7 @@ const Agenda = ({ navigation }) => {
     if (text == "") {
       const filteredList = listaEventos.filter((item) => {
         return (
-          item.pontosVisiveis <= utilizador.pontos &&
+          parseInt(item.pontosVisiveis) <= parseInt(utilizador.pontos) &&
           item.anoEscolar <= utilizador.anoEscolar &&
           item.academiaCodigo == utilizador.codigoAcademia &&
           compararData(item) &&
@@ -223,7 +223,7 @@ const Agenda = ({ navigation }) => {
     } else {
       const filteredList = listaEventos.filter((item) => {
         return (
-          item.pontosVisiveis <= utilizador.pontos &&
+          parseInt(item.pontosVisiveis) <= parseInt(utilizador.pontos) &&
           String(item.tema.toLowerCase()).includes(text.toLowerCase()) &&
           item.anoEscolar <= utilizador.anoEscolar &&
           item.academiaCodigo == utilizador.codigoAcademia &&
@@ -248,10 +248,12 @@ const Agenda = ({ navigation }) => {
           <View style={{ height: 130, backgroundColor: "#F2F3F5" }}>
             {/* Logo pequneo */}
             <View style={styles.retanguloFundo} />
-            <Image
-              style={styles.logo}
-              source={require("../Login/unlimitedLogo.png")}
-            />
+            <View style={styles.logoView}>
+              <Image
+                style={styles.logo}
+                source={require("../Login/unlimitedLogo.png")}
+              />
+            </View>
           </View>
 
           {/* Barra de Pesquisa e filtro / palavras-chave*/}
@@ -330,7 +332,10 @@ class ItemLista extends React.PureComponent {
           <View style={styles.cardView}>
             <View style={styles.cardInfo}>
               <Text style={styles.cardNome}>{this.props.item.tema}</Text>
-              <Text style={styles.cardData}>Datas: {this.props.item.data}</Text>
+              <Text style={styles.cardData}>Data: {this.props.item.data}</Text>
+              <Text style={styles.cardData}>
+                Horário: {this.props.item.horaInicio}-{this.props.item.horaFim}
+              </Text>
             </View>
             <View style={styles.cardIconContainer}>
               <FontAwesome5 name={"plus-square"} style={styles.cardIcon} />

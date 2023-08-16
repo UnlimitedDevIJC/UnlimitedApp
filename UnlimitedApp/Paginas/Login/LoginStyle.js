@@ -9,9 +9,6 @@ const styles = StyleSheet.create({
   imageLogo: {
     width: 200,
     height: 200,
-    position: "absolute",
-    left: "25%",
-    top: "15%",
   },
 
   emailInput: {
@@ -131,7 +128,7 @@ const styles = StyleSheet.create({
     width: "10%",
     zIndex: 1,
     alignSelf: "center",
-    top: '56%',
+    top: '40%',
     left: '30%'
   },
 

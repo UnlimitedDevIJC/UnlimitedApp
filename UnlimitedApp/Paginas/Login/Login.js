@@ -11,7 +11,7 @@ import {
   ImageBackground,
   Touchable,
 } from "react-native"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -29,7 +29,9 @@ const Login = ({ navigation }) => {
 
   //Constantes
   const [email, setEmail] = useState("")
+  const emailRef = useRef(null)
   const [password, setPassword] = useState("")
+  const passwordRef = useRef(null)
   const [errorLogin, setErrorLogin] = useState(false)
   const [verPalavraPasse, setVerPalavraPasse] = useState(true)
 
@@ -62,6 +64,10 @@ const Login = ({ navigation }) => {
     return () => (mounted = false)
   }, [])
 
+  const focusNextInput = (nextInputRef) => {
+    nextInputRef.current.focus()
+  }
+
   return (
     <TouchableWithoutFeedback
       onPress={() => {
@@ -69,11 +75,45 @@ const Login = ({ navigation }) => {
       }}
     >
       <>
-        {/* Logo principal */}
-        <Image
-          style={styles.imageLogo}
-          source={require("../Login/unlimitedLogo.png")}
-        />
+        <View
+          style={{
+            width: "100%",
+            padding: 10,
+            marginBottom: 20,
+            height: 125,
+          }}
+        >
+          <View
+            style={{
+              width: "150%",
+              transform: [{ rotateZ: "-15deg" }],
+              height: "320%",
+              left: "-18%",
+              top: "-100%",
+              backgroundColor: "#1A649F",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 5,
+                height: 8,
+              },
+              shadowOpacity: 0.35,
+              shadowRadius: 3.84,
+              elevation: 40,
+            }}
+          ></View>
+          <View
+            style={{
+              width: "100%",
+              top: "-180%",
+              left: "25%",
+            }}
+          >
+            <Image
+              style={styles.imageLogo}
+              source={require("../Login/unlimitedLogo.png")}
+            />
+          </View>
+        </View>
 
         {/* Inserir Email */}
         <TextInput
@@ -82,6 +122,9 @@ const Login = ({ navigation }) => {
           placeholder="Colocar Email"
           autoCapitalize="none"
           type="text"
+          returnKeyType="next"
+          onSubmitEditing={() => focusNextInput(passwordRef)}
+          ref={emailRef}
           onChangeText={(email) => setEmail(email)}
           value={email}
           style={styles.emailInput}
@@ -92,6 +135,8 @@ const Login = ({ navigation }) => {
           placeholderTextColor="#174162"
           placeholder="Colocar Palavra-Passe"
           type="text"
+          returnKeyType="done"
+          ref={passwordRef}
           onChangeText={(password) => setPassword(password)}
           value={password}
           style={styles.passwordInput}

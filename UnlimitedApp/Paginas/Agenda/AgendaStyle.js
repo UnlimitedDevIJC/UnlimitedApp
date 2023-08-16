@@ -7,20 +7,32 @@ const styles = StyleSheet.create({
   },
 
   retanguloFundo: {
-    backgroundColor: "#1A649F",
-    width: "110%",
-    height: '150%',
+    width: "190%",
     transform: [{ rotateZ: "-15deg" }],
-    left: -35,
-    top: -130,
+    height: "520%",
+    left: "-25%",
+    top: "-498%",
+    backgroundColor: "#1A649F",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 5,
+      height: 8,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 3.84,
+    elevation: 40,
+  },
+
+  logoView: {
+    width: "100%",
+    position: "absolute",
+    top: "17%",
   },
 
   logo: {
     width: 85,
-    transform: [{ rotateZ: "0deg" }],
     height: 85,
     alignSelf: "center",
-    top:'-132%',
   },
 
   searchView: {
@@ -66,7 +78,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     width: "90%",
-    height: 140,
+    flex: 1,
     alignSelf: "center",
     marginTop: 25,
     shadowColor: "#000",
@@ -88,27 +100,27 @@ const styles = StyleSheet.create({
   cardNome: {
     padding: 10,
     marginTop: 5,
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: "700",
     fontFamily: "Arial",
   },
 
   cardData: {
     padding: 10,
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "400",
     fontFamily: "Arial",
   },
 
   cardIconContainer: {
-    alignItems:'center',
-    justifyContent:'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   cardIcon: {
     fontSize: 35,
-    color:'#174162'
-  }
+    color: "#174162",
+  },
 })
 
 export default styles

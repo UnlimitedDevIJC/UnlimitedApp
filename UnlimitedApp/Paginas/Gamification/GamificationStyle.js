@@ -2,21 +2,29 @@ import { Platform, StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
     backgroundColor: "#1A649F",
+    flex: 1,
   },
 
   scrollView: {
+    flex: 1,
+    marginBottom: 45,
     backgroundColor: "#F2F3F5",
-    flexGrow: 1,
+  },
+
+  headerView: {
+    width: "100%",
+    padding: 10,
+    marginBottom: 20,
+    height: 125,
   },
 
   retanguloFundo: {
     width: "120%",
     transform: [{ rotateZ: "-15deg" }],
-    height: "100%",
+    height: "118%",
     left: "-10%",
-    top: "-55%",
+    top: "-70%",
     backgroundColor: "#1A649F",
     shadowColor: "#000",
     shadowOffset: {
@@ -31,7 +39,7 @@ const styles = StyleSheet.create({
   logoView: {
     width: "100%",
     position: "absolute",
-    top: "15%",
+    top: "17%",
   },
 
   logo: {
@@ -43,13 +51,13 @@ const styles = StyleSheet.create({
   notificationBtn: {
     width: "15%",
     position: "absolute",
-    top: "40%",
-    right: "2%",
+    top: "60%",
+    right: "3%",
     alignSelf: "flex-end",
   },
 
   notificationIcon: {
-    fontSize: 45,
+    fontSize: 34,
     color: "#174162",
   },
 

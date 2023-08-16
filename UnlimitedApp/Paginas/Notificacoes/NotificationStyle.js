@@ -54,11 +54,13 @@ const styles = StyleSheet.create({
     maxHeight: 300,
   },
 
-  notificationTitle: {
-    fontSize: 18,
-    fontWeight: "bold",
-    flex: 1,
-  },
+  // notificationTitle: {
+  //   backgroundColor:'black',
+  //   fontSize: 18,
+  //   fontWeight: "bold",
+  //   flex: 1,
+  //   width: '80%'
+  // },
 
   trashIcon: {
     color: "#FF0000",
@@ -71,12 +73,13 @@ const styles = StyleSheet.create({
   },
 
   deleteIconContainer: {
-    marginLeft: "50%",
+    marginLeft: "35%",
   },
 
   notificationTitle: {
     fontSize: 18,
     fontWeight: "bold",
+    width: '60%',
   },
 
   notificationContent: {
@@ -84,8 +87,20 @@ const styles = StyleSheet.create({
     fontSize: 16,
     left: 20,
     top: 70,
-    position:'absolute'
+    position: "absolute",
   },
+
+  goBackBtn: {
+    position: "absolute",
+    left: 30,
+    top: 30,
+    zIndex: 100
+  },
+
+  goBackIcon: {
+    color:'white',
+    fontSize: 30
+  }
 })
 
 export default styles

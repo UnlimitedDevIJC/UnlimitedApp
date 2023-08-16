@@ -2,30 +2,43 @@ import { Platform, StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
   safeArea: {
-    flex: 1,
     backgroundColor: "#1A649F",
+    flex: 1,
   },
 
   scrollView: {
-    height: "100%",
-    backgroundColor: "white",
+    flex: 1,
+    marginBottom: 45,
+    backgroundColor: "#F2F3F5",
   },
 
   retanguloFundo: {
-    backgroundColor: "#1A649F",
-    width: "110%",
-    height: 130,
+    width: "120%",
     transform: [{ rotateZ: "-15deg" }],
-    left: -25,
-    top: -70,
+    height: "118%",
+    left: "-10%",
+    top: "-70%",
+    backgroundColor: "#1A649F",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 5,
+      height: 8,
+    },
+    shadowOpacity: 0.35,
+    shadowRadius: 3.84,
+    elevation: 40,
+  },
+
+  logoView: {
+    width: "100%",
+    position: "absolute",
+    top: "17%",
   },
 
   logo: {
     width: 85,
     height: 85,
     alignSelf: "center",
-    position: "absolute",
-    top: "7%",
   },
 
   editProfileBtn: {
@@ -48,9 +61,8 @@ const styles = StyleSheet.create({
 
   perfilImageContainer: {
     height: "55%",
-    width: '50%',
-    alignSelf:'center',
-    backgroundColor:'white',
+    width: "50%",
+    alignSelf: "center",
     zIndex: 1,
   },
 
@@ -86,31 +98,34 @@ const styles = StyleSheet.create({
   perfilNome: {
     fontSize: 22,
     color: "black",
-    fontWeight:'700',
+    fontWeight: "700",
     letterSpacing: 0.8,
     padding: 5,
   },
 
   perfilDetalhesContainer: {
     width: "100%",
+    textAlign:'center',
     alignItems: "center",
     justifyContent: "center",
     marginTop: 15,
-    height: 40
+    height: 40,
   },
 
   perfilDetalhes: {
     fontSize: 18,
     color: "black",
-    fontWeight:'600',
+    fontWeight: "600",
     letterSpacing: 0.8,
     padding: 5,
+    width: '80%',
+    textAlign:'center'
   },
 
   perfilPontos: {
     fontSize: 24,
     color: "#174162",
-    fontWeight:'700',
+    fontWeight: "700",
     letterSpacing: 0.8,
     padding: 5,
     marginBottom: 10,
@@ -118,21 +133,20 @@ const styles = StyleSheet.create({
 
   perfilLogout: {
     width: "80%",
-    height: "11%",
+    height: "15%",
     justifyContent: "center",
-    alignItems:'center',
+    alignItems: "center",
     backgroundColor: "#174162",
     marginTop: "3%",
     alignSelf: "center",
-    marginBottom:'5%',
-    padding: '5%'
+    marginBottom: "15%",
   },
 
   logout: {
-    fontSize: 22,
+    fontSize: 20,
     fontWeight: 600,
-    color: 'white',
-  }
+    color: "white",
+  },
 })
 
 export default styles

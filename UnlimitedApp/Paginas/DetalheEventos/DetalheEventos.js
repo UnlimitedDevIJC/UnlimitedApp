@@ -27,6 +27,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth"
 import React, { useState, useEffect } from "react"
 import styles from "./DetalheEventosStyle"
 import GamificationStack from "../../Navigator/GamificationStack"
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 
 const DetalheEventos = ({ route, navigation }) => {
   const db = getFirestore()
@@ -98,63 +99,121 @@ const DetalheEventos = ({ route, navigation }) => {
     if (inscrito == true) {
       Alert.alert("Já estás inscrito para este evento! Esperamos-te lá!")
     } else {
-      Alert.alert("Foste inscrito para este evento! Esperamos-te lá!")
+      Alert.alert("Estás inscrito! Esperamos-te lá!")
     }
 
     navigation.navigate("Agenda")
   }
+  
+  const goBack = () => {
+    navigation.goBack()
+  }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} bounces={false}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            Keyboard.dismiss()
+    <SafeAreaView style={{ backgroundColor: "#1A649F", flex: 1 }}>
+      <ScrollView
+        style={{ flex: 1, marginBottom: 45, backgroundColor: "#F2F3F5" }}
+        bounces={false}
+      >
+        <View
+          style={{
+            width: "100%",
+            padding: 10,
+            marginBottom: 20,
+            height: 125,
           }}
         >
-          <>
-            {/* Retangulo de fundo */}
-            <View style={styles.retanguloFundo} />
-
-            {/* Logo pequneo */}
+          <View
+            style={{
+              width: "120%",
+              transform: [{ rotateZ: "-15deg" }],
+              height: "120%",
+              left: "-10%",
+              top: "-70%",
+              backgroundColor: "#1A649F",
+              shadowColor: "#000",
+              shadowOffset: {
+                width: 5,
+                height: 8,
+              },
+              shadowOpacity: 0.35,
+              shadowRadius: 3.84,
+              elevation: 40,
+            }}
+          ></View>
+          <TouchableOpacity style={styles.goBackBtn} onPress={goBack}>
+            <FontAwesome5 name="arrow-left" style={styles.goBackIcon} />
+          </TouchableOpacity>
+          <View
+            style={{
+              width: "100%",
+              position: "absolute",
+              top: "24%",
+            }}
+          >
             <Image
-              style={styles.logo}
+              style={{
+                width: 85,
+                height: 85,
+                alignSelf: "center",
+              }}
               source={require("../Login/unlimitedLogo.png")}
             />
+          </View>
+        </View>
+        <View style={styles.eventoLogo}>
+          <Image
+            style={{ height: 300, width: "100%", backgroundColor: "orange" }}
+          />
+        </View>
 
-            <View style={styles.eventoLogo}>
-              <Image
-                style={{ height: 200, width: 430 }}
-                source={{ uri: `data:image/png;base64,${imageData}` }}
+        <View
+          style={{
+            height: "80%",
+            width: "100%",
+            top: "-80%",
+          }}
+        >
+          <View style={styles.eventoTituloBox}>
+            <Text style={styles.eventoTitulo}>{route.params.item.tema}</Text>
+          </View>
+          <View style={styles.descricaoEventoBox}>
+            <Text style={styles.descricao}>
+              <Text style={{ fontWeight: 600 }}>Descrição: </Text>
+              {route.params.item.descricao}
+            </Text>
+            <Text style={styles.descricao}>
+              <Text style={{ fontWeight: 600 }}>Data: </Text>
+              {route.params.item.data}
+            </Text>
+            <Text style={styles.descricao}>
+              <Text style={{ fontWeight: 600 }}>Local: </Text>
+              {route.params.item.local}
+            </Text>
+            <Text style={styles.descricao}>
+              <Text style={{ fontWeight: 600 }}>Hora inicio: </Text>
+              {route.params.item.horaInicio}
+            </Text>
+            <Text style={styles.descricao}>
+              <Text style={{ fontWeight: 600 }}>Hora final: </Text>
+              {route.params.item.horaFim}
+            </Text>
+          </View>
+          <View style={styles.inscreverBotaoBox}>
+            <TouchableOpacity
+              onPress={() => inscrever()}
+              style={styles.inscreverBotao}
+            >
+              <Text style={styles.inscreverText}>Inscrever</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => navigation.navigate("QrCode")}>
+              <FontAwesome5
+                style={{ fontSize: 50, color: "#174162" }}
+                name="qrcode"
               />
-            </View>
-
-            <View style={styles.detalhesEvento}>
-              <View style={styles.eventoTituloBox}>
-                <Text style={styles.eventoTitulo}>
-                  {route.params.item.tema}
-                </Text>
-              </View>
-              <View style={styles.descricaoEventoBox}>
-                <Text style={styles.descricao}>
-                  <Text style={styles.descricaoEvento}>Descrição: </Text>
-                  {route.params.item.descricao}
-                </Text>
-              </View>
-              <View style={styles.inscreverBotaoBox}>
-                <TouchableOpacity
-                  onPress={() => inscrever()}
-                  style={styles.inscreverBotao}
-                >
-                  <Text style={styles.inscreverText}>Inscrever</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.inscreverBotao} onPress={() => navigation.navigate("QrCode")}>
-                  <Text style={styles.inscreverText}>Ler Qr Code</Text>
-                </TouchableOpacity>
-              </View>
-            </View>
-          </>
-        </TouchableWithoutFeedback>
+            </TouchableOpacity>
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   )

@@ -25,6 +25,7 @@ import {
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import styles from "./QrCodeStyle"
 import { BarCodeScanner } from "expo-barcode-scanner"
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 
 let listaEventos = []
 let listaCodigos = []
@@ -160,11 +161,19 @@ const QrCode = ({ navigation }) => {
     )
   }
 
+  const goBack = () => {
+    navigation.goBack()
+  }
+
+
   return (
     <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView style={styles.scrollView} bounces={false}>
         <View style={styles.headerContainer}>
           <View style={styles.headerRetangulo}></View>
+          <TouchableOpacity style={styles.goBackBtn} onPress={goBack}>
+            <FontAwesome5 name="arrow-left" style={styles.goBackIcon} />
+          </TouchableOpacity>
           <View style={styles.headerLogoContainer}>
             <Image
               style={styles.headerLogo}
