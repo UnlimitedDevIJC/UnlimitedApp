@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
     color: "#174162",
     fontSize: 35,
     fontWeight: "600",
-    letterSpacing: 1.5,
     padding: "3%",
+    fontFamily:'Oswald-Regular'
   },
 
   descricaoEventoBox: {
@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 25,
     padding: "2%",
+    fontFamily:'Oswald-Regular'
   },
 
   descricaoEvento: {
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: '15%',
+    height: "15%",
     flexDirection: "row",
     top: -100,
   },
@@ -60,8 +61,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#174162",
     padding: "2%",
     marginRight: 30,
-    alignItems:'center',
-    justifyContent:'center'
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   inscreverText: {
@@ -69,6 +70,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "white",
     textAlign: "center",
+    fontFamily:'Oswald-Regular'
   },
 
   goBackBtn: {

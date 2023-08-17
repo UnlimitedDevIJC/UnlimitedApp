@@ -32,6 +32,25 @@ import React, { useEffect, useState, useSyncExternalStore } from "react"
 import * as ImagePicker from "expo-image-picker"
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage"
 import * as DocumentPicker from "expo-document-picker"
+import SelectDropdown from "react-native-select-dropdown"
+
+let listaUniversidades = new Set()
+let listaUniversidadesData = []
+let anos = ["1", "2", "3", "4", "5"]
+const db = getFirestore()
+const universidadeRef = collection(db, "Universidade")
+
+onSnapshot(universidadeRef, (snapshot) => {
+  snapshot.docs.forEach((doc) => {
+    listaUniversidadesData.push({ ...doc.data(), id: doc.id })
+  })
+
+  listaUniversidadesData.forEach((item) => {
+    listaUniversidades.add(item.nome)
+  })
+
+  listaUniversidades = Array.from(listaUniversidades)
+})
 
 const EditarPerfil = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
@@ -40,14 +59,13 @@ const EditarPerfil = ({ navigation }) => {
   const [uploading, setUploading] = useState(null)
   const [document, setDocument] = useState(null)
   const [file, setFile] = useState(null)
-  const db = getFirestore()
+
   const storage = getStorage()
   const storageRef = ref(storage, "imagens/" + utilizador.email)
   const cvsStorageRef = ref(storage, "cvs/" + utilizador.email)
 
   let utilizadorRef = null
   useEffect(() => {
-    //verificar se tem login feito
     let isMounted = true
     if (isMounted) {
       const auth = getAuth()
@@ -158,7 +176,7 @@ const EditarPerfil = ({ navigation }) => {
 
     setUploading(false)
 
-    Alert.alert("Photo Uploaded!")
+    Alert.alert("File Uploaded!")
     setFile(null)
   }
 
@@ -175,19 +193,45 @@ const EditarPerfil = ({ navigation }) => {
           }}
         >
           <>
-            {/* Retangulo de fundo */}
-            <View style={{ height: 130, backgroundColor: "#F2F3F5" }}>
-              {/* Logo pequneo */}
-              <View style={styles.retanguloFundo} />
-              <View style={styles.logoView}>
-                <Image
-                  style={styles.logo}
-                  source={require("../Login/unlimitedLogo.png")}
-                />
+            <View style={{ width: "100%", height: 130 }}>
+              <View style={{ width: "100%", height: "100%" }}>
+                <View style={styles.retanguloFundo} />
+                <View style={styles.logoView}>
+                  <Image
+                    style={styles.logo}
+                    source={require("../Login/unlimitedLogo.png")}
+                  />
+                </View>
               </View>
+
+              <TouchableOpacity
+                style={{
+                  width: "15%",
+                  position: "absolute",
+                  top: 50,
+                  right: 15,
+                  alignSelf: "flex-end",
+                }}
+                onPress={handleDelete}
+              >
+                <FontAwesome5
+                  style={{
+                    fontSize: 34,
+                    color: "red",
+                  }}
+                  name="trash"
+                />
+              </TouchableOpacity>
             </View>
 
-            <View style={styles.perfilContainer}>
+            <View
+              style={{
+                width: "100%",
+                flex: 1,
+                zIndex: 20,
+                marginTop: 20,
+              }}
+            >
               <TouchableOpacity style={styles.editFotoBtn} onPress={pickImage}>
                 {image && (
                   <Image
@@ -195,10 +239,36 @@ const EditarPerfil = ({ navigation }) => {
                     source={{ uri: image.uri }}
                   />
                 )}
-                <View style={styles.editFoto} />
                 <FontAwesome5 name="pen" style={styles.editFotoIcon} />
               </TouchableOpacity>
-              <View style={styles.perfilDataContainer}>
+            </View>
+            <View
+              style={{
+                width: "100%",
+                flex: 1,
+                alignItems: "center",
+                marginBottom: 50,
+              }}
+            >
+              <View
+                style={{
+                  width: "80%",
+                  flex: 1,
+                  backgroundColor: "#ffffff",
+                  alignItems: "center",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 6,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                  elevation: 20,
+                  top: -20,
+                }}
+              >
                 <TextInput
                   style={styles.perfilNomeContainer}
                   onChangeText={(text) =>
@@ -219,32 +289,72 @@ const EditarPerfil = ({ navigation }) => {
                     {utilizador ? utilizador.telemovel : ""}
                   </Text>
                 </TextInput>
-                <TextInput
-                  style={styles.perfilDetalhesContainer}
-                  onChangeText={(text) =>
-                    setUtilizador({ ...utilizador, universidade: text })
-                  }
-                >
-                  <Text style={styles.perfilDetalhes}>
-                    {utilizador ? utilizador.universidade : ""}
-                  </Text>
-                </TextInput>
-                <TextInput
-                  style={styles.perfilDetalhesContainer}
-                  onChangeText={(text) =>
-                    setUtilizador({ ...utilizador, anoEscolar: text })
-                  }
-                >
-                  <Text style={styles.perfilDetalhes}>
-                    {utilizador ? utilizador.anoEscolar : ""}
-                  </Text>
-                </TextInput>
+                <View style={styles.escolaView}>
+                  <SelectDropdown
+                    dropdownStyle={{
+                      width: "50%",
+                    }}
+                    buttonStyle={{
+                      width: "100%",
+                      backgroundColor: "transparent",
+                      textAlign: "center",
+                    }}
+                    defaultButtonText={
+                      utilizador ? utilizador.universidade : "Universidade"
+                    }
+                    buttonTextStyle={{
+                      fontSize: 18,
+                      color: "black",
+                      fontFamily: "Oswald-Regular",
+                      textAlign: "center",
+                    }}
+                    data={listaUniversidades}
+                    onSelect={(selectedItem, index) => {
+                      setUtilizador({
+                        ...utilizador,
+                        universidade: selectedItem,
+                      })
+                    }}
+                  />
+                </View>
+                <View style={styles.escolaView}>
+                  <SelectDropdown
+                    dropdownStyle={{
+                      width: "50%",
+                    }}
+                    buttonStyle={{
+                      width: "100%",
+                      backgroundColor: "transparent",
+                      textAlign: "center",
+                    }}
+                    defaultButtonText={
+                      utilizador
+                        ? utilizador.anoEscolar + "º Ano"
+                        : "Ano Escolar"
+                    }
+                    buttonTextStyle={{
+                      fontSize: 18,
+                      color: "black",
+                      fontFamily: "Oswald-Regular",
+                      textAlign: "center",
+                    }}
+                    data={anos}
+                    onSelect={(selectedItem, index) => {
+                      setUtilizador({
+                        ...utilizador,
+                        anoEscolar: selectedItem,
+                      })
+                    }}
+                  />
+                </View>
                 <TouchableOpacity
                   style={styles.perfilDetalhesContainer}
                   onPress={pickDocument}
                 >
-                  {document && (
+                  {document ? (
                     <Text style={styles.perfilDetalhes}>{document}</Text>
+                  ) : (
+                    <Text style={styles.perfilDetalhes}>Inserir Currículo</Text>
                   )}
                 </TouchableOpacity>
                 <TextInput
@@ -265,13 +375,10 @@ const EditarPerfil = ({ navigation }) => {
                   <Text style={styles.guardarTexto}>Guardar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  style={styles.guardarBtn}
-                  onPress={() => handleUpdate()}
+                  style={styles.perfilBtn}
+                  onPress={() => navigation.navigate("Perfil")}
                 >
                   <Text style={styles.guardarTexto}>Cancelar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.guardarBtn} onPress={goBack}>
-                  <Text style={styles.guardarTexto}>Apagar Conta</Text>
                 </TouchableOpacity>
               </View>
             </View>

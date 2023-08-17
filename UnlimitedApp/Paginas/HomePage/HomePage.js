@@ -32,6 +32,7 @@ import {
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { useState, useEffect } from "react"
 import styles from "./HomePageStyle"
+import * as Font from "expo-font"
 
 const db = getFirestore()
 const academiaRef = collection(db, "Academia")
@@ -89,6 +90,7 @@ const HomePage = ({ navigation }) => {
   const [notificacoesOn, setNotificacoesOn] = useState([])
   const [userNotification, setUserNotification] = useState([])
   const [notificationIds, setNotificationIds] = useState([])
+  const [imageSize, setImageSize] = useState({ width: 0, height: 0 })
 
   const imageData = `${imageCodigo}`
 
@@ -167,7 +169,7 @@ const HomePage = ({ navigation }) => {
     if (utils) {
       setNotificacoesOn(utils.notificacoes)
     }
-  })
+  }, [utilizador])
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -186,8 +188,8 @@ const HomePage = ({ navigation }) => {
             style={{
               width: "15%",
               position: "absolute",
-              top: "60%",
-              right: "3%",
+              top: 50,
+              right: 15,
               alignSelf: "flex-end",
             }}
             onPress={() => navigation.navigate("Notificacoes")}
@@ -206,8 +208,8 @@ const HomePage = ({ navigation }) => {
                 width: 20,
                 top: 20,
                 position: "absolute",
-                top: "60%",
-                right: "9%",
+                top: "38%",
+                right: "10%",
                 alignSelf: "flex-end",
               }}
               onPress={() => navigation.navigate("Notificacoes")}
@@ -243,6 +245,7 @@ const HomePage = ({ navigation }) => {
                 color: "#174162",
                 fontSize: 34,
                 fontWeight: "600",
+                fontFamily: "Oswald-Regular",
               }}
             >
               {`Bem-Vindo à Academia!`}
@@ -252,37 +255,23 @@ const HomePage = ({ navigation }) => {
         <View
           style={{
             width: "100%",
-            padding: 5,
             height: 300,
           }}
         >
           <View
             style={{
-              width: "120%",
-              left: "-10%",
-              height: "80%",
+              width: 430,
+              height: 300,
               top: "10%",
               backgroundColor: "#DADBDB",
-              alignItems: "center",
-              justifyContent: "center",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 5,
-                height: 8,
-              },
-              shadowOpacity: 0.35,
-              shadowRadius: 3.84,
-              elevation: 40,
             }}
           >
             <Image
               style={{
-                width: 400,
-                height: 75,
-                top: "3%",
+                width: "100%",
+                height: "100%",
               }}
               source={{ uri: `data:image/png;base64,${imageData}` }}
-              //style={{ width: 200, height: 200 }}
             />
           </View>
         </View>
@@ -299,7 +288,6 @@ const HomePage = ({ navigation }) => {
               transform: [{ rotateZ: "-12deg" }],
               height: "70%",
               left: "-15%",
-              top: "10%",
               backgroundColor: "#174162",
               shadowColor: "#000",
               shadowOffset: {
@@ -309,6 +297,7 @@ const HomePage = ({ navigation }) => {
               shadowOpacity: 0.35,
               shadowRadius: 3.84,
               elevation: 40,
+              marginTop: 100,
             }}
           >
             <Text
@@ -318,12 +307,13 @@ const HomePage = ({ navigation }) => {
                 transform: [{ rotateZ: "12deg" }],
                 left: "13%",
                 top: "20%",
-                fontSize: 16,
+                fontSize: 18,
                 lineHeight: 25,
                 color: "white",
+                fontFamily: "Oswald-Regular",
               }}
             >
-              <Text style={{ fontWeight: 600 }}>Descrição: {""}</Text>
+              <Text style={{ fontWeight: 900 }}>Descrição: {""}</Text>
               {academia.descricao}
             </Text>
           </View>
@@ -332,11 +322,11 @@ const HomePage = ({ navigation }) => {
           style={{
             width: "100%",
             padding: 10,
-            top: "-8%",
             height: 150,
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
+            marginTop: 30,
           }}
         >
           <View>
@@ -346,6 +336,7 @@ const HomePage = ({ navigation }) => {
                 fontWeight: 600,
                 fontSize: 14,
                 color: "#174162",
+                fontFamily: "Oswald-Regular",
               }}
             >
               Powered By:{" "}
@@ -371,6 +362,7 @@ const HomePage = ({ navigation }) => {
                 fontWeight: 600,
                 fontSize: 14,
                 color: "#174162",
+                fontFamily: "Oswald-Regular",
               }}
             >
               Made By:{" "}

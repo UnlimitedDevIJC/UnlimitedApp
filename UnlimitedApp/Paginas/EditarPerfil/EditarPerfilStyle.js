@@ -13,10 +13,10 @@ const styles = StyleSheet.create({
   },
 
   retanguloFundo: {
-    width: "190%",
+    width: "120%",
     transform: [{ rotateZ: "-15deg" }],
-    height: "520%",
-    left: "-25%",
+    height: "118%",
+    left: "-10%",
     top: "-70%",
     backgroundColor: "#1A649F",
     shadowColor: "#000",
@@ -41,52 +41,31 @@ const styles = StyleSheet.create({
     alignSelf: "center",
   },
 
-  perfilContainer: {
-    width: "100%",
-    height: "100%",
-  },
-
-  perfilImage: {
-    width: 150,
-    height: 150,
-    alignSelf: "center",
-  },
-
-  editFoto: {
+  editFotoBtn: {
     height: 150,
     width: 150,
     alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
     backgroundColor: "#000000",
     opacity: 0.5,
-    position: "absolute",
-    zIndex: 1,
   },
 
   editFotoIcon: {
-    position: "absolute",
-    fontSize: 50,
+    fontSize: 45,
     color: "white",
-    zIndex: 2,
-    alignSelf: "center",
-    top: 50,
   },
 
-  editFotoBtn: {
-    height: "55%",
-    width: "50%",
-    alignSelf: "center",
-    zIndex: 1,
+  perfilContainer: {
+    width: "100%",
+    marginTop: 30,
   },
 
   perfilDataContainer: {
     backgroundColor: "white",
     width: "80%",
-    height: 530,
-    alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    position: "absolute",
-    top: 110,
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -97,57 +76,62 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
 
-  perfilNomeContainer: {
-    width: "80%",
-    alignItems: "center",
-    justifyContent: "center",
-    textAlign: "center",
-    backgroundColor: "lightgrey",
-    marginTop: 70,
-    marginBottom: 5,
-    borderWidth: 1,
-    padding: 10,
-    borderColor: "#B9B6B6",
-  },
-
   perfilNome: {
     fontSize: 20,
     color: "black",
-    fontWeight: "700",
-    letterSpacing: 0.8,
-    padding: 5,
+    fontFamily: "Oswald-Regular",
   },
 
   perfilDetalhesContainer: {
-    alignItems: "center",
-    justifyContent: "center",
+    width: "80%",
+    flex: 1,
     textAlign: "center",
     backgroundColor: "lightgrey",
-    width: "80%",
-    margin: 7,
-    padding: 10,
-    height: 40,
     borderWidth: 1,
+    padding: 7,
     borderColor: "#B9B6B6",
-    alignSelf: "center",
+    marginTop: 20,
+  },
+
+  perfilNomeContainer: {
+    width: "80%",
+    flex: 1,
+    textAlign: "center",
+    backgroundColor: "lightgrey",
+    borderWidth: 1,
+    padding: 7,
+    borderColor: "#B9B6B6",
+    marginTop: 40,
   },
 
   perfilDetalhes: {
+    alignSelf: "center",
     fontSize: 18,
     color: "black",
-    fontWeight: "500",
-    letterSpacing: 0.8,
-    padding: 3,
+    fontFamily: "Oswald-Regular",
+  },
+
+  perfilBtn: {
+    width: "80%",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 15,
+    padding: 5,
+    marginBottom: 15,
+    backgroundColor: "#174162",
+    fontFamily: "Oswald-Regular",
   },
 
   guardarBtn: {
     width: "80%",
-    height: 40,
+    flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
+    marginTop: 20,
+    padding: 5,
     backgroundColor: "#174162",
-    marginBottom: 10,
+    fontFamily: "Oswald-Regular",
   },
 
   guardarTexto: {
@@ -155,6 +139,18 @@ const styles = StyleSheet.create({
     color: "white",
     fontWeight: "600",
     letterSpacing: 1,
+    fontFamily: "Oswald-Regular",
+  },
+
+  escolaView: {
+    width: "80%",
+    flex: 1,
+    backgroundColor: "lightgrey",
+    marginTop: 20,
+    flexDirection: "row",
+    borderWidth: 1,
+    borderColor: "#B9B6B6",
+    textAlign:'center'
   },
 })
 

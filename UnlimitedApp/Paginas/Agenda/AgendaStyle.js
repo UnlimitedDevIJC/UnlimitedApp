@@ -58,7 +58,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 20,
-    borderRadius: 5,
   },
 
   filterIcon: {
@@ -102,14 +101,14 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 22,
     fontWeight: "700",
-    fontFamily: "Arial",
+    fontFamily:'Oswald-Regular'
   },
 
   cardData: {
     padding: 10,
     fontSize: 14,
     fontWeight: "400",
-    fontFamily: "Arial",
+    fontFamily:'Oswald-Regular'
   },
 
   cardIconContainer: {

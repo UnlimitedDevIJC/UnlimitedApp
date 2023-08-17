@@ -65,7 +65,7 @@ const Gamification = ({ navigation }) => {
           >
             <FontAwesome5 style={styles.notificationIcon} name="qrcode" />
           </TouchableOpacity>
-          <View style={{ width: "100%", height: "100%", top: "-25%" }}>
+          <View style={{ width: "100%", height: "100%", top: "-15%" }}>
             <View style={styles.titleView}>
               <Text style={styles.titleText}>
                 Já conheces os nossos prémios?
@@ -74,7 +74,7 @@ const Gamification = ({ navigation }) => {
           </View>
         </View>
         <View
-          style={{ backgroundColor: "orange", height: 550, width: "100%", top: 100 }}
+          style={{ backgroundColor: "orange", height: 550, width: 430, top: 100 }}
         ></View>
       </ScrollView>
     </SafeAreaView>

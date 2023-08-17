@@ -26,7 +26,6 @@ import {
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import React, { useState, useEffect } from "react"
 import styles from "./DetalheEventosStyle"
-import GamificationStack from "../../Navigator/GamificationStack"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 
 const DetalheEventos = ({ route, navigation }) => {

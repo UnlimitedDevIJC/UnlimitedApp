@@ -8,11 +8,10 @@ const styles = StyleSheet.create({
 
   scrollView: {
     flex: 1,
-    marginBottom: 45,
     backgroundColor: "#F2F3F5",
   },
 
-  retanguloFundo:{
+  retanguloFundo: {
     width: "120%",
     transform: [{ rotateZ: "-15deg" }],
     height: "118%",

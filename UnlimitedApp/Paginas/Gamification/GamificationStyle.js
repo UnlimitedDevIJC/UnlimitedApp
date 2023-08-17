@@ -51,8 +51,8 @@ const styles = StyleSheet.create({
   notificationBtn: {
     width: "15%",
     position: "absolute",
-    top: "60%",
-    right: "3%",
+    top: 50,
+    right: 15,
     alignSelf: "flex-end",
   },
 
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "600",
     textAlign: "center",
+    fontFamily:'Oswald-Regular'
   },
 
   academiaLogoRetangulo: {

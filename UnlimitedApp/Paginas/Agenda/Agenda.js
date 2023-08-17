@@ -334,7 +334,7 @@ class ItemLista extends React.PureComponent {
               <Text style={styles.cardNome}>{this.props.item.tema}</Text>
               <Text style={styles.cardData}>Data: {this.props.item.data}</Text>
               <Text style={styles.cardData}>
-                Horário: {this.props.item.horaInicio}-{this.props.item.horaFim}
+                Horário: {this.props.item.horaInicio} - {this.props.item.horaFim}
               </Text>
             </View>
             <View style={styles.cardIconContainer}>
