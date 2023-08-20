@@ -33,6 +33,7 @@ import * as ImagePicker from "expo-image-picker"
 import { getStorage, ref, getDownloadURL, uploadBytes } from "firebase/storage"
 import * as DocumentPicker from "expo-document-picker"
 import SelectDropdown from "react-native-select-dropdown"
+import * as FileSystem from "expo-file-system"
 
 let listaUniversidades = new Set()
 let listaUniversidadesData = []
@@ -96,13 +97,13 @@ const EditarPerfil = ({ navigation }) => {
       telemovel: utilizador.telemovel,
       universidade: utilizador.universidade,
       anoEscolar: utilizador.anoEscolar,
-      curriculo: utilizador.curriculo,
+      curriculo: document,
       linkedIn: utilizador.linkedIn,
     }).then(() => {
       navigation.navigate("Perfil")
     })
     uploadImage()
-    uploadDocument()
+    // uploadDocument()
   }
 
   const handleDelete = async () => {
@@ -154,30 +155,61 @@ const EditarPerfil = ({ navigation }) => {
     setImage(null)
   }
 
-  const pickDocument = async () => {
-    let result = await DocumentPicker.getDocumentAsync({})
-    if (result != null) {
-      setDocument(result.uri)
-    }
+  // const pickDocument = async () => {
+  //   let result = await DocumentPicker.getDocumentAsync({})
+  //   if (result != null) {
+  //     setDocument(result.uri)
+  //   }
+  // }
+
+  // const uploadDocument = async () => {
+  //   setUploading(true)
+  //   const response = await fetch(document)
+  //   const blob = await response.blob()
+  //   var ref = uploadBytes(cvsStorageRef, blob).then((snapshot) => {
+  //     console.log("Uploaded a blob or file!")
+  //   })
+  //   try {
+  //     await ref
+  //   } catch (e) {
+  //     console.log(e)
+  //   }
+
+  //   setUploading(false)
+
+  //   Alert.alert("File Uploaded!")
+  //   setFile(null)
+  // }
+
+  const blobToBase64 = (blob) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => {
+        resolve(reader.result.split(",")[1])
+      }
+      reader.onerror = (error) => {
+        reject(error)
+      }
+      reader.readAsDataURL(blob)
+    })
   }
 
-  const uploadDocument = async () => {
-    setUploading(true)
-    const response = await fetch(document)
-    const blob = await response.blob()
-    var ref = uploadBytes(cvsStorageRef, blob).then((snapshot) => {
-      console.log("Uploaded a blob or file!")
-    })
+  const pickAndUploadFile = async () => {
     try {
-      await ref
-    } catch (e) {
-      console.log(e)
+      const result = await DocumentPicker.getDocumentAsync({})
+
+      if (result) {
+        const fileBlob = await fetch(result.uri).then((response) =>
+          response.blob()
+        )
+        const base64Data = await blobToBase64(fileBlob)
+        setDocument(base64Data)
+
+        console.log("File uploaded successfully!")
+      }
+    } catch (error) {
+      console.error("Error picking/uploading file:", error)
     }
-
-    setUploading(false)
-
-    Alert.alert("File Uploaded!")
-    setFile(null)
   }
 
   const goBack = () => {
@@ -349,7 +381,7 @@ const EditarPerfil = ({ navigation }) => {
                 </View>
                 <TouchableOpacity
                   style={styles.perfilDetalhesContainer}
-                  onPress={pickDocument}
+                  onPress={pickAndUploadFile}
                 >
                   {document ? (
                     <Text style={styles.perfilDetalhes}>{document}</Text>
