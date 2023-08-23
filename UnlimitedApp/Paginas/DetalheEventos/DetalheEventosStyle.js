@@ -52,12 +52,13 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "15%",
     flexDirection: "row",
-    top: -100,
+    top: 400,
+    position:'absolute'
   },
 
   inscreverBotao: {
     width: "35%",
-    height: "50%",
+    height: "100%",
     backgroundColor: "#174162",
     padding: "2%",
     marginRight: 30,

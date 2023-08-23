@@ -82,8 +82,12 @@ onSnapshot(notificationRef, (snapshot) => {
 const HomePage = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
   const [utilizadorUtils, setUtilizadorUtils] = useState("null")
-  const [imageCodigo, setImageCodigo] = useState()
+  const [imageCodigoAcademia, setImageCodigoAcademia] = useState()
+  const [imageCodigoEmpresa, setImageCodigoEmpresa] = useState()
+  const [imageCodigoUnlimited, setImageCodigoUnlimited] = useState()
+  const [academiaURL, setAcademiaURL] = useState()
   const [empresaURL, setEmpresaURL] = useState()
+  const [unlimitedURL, setUnlimitedURL] = useState()
   const [academia, setAcademia] = useState("")
   const [user, setUser] = useState()
   const [utils, setUtils] = useState()
@@ -92,7 +96,9 @@ const HomePage = ({ navigation }) => {
   const [notificationIds, setNotificationIds] = useState([])
   const [imageSize, setImageSize] = useState({ width: 0, height: 0 })
 
-  const imageData = `${imageCodigo}`
+  const imageDataAcademia = `${imageCodigoAcademia}`
+  const imageDataEmpresa = `${imageCodigoEmpresa}`
+  const imageDataUnlimited = `${imageCodigoUnlimited}`
 
   let utilizadorRef = null
   let utilizadorUtilsRef = null
@@ -156,8 +162,12 @@ const HomePage = ({ navigation }) => {
         setAcademia(listaAcademia[i])
       }
     }
-    setEmpresaURL(academia.website)
-    setImageCodigo(academia.foto)
+    setAcademiaURL(academia.linkAcademia)
+    setEmpresaURL(academia.linkEmpresa)
+    setUnlimitedURL(academia.linkUnlimited)
+    setImageCodigoAcademia(academia.fotoAcademia)
+    setImageCodigoEmpresa(academia.fotoEmpresa)
+    setImageCodigoUnlimited(academia.fotoUnlimited)
   })
 
   useEffect(() => {
@@ -258,22 +268,23 @@ const HomePage = ({ navigation }) => {
             height: 300,
           }}
         >
-          <View
+          <TouchableOpacity
             style={{
               width: 430,
               height: 300,
               top: "10%",
               backgroundColor: "#DADBDB",
             }}
+            onPress={() => Linking.openURL(academiaURL)}
           >
             <Image
               style={{
                 width: "100%",
                 height: "100%",
               }}
-              source={{ uri: `data:image/png;base64,${imageData}` }}
+              source={{ uri: `data:image/png;base64,${imageDataAcademia}` }}
             />
-          </View>
+          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -342,7 +353,7 @@ const HomePage = ({ navigation }) => {
               Powered By:{" "}
             </Text>
             <TouchableOpacity
-              style={{ alignItems: "center" }}
+              style={{ alignItems: "center", marginTop: 10 }}
               onPress={() => Linking.openURL(empresaURL)}
             >
               <Image
@@ -350,7 +361,7 @@ const HomePage = ({ navigation }) => {
                   width: 200,
                   height: 60,
                 }}
-                source={{ uri: `data:image/png;base64,${imageData}` }}
+                source={{ uri: `data:image/png;base64,${imageDataEmpresa}` }}
                 //style={{ width: 200, height: 200 }}
               />
             </TouchableOpacity>
@@ -368,15 +379,15 @@ const HomePage = ({ navigation }) => {
               Made By:{" "}
             </Text>
             <TouchableOpacity
-              style={{ alignItems: "center" }}
-              onPress={() => Linking.openURL(empresaURL)}
+              style={{ alignItems: "center", marginTop: 10 }}
+              onPress={() => Linking.openURL(unlimitedURL)}
             >
               <Image
                 style={{
                   width: 200,
                   height: 60,
                 }}
-                source={{ uri: `data:image/png;base64,${imageData}` }}
+                source={{ uri: `data:image/png;base64,${imageDataUnlimited}` }}
                 //style={{ width: 200, height: 200 }}
               />
             </TouchableOpacity>

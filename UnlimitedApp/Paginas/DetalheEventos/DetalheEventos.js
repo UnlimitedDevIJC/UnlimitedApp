@@ -35,8 +35,9 @@ const DetalheEventos = ({ route, navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
   const [inscrito, setInscrito] = useState(false)
   const [imageCodigo, setImageCodigo] = useState()
+  const [imageCodigoEvento, setImageCodigoEvento] = useState()
 
-  const imageData = `${imageCodigo}`
+  const imageData = `${route.params.item.foto}`
 
   let utilizadorRef = null
   useEffect(() => {
@@ -162,7 +163,8 @@ const DetalheEventos = ({ route, navigation }) => {
         </View>
         <View style={styles.eventoLogo}>
           <Image
-            style={{ height: 300, width: "100%", backgroundColor: "orange" }}
+            // style={{ height: 300, width: "100%", backgroundColor: "orange" }}
+            source={{ uri: `data:image/png;base64,${imageData}` }}
           />
         </View>
 
