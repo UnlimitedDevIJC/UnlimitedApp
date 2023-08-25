@@ -50,15 +50,15 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    height: "15%",
+    height: "20%",
     flexDirection: "row",
-    top: 400,
+    top: 350,
     position:'absolute'
   },
 
   inscreverBotao: {
     width: "35%",
-    height: "100%",
+    height: "50%",
     backgroundColor: "#174162",
     padding: "2%",
     marginRight: 30,

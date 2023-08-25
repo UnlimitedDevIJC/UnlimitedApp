@@ -163,7 +163,7 @@ const DetalheEventos = ({ route, navigation }) => {
         </View>
         <View style={styles.eventoLogo}>
           <Image
-            // style={{ height: 300, width: "100%", backgroundColor: "orange" }}
+            style={{ height: 300, width: "100%" }}
             source={{ uri: `data:image/png;base64,${imageData}` }}
           />
         </View>
