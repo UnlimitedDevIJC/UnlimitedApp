@@ -33,7 +33,6 @@ import { firebase } from "../../Config/firebase"
 import React, { useState, useEffect, useRef } from "react"
 import styles from "./RegistoStyle"
 import { FontAwesome5 } from "@expo/vector-icons"
-import TabsStack from "../../Navigator/TabsStack"
 import SelectDropdown from "react-native-select-dropdown"
 
 const db = getFirestore()
@@ -41,6 +40,19 @@ const universidadeRef = collection(db, "Universidade")
 
 let listaUniversidadesData = []
 let listaUniversidades = new Set()
+
+onSnapshot(universidadeRef, (snapshot) => {
+  snapshot.docs.forEach((doc) => {
+    listaUniversidadesData.push({ ...doc.data(), id: doc.id })
+  })
+
+  console.log(listaUniversidadesData)
+  listaUniversidadesData.forEach((item) => {
+    listaUniversidades.add(item.nome)
+  })
+
+  listaUniversidades = Array.from(listaUniversidades)
+})
 
 const Registo = ({ navigation }) => {
   const [nome, setNome] = useState("")
@@ -66,17 +78,6 @@ const Registo = ({ navigation }) => {
   let anos = ["1", "2", "3", "4", "5"]
 
   //Funções
-  onSnapshot(universidadeRef, (snapshot) => {
-    snapshot.docs.forEach((doc) => {
-      listaUniversidadesData.push({ ...doc.data(), id: doc.id })
-    })
-
-    listaUniversidadesData.forEach((item) => {
-      listaUniversidades.add(item.nome)
-    })
-
-    listaUniversidades = Array.from(listaUniversidades)
-  })
 
   // Criar Utilizador - Chave primária "Email"
   function adicionarUtilizador() {
@@ -432,7 +433,6 @@ const Registo = ({ navigation }) => {
                 </View>
                 <View style={{ top: 200 }}>
                   <TextInput
-                    keyboardType="text"
                     placeholderTextColor="#174162"
                     placeholder="Colocar Código"
                     autoCapitalize="none"
