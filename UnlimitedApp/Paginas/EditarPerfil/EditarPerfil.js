@@ -12,6 +12,7 @@ import {
   Image,
   Alert,
   ImageBackground,
+  Linking,
 } from "react-native"
 import {
   getFirestore,
@@ -57,13 +58,13 @@ const EditarPerfil = ({ navigation }) => {
   const [utilizador, setUtilizador] = useState("null")
   const [user, setUser] = useState()
   const [image, setImage] = useState(null)
+  const [image2, setImage2] = useState(null)
   const [uploading, setUploading] = useState(null)
   const [document, setDocument] = useState(null)
-  const [file, setFile] = useState(null)
+  const [isLogin, setIsLogin] = useState(false)
 
   const storage = getStorage()
   const storageRef = ref(storage, "imagens/" + utilizador.email)
-  const cvsStorageRef = ref(storage, "cvs/" + utilizador.email)
 
   let utilizadorRef = null
   useEffect(() => {
@@ -77,6 +78,7 @@ const EditarPerfil = ({ navigation }) => {
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
               setUtilizador(doc.data())
+              setIsLogin(true)
             } else {
             }
           })
@@ -132,54 +134,38 @@ const EditarPerfil = ({ navigation }) => {
       quality: 1,
     })
 
-    const source = { uri: result.assets[0].uri }
-    console.log(source)
-    setImage(source)
+    if (!result.canceled) {
+      const source = { uri: result.assets[0].uri }
+      console.log(source)
+      setImage(source)
+    } else {
+      console.log("Image selection canceled.")
+    }
     console.log(storageRef)
   }
 
   const uploadImage = async () => {
-    setUploading(true)
-    const response = await fetch(image.uri)
-    const blob = await response.blob()
-    var ref = uploadBytes(storageRef, blob).then((snapshot) => {})
-    try {
-      await ref
-    } catch (e) {
-      console.log(e)
+    if (!image || !image.uri) {
+      console.log("Image is null or has no URI.")
+      return
     }
 
-    setUploading(false)
+    setUploading(true)
 
-    Alert.alert("Photo Uploaded!")
-    setImage(null)
+    try {
+      const response = await fetch(image.uri)
+      const blob = await response.blob()
+      var ref = uploadBytes(storageRef, blob).then((snapshot) => {})
+      await ref
+
+      setUploading(false)
+      Alert.alert("Photo Uploaded!")
+      setImage(null)
+    } catch (e) {
+      console.log("Error uploading image:", e)
+      setUploading(false)
+    }
   }
-
-  // const pickDocument = async () => {
-  //   let result = await DocumentPicker.getDocumentAsync({})
-  //   if (result != null) {
-  //     setDocument(result.uri)
-  //   }
-  // }
-
-  // const uploadDocument = async () => {
-  //   setUploading(true)
-  //   const response = await fetch(document)
-  //   const blob = await response.blob()
-  //   var ref = uploadBytes(cvsStorageRef, blob).then((snapshot) => {
-  //     console.log("Uploaded a blob or file!")
-  //   })
-  //   try {
-  //     await ref
-  //   } catch (e) {
-  //     console.log(e)
-  //   }
-
-  //   setUploading(false)
-
-  //   Alert.alert("File Uploaded!")
-  //   setFile(null)
-  // }
 
   const blobToBase64 = (blob) => {
     return new Promise((resolve, reject) => {
@@ -198,7 +184,7 @@ const EditarPerfil = ({ navigation }) => {
     try {
       const result = await DocumentPicker.getDocumentAsync({})
 
-      if (result) {
+      if (result && !result.canceled) {
         const fileBlob = await fetch(result.uri).then((response) =>
           response.blob()
         )
@@ -212,9 +198,27 @@ const EditarPerfil = ({ navigation }) => {
     }
   }
 
-  const goBack = () => {
-    navigation.goBack()
+  async function getImage() {
+    getDownloadURL(ref(storage, "imagens/" + utilizador.email))
+      .then((url) => {
+        setImage2(url)
+        const xhr = new XMLHttpRequest()
+        xhr.responseType = "blob"
+        xhr.onload = (event) => {
+          const blob = xhr.response
+        }
+        xhr.open("GET", url)
+        xhr.send()
+
+        const img = document.getElementById("myimg")
+        img.setAttribute("src", url)
+      })
+      .catch((error) => {})
   }
+
+  useEffect(() => {
+    getImage()
+  }, [isLogin])
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -259,16 +263,18 @@ const EditarPerfil = ({ navigation }) => {
             <View
               style={{
                 width: "100%",
-                flex: 1,
+                flex: -10,
                 zIndex: 20,
                 marginTop: 20,
               }}
             >
               <TouchableOpacity style={styles.editFotoBtn} onPress={pickImage}>
-                {image && (
+                {image2 ? (
+                  <Image source={{ uri: image2 }} style={styles.perfilImage} />
+                ) : (
                   <Image
                     style={styles.perfilImage}
-                    source={{ uri: image.uri }}
+                    source={require("../Perfil/default.jpeg")}
                   />
                 )}
                 <FontAwesome5 name="pen" style={styles.editFotoIcon} />
@@ -383,8 +389,10 @@ const EditarPerfil = ({ navigation }) => {
                   style={styles.perfilDetalhesContainer}
                   onPress={pickAndUploadFile}
                 >
-                  {document ? (
-                    <Text style={styles.perfilDetalhes}>{document}</Text>
+                  {utilizador.curriculo ? (
+                    <Text style={styles.perfilDetalhes}>
+                      CV - {utilizador.nome}
+                    </Text>
                   ) : (
                     <Text style={styles.perfilDetalhes}>Inserir Currículo</Text>
                   )}
@@ -394,11 +402,14 @@ const EditarPerfil = ({ navigation }) => {
                   onChangeText={(text) =>
                     setUtilizador({ ...utilizador, linkedIn: text })
                   }
-                  placeholder="Insere o teu LinkedIn"
                 >
-                  <Text style={styles.perfilDetalhes}>
-                    {utilizador ? utilizador.linkedIn : ""}
-                  </Text>
+                  {utilizador.linkedIn ? (
+                    <Text style={styles.perfilDetalhes}>
+                      LinkedIn - {utilizador.nome}
+                    </Text>
+                  ) : (
+                    <Text style={styles.perfilDetalhes}>Inserir LinkedIn</Text>
+                  )}
                 </TextInput>
                 <TouchableOpacity
                   style={styles.guardarBtn}

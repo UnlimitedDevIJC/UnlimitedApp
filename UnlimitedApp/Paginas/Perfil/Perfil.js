@@ -75,7 +75,6 @@ const Perfil = ({ navigation }) => {
 
   useEffect(() => {
     getImage()
-    getDocument()
   }, [isLogin])
 
   async function getImage() {
@@ -95,28 +94,7 @@ const Perfil = ({ navigation }) => {
       })
       .catch((error) => {})
   }
-
-  async function getDocument() {
-    getDownloadURL(ref(storage, "cvs/" + utilizador.email))
-      .then((url) => {
-        setDocument(url)
-
-        const xhr = new XMLHttpRequest()
-        xhr.responseType = "blob"
-        xhr.onload = (event) => {
-          const blob = xhr.response
-        }
-        xhr.open("GET", url)
-        xhr.send()
-
-        // Or inserted into an <img> element
-        const img = document.getElementById("myimg")
-        img.setAttribute("src", url)
-      })
-      .catch((error) => {
-        // Handle any errors
-      })
-  }
+  
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -145,8 +123,13 @@ const Perfil = ({ navigation }) => {
             </TouchableOpacity>
             <View style={styles.perfilContainer}>
               <View style={styles.perfilImageContainer}>
-                {image2 && (
+                {image2 ? (
                   <Image style={styles.perfilImage} source={{ uri: image2 }} />
+                ) : (
+                  <Image
+                    style={styles.perfilImage}
+                    source={require("../Perfil/default.jpeg")}
+                  />
                 )}
               </View>
               <View style={styles.perfilDataContainer}>
@@ -154,10 +137,10 @@ const Perfil = ({ navigation }) => {
                   <Text style={styles.perfilNome}>{utilizador.nome}</Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
-                  {document ? (
-                    <Text style={styles.perfilDetalhes}>{document}</Text>
+                  {(utilizador.curriculo && utilizador.curriculo != null) ? (
+                    <Text style={styles.perfilDetalhes}>CV - {utilizador.nome}</Text>
                   ) : (
-                    <Text style={styles.perfilDetalhes}>Inserir Currículo</Text>
+                    <Text style={styles.perfilDetalhes}>Ainda não tens currículo!</Text>
                   )}
                 </View>
                 <View style={styles.perfilDetalhesContainer}>
@@ -165,9 +148,11 @@ const Perfil = ({ navigation }) => {
                     style={styles.perfilDetalhes}
                     onPress={() => Linking.openURL(utilizador.linkedIn)}
                   >
-                    {utilizador.linkedIn
-                      ? utilizador.linkedIn
-                      : "Inserir LinkedIn"}
+                     {(utilizador.linkedIn && utilizador.linkedIn != null) ? (
+                    <Text style={styles.perfilDetalhes}>LinkedIn - {utilizador.nome}</Text>
+                  ) : (
+                    <Text style={styles.perfilDetalhes}>Ainda não tens LinkedIn!</Text>
+                  )}
                   </Text>
                 </View>
                 <View style={styles.perfilDetalhesContainer}>

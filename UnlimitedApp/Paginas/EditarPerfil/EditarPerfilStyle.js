@@ -47,11 +47,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#000000",
     opacity: 0.5,
+    top: 20,
   },
 
   editFotoIcon: {
+    top: -90,
     fontSize: 45,
     color: "white",
   },
@@ -150,7 +151,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderColor: "#B9B6B6",
-    textAlign:'center'
+    textAlign: "center",
+  },
+
+  perfilImage: {
+    width: 150,
+    height: 150,
+    alignSelf: "center",
   },
 })
 
