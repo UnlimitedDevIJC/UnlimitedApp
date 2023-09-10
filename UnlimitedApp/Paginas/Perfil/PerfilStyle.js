@@ -19,13 +19,7 @@ const styles = StyleSheet.create({
     left: "-10%",
     top: "-70%",
     backgroundColor: "#1A649F",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 5,
-      height: 8,
-    },
-    shadowOpacity: 0.35,
-    shadowRadius: 3.84,
+    
     elevation: 40,
   },
 
@@ -57,7 +51,8 @@ const styles = StyleSheet.create({
   perfilContainer: {
     width: "100%",
     height: "100%",
-    marginTop: 30
+    marginTop: 30,
+    marginBottom:20,
   },
 
   perfilImageContainer: {
@@ -65,12 +60,14 @@ const styles = StyleSheet.create({
     width: "50%",
     alignSelf: "center",
     zIndex: 1,
+    marginBottom:600,
   },
 
   perfilImage: {
     width: 150,
     height: 150,
     alignSelf: "center",
+    
   },
 
   perfilDataContainer: {
@@ -78,14 +75,7 @@ const styles = StyleSheet.create({
     width: "80%",
     alignSelf: "center",
     position: "absolute",
-    top: 130,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 1,
-      height: 5,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    marginTop:120,
     elevation: 20,
   },
 
@@ -102,7 +92,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 0.8,
     padding: 5,
-    fontFamily:'Oswald-Regular'
+   
   },
 
   perfilDetalhesContainer: {
@@ -111,7 +101,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 15,
-    height: 40,
+    height: 80,
   },
 
   perfilDetalhes: {
@@ -122,7 +112,7 @@ const styles = StyleSheet.create({
     padding: 5,
     width: "80%",
     textAlign: "center",
-    fontFamily:'Oswald-Regular'
+    
   },
 
   perfilPontos: {
@@ -131,7 +121,7 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     letterSpacing: 0.8,
     padding: 5,
-    fontFamily:'Oswald-Regular'
+    
   },
 
   perfilLogout: {
@@ -149,7 +139,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 600,
     color: "white",
-    fontFamily:'Oswald-Regular'
+    
   },
 })
 

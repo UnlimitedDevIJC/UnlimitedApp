@@ -149,6 +149,7 @@ const Perfil = ({ navigation }) => {
                   <Image style={styles.perfilImage} source={{ uri: image2 }} />
                 )}
               </View>
+              
               <View style={styles.perfilDataContainer}>
                 <View style={styles.perfilNomeContainer}>
                   <Text style={styles.perfilNome}>{utilizador.nome}</Text>

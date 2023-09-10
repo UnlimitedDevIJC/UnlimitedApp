@@ -75,6 +75,8 @@ const Gamification = ({ navigation }) => {
         </View>
         <View
           style={{ backgroundColor: "orange", height: 550, width: 430, top: 100 }}
+
+          
         ></View>
       </ScrollView>
     </SafeAreaView>
