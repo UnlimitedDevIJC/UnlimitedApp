@@ -159,6 +159,39 @@ const styles = StyleSheet.create({
     height: 150,
     alignSelf: "center",
   },
+
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  messageText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  confirmButton: {
+    backgroundColor: "green",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  cancelButton: {
+    backgroundColor: "red",
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 })
 
 export default styles

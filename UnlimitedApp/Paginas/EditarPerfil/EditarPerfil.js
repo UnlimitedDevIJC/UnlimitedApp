@@ -13,6 +13,7 @@ import {
   Alert,
   ImageBackground,
   Linking,
+  Modal,
 } from "react-native"
 import {
   getFirestore,
@@ -62,6 +63,13 @@ const EditarPerfil = ({ navigation }) => {
   const [uploading, setUploading] = useState(null)
   const [document, setDocument] = useState(null)
   const [isLogin, setIsLogin] = useState(false)
+  const [isModalVisible, setModalVisible] = useState(false)
+
+  const handleConfirm = () => {
+    handleDelete()
+    navigation.navigate("Login")
+    Alert.alert("A tua conta foi eliminada")
+  }
 
   const storage = getStorage()
   const storageRef = ref(storage, "imagens/" + utilizador.email)
@@ -220,6 +228,35 @@ const EditarPerfil = ({ navigation }) => {
     getImage()
   }, [isLogin])
 
+  const ConfirmationModal = ({ isVisible, message, onCancel, onConfirm }) => {
+    return (
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={isVisible}
+        onRequestClose={onCancel}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.messageText}>Queres eliminar a tua conta?</Text>
+            <TouchableOpacity
+              style={styles.confirmButton}
+              onPress={() => {
+                onConfirm()
+                onCancel()
+              }}
+            >
+              <Text style={styles.buttonText}>Sim</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.cancelButton} onPress={onCancel}>
+              <Text style={styles.buttonText}>Cancelar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    )
+  }
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.scrollView} bounces={false}>
@@ -248,7 +285,7 @@ const EditarPerfil = ({ navigation }) => {
                   right: 15,
                   alignSelf: "flex-end",
                 }}
-                onPress={handleDelete}
+                onPress={() => setModalVisible(true)}
               >
                 <FontAwesome5
                   style={{
@@ -257,6 +294,11 @@ const EditarPerfil = ({ navigation }) => {
                   }}
                   name="trash"
                 />
+                <ConfirmationModal
+                  isVisible={isModalVisible}
+                  onCancel={() => setModalVisible(false)}
+                  onConfirm={handleConfirm}
+                ></ConfirmationModal>
               </TouchableOpacity>
             </View>
 
@@ -396,6 +438,17 @@ const EditarPerfil = ({ navigation }) => {
                   ) : (
                     <Text style={styles.perfilDetalhes}>Inserir Currículo</Text>
                   )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() =>
+                    Linking.openURL(
+                      "https://www.adobe.com/pt/acrobat/online/compress-pdf.html"
+                    )
+                  }
+                >
+                  <Text style={{ marginTop: 10, fontSize: 12 }}>
+                    Compacta o teu currículo Aqui!
+                  </Text>
                 </TouchableOpacity>
                 <TextInput
                   style={styles.perfilDetalhesContainer}
