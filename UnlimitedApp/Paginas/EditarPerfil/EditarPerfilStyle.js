@@ -179,13 +179,11 @@ const styles = StyleSheet.create({
   confirmButton: {
     backgroundColor: "green",
     padding: 10,
-    borderRadius: 5,
     marginBottom: 10,
   },
   cancelButton: {
     backgroundColor: "red",
     padding: 10,
-    borderRadius: 5,
   },
   buttonText: {
     color: "white",
