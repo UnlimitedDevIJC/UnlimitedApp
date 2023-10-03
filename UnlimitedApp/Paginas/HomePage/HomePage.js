@@ -358,8 +358,10 @@ const HomePage = ({ navigation }) => {
             >
               <Image
                 style={{
-                  width: 200,
-                  height: 60,
+                  width: 150,
+                  height: "70%",
+                  marginRight:50,
+
                 }}
                 source={{ uri: `data:image/png;base64,${imageDataEmpresa}` }}
                 //style={{ width: 200, height: 200 }}
@@ -384,8 +386,9 @@ const HomePage = ({ navigation }) => {
             >
               <Image
                 style={{
-                  width: 200,
-                  height: 60,
+                  width: 150,
+                  height: "70%",
+                  resizeMode:"contain",
                 }}
                 source={{ uri: `data:image/png;base64,${imageDataUnlimited}` }}
                 //style={{ width: 200, height: 200 }}

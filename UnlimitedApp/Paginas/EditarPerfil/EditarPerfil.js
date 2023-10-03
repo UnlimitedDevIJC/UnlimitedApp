@@ -338,14 +338,6 @@ const EditarPerfil = ({ navigation }) => {
                   alignItems: "center",
                   alignItems: "center",
                   justifyContent: "center",
-                  shadowColor: "#000",
-                  shadowOffset: {
-                    width: 0,
-                    height: 6,
-                  },
-                  shadowOpacity: 0.25,
-                  shadowRadius: 3.84,
-                  elevation: 20,
                   top: -20,
                 }}
               >

@@ -85,13 +85,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#174162",
     alignItems: "center",
     justifyContent: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 5,
-      height: 8,
-    },
-    shadowOpacity: 0.35,
-    shadowRadius: 3.84,
+   
     elevation: 40,
   },
 
@@ -110,13 +104,7 @@ const styles = StyleSheet.create({
     right: "-40%",
     top: "60%",
     backgroundColor: "#174162",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 5,
-      height: 8,
-    },
-    shadowOpacity: 0.35,
-    shadowRadius: 3.84,
+  
     elevation: 40,
   },
 

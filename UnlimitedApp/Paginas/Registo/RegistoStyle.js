@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
   },
 
   returnLoginBtnCodigo: {
-    marginTop: 60,
+    marginTop: 200,
     marginBottom: 40,
     justifyContent: "center",
     alignItems: "center",
