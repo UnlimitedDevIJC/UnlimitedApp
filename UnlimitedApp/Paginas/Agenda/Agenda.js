@@ -37,7 +37,7 @@ const palavraChaveRef = collection(db, "PalavrasChave")
 
 let listaEventos = []
 let listaEventosFiltradaPrimeira = []
-let filtros = []
+let filtros = new Set()
 
 let listaAcademia = []
 

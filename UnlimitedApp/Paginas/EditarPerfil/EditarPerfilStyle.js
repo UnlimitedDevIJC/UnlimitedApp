@@ -47,11 +47,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#000000",
     opacity: 0.5,
+    top: 20,
   },
 
   editFotoIcon: {
+    top: -90,
     fontSize: 45,
     color: "white",
   },
@@ -150,7 +151,44 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderWidth: 1,
     borderColor: "#B9B6B6",
-    textAlign:'center'
+    textAlign: "center",
+  },
+
+  perfilImage: {
+    width: 150,
+    height: 150,
+    alignSelf: "center",
+  },
+
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 10,
+    alignItems: "center",
+  },
+  messageText: {
+    fontSize: 18,
+    marginBottom: 20,
+  },
+  confirmButton: {
+    backgroundColor: "green",
+    padding: 10,
+    marginBottom: 10,
+  },
+  cancelButton: {
+    backgroundColor: "red",
+    padding: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 })
 

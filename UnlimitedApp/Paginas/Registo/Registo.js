@@ -46,7 +46,6 @@ onSnapshot(universidadeRef, (snapshot) => {
     listaUniversidadesData.push({ ...doc.data(), id: doc.id })
   })
 
-  console.log(listaUniversidadesData)
   listaUniversidadesData.forEach((item) => {
     listaUniversidades.add(item.nome)
   })
@@ -70,6 +69,7 @@ const Registo = ({ navigation }) => {
   const [linkedIn, setLinkedIn] = useState("")
   const [curriculo, setCurriculo] = useState("")
   const [errorRegisterPassword, setErrorRegisterPassword] = useState(true)
+  const [errorCodigo, setErrorCodigo] = useState()
   const [verPalavraPasse, setVerPalavraPasse] = useState(true)
   const [codigo, setCodigo] = useState("")
   const [paginaRegister, setPaginaRegister] = useState(1)
@@ -132,32 +132,38 @@ const Registo = ({ navigation }) => {
       })
   }
 
+  function hasMatchingRecord(list, universidade, codigo) {
+    for (const faculdade of list) {
+      if (universidade === faculdade.nome && codigo === faculdade.academiaCodigo) {
+        console.log(faculdade)
+        return true;
+      }
+    }
+    return false;
+  }
+  
+  function verificarCodigo() {
+    if (hasMatchingRecord(listaUniversidadesData, universidade, codigo)) {
+      setErrorCodigo(false)
+      console.log(errorCodigo)
+    } else {
+      setErrorCodigo(true)
+    }
+  }
+
   // Regista na Firebase
   const handleSignUp = () => {
-    if (errorRegisterPassword == false) {
+    verificarCodigo()
+    if (errorRegisterPassword == false && errorCodigo == false) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredentials) => {
           const user = userCredentials.user
-          adicionarUtilizador()
-          adicionarUtilizadorUtils()
+          // adicionarUtilizador()
+          // adicionarUtilizadorUtils()
           navigation.navigate("Login")
           Alert.alert("Inicia sessão para entrares na tua conta")
         })
         .catch((error) => alert(error.message))
-    }
-  }
-
-  //Verificar password
-  function verificarPalavraPasse() {
-    if (password.length < 6) {
-      setErrorRegisterPassword(true)
-      Alert.alert("A password não tem caracteres suficientes")
-    } else if (checkPassword !== password) {
-      setErrorRegisterPassword(true)
-      Alert.alert("As palavra-passes não coincidem")
-    } else {
-      setErrorRegisterPassword(false)
-      setPaginaRegister(2)
     }
   }
 
@@ -170,19 +176,12 @@ const Registo = ({ navigation }) => {
       setErrorRegisterPassword(true)
       Alert.alert("As palavra-passes não coincidem!")
       setPaginaRegister(1)
-    } else {
-      setErrorRegisterPassword(false)
-    }
-
-    if (telemovel.length < 9) {
+    } else if (telemovel.length < 9) {
       setErrorRegisterPassword(true)
       Alert.alert("O número de telemóvel não tem números suficientes!")
       setPaginaRegister(1)
     } else {
       setErrorRegisterPassword(false)
-    }
-
-    if (errorRegisterPassword == false) {
       setPaginaRegister(2)
     }
   }
@@ -389,7 +388,6 @@ const Registo = ({ navigation }) => {
                   <TouchableOpacity
                     disabled={true}
                     style={styles.registarBtnDisable}
-                    onPress={() => verificarCredenciais()}
                   >
                     <Text style={styles.registarText}>Continuar</Text>
                   </TouchableOpacity>

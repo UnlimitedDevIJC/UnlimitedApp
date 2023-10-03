@@ -25,24 +25,26 @@ import QrCode from "../QRCode/QrCode"
 const db = getFirestore()
 const gamificationRef = collection(db, "Gamification")
 
-let descricaoGamification = []
+let gamification = []
 
 onSnapshot(gamificationRef, (snapshot) => {
   let existe = true
   if (existe) {
     snapshot.docs.forEach((doc) => {
-      descricaoGamification.push({ ...doc.data(), id: doc.id })
+      gamification.push({ ...doc.data(), id: doc.id })
     })
   }
   return () => (existe = false)
 })
 
 const Gamification = ({ navigation }) => {
-  const [descricao, setDescricao] = useState("")
+  const [imageGamifictaion, setImageGamification] = useState()
+
+  const image = `${imageGamifictaion}`
 
   useEffect(() => {
-    for (let i = 0; i < descricaoGamification.length; i++) {
-      setDescricao(descricaoGamification[i])
+    for (let i = 0; i < gamification.length; i++) {
+      setImageGamification(gamification[i].fotoGamification)
     }
   })
 
@@ -74,10 +76,16 @@ const Gamification = ({ navigation }) => {
           </View>
         </View>
         <View
-          style={{ backgroundColor: "orange", height: 550, width: 430, top: 100 }}
-
-          
-        ></View>
+          style={{ height: 550, width: 430, top: 100 }}
+        >
+          <Image
+              style={{
+                width: "100%",
+                height: "100%",
+              }}
+              source={{ uri: `data:image/png;base64,${image}` }}
+            />
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
