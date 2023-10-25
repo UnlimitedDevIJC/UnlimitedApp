@@ -33,7 +33,7 @@ const TabsStack = () => {
           position: "absolute",
           backgroundColor: "#333333",
           elevation: 0,
-          height: 90,
+          height: 70,
         },
       }}
     >

@@ -10,6 +10,7 @@ import {
   Image,
   ImageBackground,
   Touchable,
+  ScrollView,
 } from "react-native"
 import React, { useState, useEffect, useRef } from "react"
 import {
@@ -90,15 +91,7 @@ const Login = ({ navigation }) => {
               height: "320%",
               left: "-18%",
               top: "-100%",
-              backgroundColor: "#1A649F",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 5,
-                height: 8,
-              },
-              shadowOpacity: 0.35,
-              shadowRadius: 3.84,
-              elevation: 40,
+              backgroundColor: "#1A649F"
             }}
           ></View>
           <View
@@ -114,7 +107,14 @@ const Login = ({ navigation }) => {
             />
           </View>
         </View>
-
+        <View
+          style={{
+            width: "100%",
+            padding: 10,
+            marginBottom: 20,
+            height: 600,
+          }}
+        >
         {/* Inserir Email */}
         <TextInput
           keyboardType="email-address"
@@ -205,6 +205,7 @@ const Login = ({ navigation }) => {
           >
             <Text style={styles.registarText}>Registar</Text>
           </TouchableOpacity>
+        </View>
         </View>
       </>
     </TouchableWithoutFeedback>
