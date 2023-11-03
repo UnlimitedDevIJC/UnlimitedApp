@@ -20,7 +20,6 @@ import HomePageStack from "../Navigator/HomePageStack"
 import GamificationStack from "../Navigator/GamificationStack"
 import PerfilStack from "./PerfilStack"
 import AgendaStack from "./AgendaStack"
-import styles from "./TabsStackStyle"
 
 const Tab = createBottomTabNavigator()
 
