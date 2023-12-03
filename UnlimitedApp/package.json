@@ -37,6 +37,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "esbuild": "^0.19.5",
     "expo-cli": "^6.3.10"
   },
   "private": true
