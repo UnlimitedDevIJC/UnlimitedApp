@@ -158,8 +158,8 @@ const Registo = ({ navigation }) => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredentials) => {
           const user = userCredentials.user
-          // adicionarUtilizador()
-          // adicionarUtilizadorUtils()
+          adicionarUtilizador()
+          adicionarUtilizadorUtils()
           navigation.navigate("Login")
           Alert.alert("Inicia sessão para entrares na tua conta")
         })
