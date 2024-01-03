@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
   logoView: {
     width: "100%",
     position: "absolute",
-    top: "17%",
+    top: "16%",
   },
 
   logo: {
@@ -80,14 +80,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: "center",
     marginTop: 25,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 3,
-      height: 6,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 20,
   },
 
   cardInfo: {

@@ -3,12 +3,7 @@ import { Platform, StyleSheet } from "react-native"
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#1A649F",
-  },
-
-  scrollView: {
     backgroundColor: "#F2F3F5",
-    flexGrow: 1,
   },
 
   retanguloFundo: {
@@ -53,14 +48,6 @@ const styles = StyleSheet.create({
     height: 150,
     maxHeight: 300,
   },
-
-  // notificationTitle: {
-  //   backgroundColor:'black',
-  //   fontSize: 18,
-  //   fontWeight: "bold",
-  //   flex: 1,
-  //   width: '80%'
-  // },
 
   trashIcon: {
     color: "#FF0000",

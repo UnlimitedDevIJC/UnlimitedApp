@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "UnlimitedApp",
+    "name": "Unlimited App",
     "slug": "UnlimitedApp",
-    "version": "1.0.0",
+    "version": "1.0.5",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/unlimitedLogo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -22,14 +22,15 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.unlimitedf.UnlimitedApp"
+      "package": "com.unlimitedfuture.UnlimitedApp",
+      "versionCode": 5
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "cba2a838-93c2-421d-8161-2361c9c4d788"
+        "projectId": "4f4e08fb-4c44-48fc-bc99-8f94d2ed5352"
       }
     }
   }

@@ -12,7 +12,7 @@ import {
   Image,
   Alert,
   ImageBackground,
-} from "react-native"
+} from "react-native";
 import {
   getFirestore,
   collection,
@@ -22,92 +22,99 @@ import {
   setDoc,
   doc,
   getDocs,
-} from "firebase/firestore"
-import { getAuth, onAuthStateChanged } from "firebase/auth"
-import React, { useState, useEffect } from "react"
-import styles from "./DetalheEventosStyle"
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
+} from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import React, { useState, useEffect } from "react";
+import styles from "./DetalheEventosStyle";
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import { v4 as uuidv4 } from "uuid";
+import { getRandomBase64 } from "react-native-get-random-values";
 
 const DetalheEventos = ({ route, navigation }) => {
-  const db = getFirestore()
-  const ref = collection(db, "EventoUtilizador")
+  const db = getFirestore();
+  const ref = collection(db, "EventoUtilizador");
 
-  const [utilizador, setUtilizador] = useState("null")
-  const [inscrito, setInscrito] = useState(false)
-  const [imageCodigo, setImageCodigo] = useState()
-  const [imageCodigoEvento, setImageCodigoEvento] = useState()
+  const [utilizador, setUtilizador] = useState("null");
+  const [inscrito, setInscrito] = useState(false);
+  const [imageCodigo, setImageCodigo] = useState();
+  const [imageCodigoEvento, setImageCodigoEvento] = useState();
 
-  const imageData = `${route.params.item.foto}`
+  const imageData = `${route.params.item.foto}`;
 
-  let utilizadorRef = null
+  let utilizadorRef = null;
   useEffect(() => {
-    let isMounted = true
+    let isMounted = true;
     if (isMounted) {
-      const auth = getAuth()
+      const auth = getAuth();
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          utilizadorRef = doc(db, "Utilizador", user.email)
+          utilizadorRef = doc(db, "Utilizador", user.email);
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
-              setUtilizador(doc.data())
-              setImageCodigo(route.params.item.foto)
+              setUtilizador(doc.data());
+              setImageCodigo(route.params.item.foto);
             } else {
-              console.log("No such document!")
+              console.log("No such document!");
             }
-          })
+          });
         } else {
         }
-      })
+      });
     }
     return () => {
-      isMounted = false
-    }
-  }, [])
+      isMounted = false;
+    };
+  }, []);
 
-  let listaEventoUtilizador = []
+  let listaEventoUtilizador = [];
 
   onSnapshot(ref, (snapshot) => {
-    let mounted = true
+    let mounted = true;
     if (mounted) {
-      listaEventoUtilizador = []
+      listaEventoUtilizador = [];
       snapshot.docs.forEach((doc) => {
-        listaEventoUtilizador.push({ ...doc.data(), id: doc.id })
-      })
+        listaEventoUtilizador.push({ ...doc.data(), id: doc.id });
+      });
 
       for (let i = 0; i < listaEventoUtilizador.length; i++) {
         if (
           listaEventoUtilizador[i].idEvento == route.params.item.id &&
           listaEventoUtilizador[i].utilizador == utilizador.email
         ) {
-          setInscrito(true)
+          setInscrito(true);
         }
       }
     }
-    return () => (mounted = false)
-  })
+    return () => (mounted = false);
+  });
 
   function inscrever() {
+    const randomId = uuidv4({
+      random: getRandomBase64,
+    });
+
     getDocs(ref).then(() => {
       if (inscrito == false) {
-        setDoc(doc(db, "EventoUtilizador", route.params.item.id), {
+        setDoc(doc(db, "EventoUtilizador", randomId), {
+          EventoUtilizadorId: randomId,
           idEvento: route.params.item.id,
           utilizador: utilizador.email,
-        })
+        });
       }
-    })
+    });
 
     if (inscrito == true) {
-      Alert.alert("Já estás inscrito para este evento! Esperamos-te lá!")
+      Alert.alert("Já estás inscrito para este evento! Esperamos-te lá!");
     } else {
-      Alert.alert("Estás inscrito! Esperamos-te lá!")
+      Alert.alert("Estás inscrito! Esperamos-te lá!");
     }
 
-    navigation.navigate("Agenda")
+    navigation.navigate("Agenda");
   }
-  
+
   const goBack = () => {
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
 
   return (
     <SafeAreaView style={{ backgroundColor: "#1A649F", flex: 1 }}>
@@ -217,7 +224,7 @@ const DetalheEventos = ({ route, navigation }) => {
         </View>
       </ScrollView>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default DetalheEventos
+export default DetalheEventos;
