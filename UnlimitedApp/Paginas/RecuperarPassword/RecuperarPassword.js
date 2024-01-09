@@ -8,6 +8,7 @@ import {
   TextInput,
   Alert,
   TouchableOpacity,
+  StatusBar,
 } from "react-native"
 import React, { useState, useEffect } from "react"
 import styles from "./RecuperarPasswordStyle"
@@ -49,6 +50,7 @@ const RecuperarPassword = ({ navigation }) => {
   const [email, setEmail] = useState("")
   const [errorPedido, setErrorPedido] = useState(false)
   const [user, setUser] = useState()
+  StatusBar.setBackgroundColor('#1A649F')
 
   const enviarEmail = () => {
     let existe = false

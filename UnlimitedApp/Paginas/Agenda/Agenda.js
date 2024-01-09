@@ -254,62 +254,63 @@ const Agenda = ({ navigation }) => {
               />
             </View>
           </View>
-
-          {/* Barra de Pesquisa e filtro / palavras-chave*/}
-          <View style={styles.searchView}>
-            <TextInput
-              placeholder="Pesquisa..."
-              type="text"
-              onChangeText={(text) => alterarFiltroManual(text)}
-              value={filtro}
-              style={styles.searchInput}
+          <View style={{ backgroundColor: "#F2F3F5" }}>
+            {/* Barra de Pesquisa e filtro / palavras-chave*/}
+            <View style={styles.searchView}>
+              <TextInput
+                placeholder="Pesquisa..."
+                type="text"
+                onChangeText={(text) => alterarFiltroManual(text)}
+                value={filtro}
+                style={styles.searchInput}
+              />
+              <SelectDropdown
+                data={filtros}
+                onSelect={(selectedItem, index) => {
+                  alterarFiltro(selectedItem);
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }}
+                renderDropdownIcon={(isOpened) => {
+                  return (
+                    <FontAwesome5
+                      name={"filter"}
+                      color={"#444"}
+                      style={styles.filterIcon}
+                    />
+                  );
+                }}
+                defaultValue={"Todos"}
+                defaultButtonText="Todos"
+                dropdownIconPosition="left"
+                rowTextStyle={{ fontWeight: "600" }}
+                buttonStyle={{
+                  width: "20%",
+                  height: 40,
+                  backgroundColor: "transparent",
+                }}
+                dropdownStyle={{
+                  width: "40%",
+                  position: "absolute",
+                  left: "55%",
+                  borderRadius: 5,
+                }}
+              />
+            </View>
+            <FlatList
+              data={listaEventosFiltrada}
+              initialNumToRender={3}
+              renderItem={(item) => _renderItem(item)}
+              keyExtractor={(item) => {
+                return item.id;
+              }}
             />
-            <SelectDropdown
-              data={filtros}
-              onSelect={(selectedItem, index) => {
-                alterarFiltro(selectedItem);
-              }}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              rowTextForSelection={(item, index) => {
-                return item;
-              }}
-              renderDropdownIcon={(isOpened) => {
-                return (
-                  <FontAwesome5
-                    name={"filter"}
-                    color={"#444"}
-                    style={styles.filterIcon}
-                  />
-                );
-              }}
-              defaultValue={"Todos"}
-              defaultButtonText="Todos"
-              dropdownIconPosition="left"
-              rowTextStyle={{ fontWeight: "600" }}
-              buttonStyle={{
-                width: "20%",
-                height: 40,
-                backgroundColor: "transparent",
-              }}
-              dropdownStyle={{
-                width: "40%",
-                position: "absolute",
-                left: "55%",
-                borderRadius: 5,
-              }}
-            />
+            <View style={{ zIndex: -1, height: 50, marginTop: 10 }}></View>
           </View>
-          <FlatList
-            data={listaEventosFiltrada}
-            initialNumToRender={3}
-            renderItem={(item) => _renderItem(item)}
-            keyExtractor={(item) => {
-              return item.id;
-            }}
-          />
-          <View style={{ zIndex: -1, height: 50, marginTop: 10 }}></View>
         </>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -321,7 +322,6 @@ class ItemLista extends React.PureComponent {
     return (
       <>
         <TouchableOpacity
-          style={{ zIndex: 0, marginBottom: 10 }}
           onPress={() =>
             this.props.navigation.navigate("DetalheEvento", {
               item: this.props.item,

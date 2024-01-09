@@ -12,6 +12,7 @@ import {
   Image,
   Alert,
   ImageBackground,
+  StatusBar,
 } from "react-native"
 import {
   getFirestore,
@@ -73,6 +74,8 @@ const Registo = ({ navigation }) => {
   const [verPalavraPasse, setVerPalavraPasse] = useState(true)
   const [codigo, setCodigo] = useState("")
   const [paginaRegister, setPaginaRegister] = useState(1)
+
+  StatusBar.setBackgroundColor('#1A649F')
 
   //Variaveis
   let anos = ["1", "2", "3", "4", "5"]

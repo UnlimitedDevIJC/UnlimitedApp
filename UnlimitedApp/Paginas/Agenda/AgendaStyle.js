@@ -3,7 +3,9 @@ import { Platform, StyleSheet } from "react-native"
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: "#F2F3F5",
+    backgroundColor: "#1A649F",
+    marginTop: 30,
+    marginBottom: 500,
   },
 
   retanguloFundo: {
@@ -50,14 +52,6 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     padding: 10,
     backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 20,
   },
 
   filterIcon: {

@@ -117,7 +117,7 @@ const DetalheEventos = ({ route, navigation }) => {
   };
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#1A649F", flex: 1 }}>
+    <SafeAreaView style={{ backgroundColor: "#1A649F", flex: 1,  marginTop: 30 }}>
       <ScrollView
         style={{ flex: 1, marginBottom: 45, backgroundColor: "#F2F3F5" }}
         bounces={false}
