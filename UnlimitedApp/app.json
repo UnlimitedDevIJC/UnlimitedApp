@@ -2,7 +2,7 @@
   "expo": {
     "name": "Unlimited App",
     "slug": "UnlimitedApp",
-    "version": "1.0.5",
+    "version": "1.0.8",
     "orientation": "portrait",
     "icon": "./assets/unlimitedLogo.png",
     "userInterfaceStyle": "light",
@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.unlimitedfuture.UnlimitedApp",
-      "versionCode": 5
+      "versionCode": 8
     },
     "web": {
       "favicon": "./assets/favicon.png"
