@@ -31,7 +31,7 @@ import React, { useState, useEffect } from "react"
 import SelectDropdown from "react-native-select-dropdown"
 
 const db = getFirestore()
-const colRef = collection(db, "Evento")
+
 const academiaRef = collection(db, "Academia")
 const palavraChaveRef = collection(db, "PalavrasChave")
 
