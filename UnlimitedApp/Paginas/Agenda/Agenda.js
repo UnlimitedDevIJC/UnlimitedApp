@@ -245,7 +245,7 @@ const Agenda = ({ navigation }) => {
         }}
       >
         <>
-          <View style={{ height: 130, backgroundColor: "#F2F3F5" }}>
+          <View style={{ height: 130, backgroundColor: "#F2F3F5", marginTop: 30 }}>
             <View style={styles.retanguloFundo} />
             <View style={styles.logoView}>
               <Image
@@ -303,13 +303,12 @@ const Agenda = ({ navigation }) => {
             </View>
             <FlatList
               data={listaEventosFiltrada}
-              initialNumToRender={3}
+              initialNumToRender={10}
               renderItem={(item) => _renderItem(item)}
               keyExtractor={(item) => {
                 return item.id;
               }}
             />
-            <View style={{ zIndex: -1, height: 50, marginTop: 10 }}></View>
           </View>
         </>
       </TouchableWithoutFeedback>

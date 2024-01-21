@@ -4,16 +4,14 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#1A649F",
-    marginTop: 30,
-    marginBottom: 500,
   },
 
   retanguloFundo: {
-    width: "190%",
+    width: "210%",
     transform: [{ rotateZ: "-15deg" }],
     height: "520%",
-    left: "-25%",
-    top: "-498%",
+    left: "-30%",
+    top: "-502%",
     backgroundColor: "#1A649F",
     shadowColor: "#000",
     shadowOffset: {
@@ -28,7 +26,7 @@ const styles = StyleSheet.create({
   logoView: {
     width: "100%",
     position: "absolute",
-    top: "16%",
+    top: "17%",
   },
 
   logo: {
