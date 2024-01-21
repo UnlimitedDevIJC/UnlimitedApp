@@ -2,7 +2,7 @@
   "expo": {
     "name": "Unlimited App",
     "slug": "UnlimitedApp",
-    "version": "1.0.8",
+    "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/unlimitedLogo.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,7 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +23,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.unlimitedfuture.UnlimitedApp",
-      "versionCode": 8
+      "versionCode": 9
     },
     "web": {
       "favicon": "./assets/favicon.png"
