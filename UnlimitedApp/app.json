@@ -2,7 +2,7 @@
   "expo": {
     "name": "Unlimited App",
     "slug": "UnlimitedApp",
-    "version": "1.0.10",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/unlimitedLogo.png",
     "userInterfaceStyle": "light",
@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp"
+      "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp",
+      "buildNumber": "2"
     },
     "android": {
       "adaptiveIcon": {
