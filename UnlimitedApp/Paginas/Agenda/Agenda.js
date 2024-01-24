@@ -13,7 +13,7 @@ import {
   FlatList,
   Alert,
   ImageBackground,
-} from "react-native";
+} from "react-native"
 import {
   getFirestore,
   collection,
@@ -23,117 +23,117 @@ import {
   getDoc,
   doc,
   QuerySnapshot,
-} from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import styles from "./AgendaStyle";
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
-import React, { useState, useEffect } from "react";
-import SelectDropdown from "react-native-select-dropdown";
-import { Header } from "react-native/Libraries/NewAppScreen";
+} from "firebase/firestore"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
+import styles from "./AgendaStyle"
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
+import React, { useState, useEffect } from "react"
+import SelectDropdown from "react-native-select-dropdown"
+import { Header } from "react-native/Libraries/NewAppScreen"
 
-const db = getFirestore();
-const colRef = collection(db, "Evento");
-const academiaRef = collection(db, "Academia");
-const palavraChaveRef = collection(db, "PalavrasChave");
+const db = getFirestore()
+const colRef = collection(db, "Evento")
+const academiaRef = collection(db, "Academia")
+const palavraChaveRef = collection(db, "PalavrasChave")
 
-let listaEventos = [];
-let listaEventosFiltradaPrimeira = [];
-let filtros = new Set();
+let listaEventos = []
+let listaEventosFiltradaPrimeira = []
+let filtros = new Set()
 
-let listaAcademia = [];
+let listaAcademia = []
 
-let listaPalavrasChave = [];
+let listaPalavrasChave = []
 
 onSnapshot(academiaRef, (snapshot) => {
-  let existe = true;
+  let existe = true
   if (existe) {
     snapshot.docs.forEach((doc) => {
-      listaAcademia.push({ ...doc.data(), id: doc.id });
-    });
+      listaAcademia.push({ ...doc.data(), id: doc.id })
+    })
   }
-  return () => (existe = false);
-});
+  return () => (existe = false)
+})
 
 onSnapshot(palavraChaveRef, (snapshot) => {
-  let existe = true;
+  let existe = true
   if (existe) {
     snapshot.docs.forEach((doc) => {
-      listaPalavrasChave.push({ ...doc.data(), id: doc.id });
-    });
+      listaPalavrasChave.push({ ...doc.data(), id: doc.id })
+    })
   }
-  return () => (existe = false);
-});
+  return () => (existe = false)
+})
 
 onSnapshot(colRef, (snapshot) => {
-  let mounted = true;
+  let mounted = true
   if (mounted) {
-    listaEventos = [];
+    listaEventos = []
     snapshot.docs.forEach((doc) => {
-      listaEventos.push({ ...doc.data(), id: doc.id });
-    });
-    filtros = [...new Set(listaPalavrasChave.map((item) => item.palavraChave))];
-    filtros.unshift("Todos");
+      listaEventos.push({ ...doc.data(), id: doc.id })
+    })
+    filtros = [...new Set(listaPalavrasChave.map((item) => item.palavraChave))]
+    filtros.unshift("Todos")
   }
-  return () => (mounted = false);
-});
+  return () => (mounted = false)
+})
 
 const Agenda = ({ navigation }) => {
-  const [filtro, setFiltro] = useState("");
-  const [utilizador, setUtilizador] = useState("null");
-  const [academia, setAcademia] = useState("");
-  const [value, setValue] = useState("");
-  const [user, setUser] = useState();
-  const [listaEventosFiltrada, setListaEventosFiltrada] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [filtro, setFiltro] = useState("")
+  const [utilizador, setUtilizador] = useState("null")
+  const [academia, setAcademia] = useState("")
+  const [value, setValue] = useState("")
+  const [user, setUser] = useState()
+  const [listaEventosFiltrada, setListaEventosFiltrada] = useState([])
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  let utilizadorRef = null;
+  let utilizadorRef = null
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true
     if (isMounted) {
-      const auth = getAuth();
+      const auth = getAuth()
       onAuthStateChanged(auth, (user1) => {
         if (user1) {
-          utilizadorRef = doc(db, "Utilizador", user1.email);
-          setUser(user1);
+          utilizadorRef = doc(db, "Utilizador", user1.email)
+          setUser(user1)
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
-              setUtilizador(doc.data());
-              setIsLoggedIn(true);
+              setUtilizador(doc.data())
+              setIsLoggedIn(true)
             } else {
             }
-          });
+          })
         } else {
         }
-      });
+      })
     }
     return () => {
-      isMounted = false;
-    };
-  }, []);
+      isMounted = false
+    }
+  }, [])
 
   function compararData(evento) {
-    const currentDay = new Date().getDate();
-    const currentMonth = new Date().getMonth() + 1;
-    const currentYear = new Date().getFullYear();
+    const currentDay = new Date().getDate()
+    const currentMonth = new Date().getMonth() + 1
+    const currentYear = new Date().getFullYear()
 
     const currentDate = new Date(
       currentYear + "-" + currentMonth + "-" + currentDay
-    );
+    )
 
-    const eventoData = new Date(evento.data);
+    const eventoData = new Date(evento.data)
 
     if (eventoData.getTime() > currentDate.getTime()) {
-      return true;
+      return true
     } else if (eventoData.getTime() === currentDate.getTime()) {
-      return true;
+      return true
     } else {
-      return false;
+      return false
     }
   }
 
   useEffect(() => {
     const unsubscribe = onSnapshot(colRef, (snapshot) => {
-      const data = snapshot.docs.map((doc) => doc.data());
+      const data = snapshot.docs.map((doc) => doc.data())
       const filteredEvents = data.filter((item) => {
         return (
           parseInt(item.pontosVisiveis) <= parseInt(utilizador.pontos) &&
@@ -142,13 +142,13 @@ const Agenda = ({ navigation }) => {
           compararData(item) &&
           item.visivel === "true" &&
           item.universidade === utilizador.universidade
-        );
-      });
-      setListaEventosFiltrada(filteredEvents);
-    });
+        )
+      })
+      setListaEventosFiltrada(filteredEvents)
+    })
 
-    return () => unsubscribe();
-  }, [isLoggedIn]);
+    return () => unsubscribe()
+  }, [isLoggedIn])
 
   function _renderItem(item) {
     return (
@@ -157,20 +157,20 @@ const Agenda = ({ navigation }) => {
         utilizador={utilizador}
         navigation={navigation}
       />
-    );
+    )
   }
 
   function alterarAcademias() {
     for (let i = 0; i < listaAcademia.length; i++) {
       if (listaAcademia[i].codigo == utilizador.codigoAcademia) {
-        setAcademia(listaAcademia[i]);
+        setAcademia(listaAcademia[i])
       }
     }
   }
 
   function alterarFiltro(item) {
-    alterarAcademias();
-    setValue(item);
+    alterarAcademias()
+    setValue(item)
 
     if (isLoggedIn && item == "Todos") {
       const filteredList = listaEventos.filter((evento) => {
@@ -182,9 +182,9 @@ const Agenda = ({ navigation }) => {
           compararData(evento) &&
           evento.visivel === "true" &&
           evento.universidade == utilizador.universidade
-        );
-      });
-      setListaEventosFiltrada(filteredList);
+        )
+      })
+      setListaEventosFiltrada(filteredList)
     } else {
       const filteredList = listaEventos.filter((evento) => {
         for (let i = 0; i < listaPalavrasChave.length; i++) {
@@ -198,16 +198,16 @@ const Agenda = ({ navigation }) => {
               compararData(evento) &&
               evento.visivel === "true" &&
               evento.universidade == utilizador.universidade
-            );
+            )
           }
         }
-      });
-      setListaEventosFiltrada(filteredList);
+      })
+      setListaEventosFiltrada(filteredList)
     }
   }
 
   function alterarFiltroManual(text) {
-    setFiltro(text);
+    setFiltro(text)
 
     if (text == "") {
       const filteredList = listaEventos.filter((item) => {
@@ -218,9 +218,9 @@ const Agenda = ({ navigation }) => {
           compararData(item) &&
           item.visivel === "true" &&
           item.universidade == utilizador.universidade
-        );
-      });
-      setListaEventosFiltrada(filteredList);
+        )
+      })
+      setListaEventosFiltrada(filteredList)
     } else {
       const filteredList = listaEventos.filter((item) => {
         return (
@@ -231,96 +231,111 @@ const Agenda = ({ navigation }) => {
           compararData(item) &&
           item.visivel === "true" &&
           item.universidade == utilizador.universidade
-        );
-      });
-      setListaEventosFiltrada(filteredList);
+        )
+      })
+      setListaEventosFiltrada(filteredList)
     }
   }
+
+  const HeaderInclinado = () => {
+    return (
+      <View>
+        <View
+          style={{
+            backgroundColor: "#1A649F",
+            height: 150,
+            width: "120%",
+            left: -50,
+            top: -50,
+            transform: [{ skewY: "-15deg" }],
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
+        <Image
+          style={styles.imageLogo}
+          source={require("../Login/unlimitedLogo.png")}
+        />
+      </View>
+    );
+  };
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <TouchableWithoutFeedback
         onPress={() => {
-          Keyboard.dismiss();
+          Keyboard.dismiss()
         }}
       >
         <>
-          <View style={{ height: 130, backgroundColor: "#F2F3F5", marginTop: 30 }}>
-            <View style={styles.retanguloFundo} />
-            <View style={styles.logoView}>
-              <Image
-                style={styles.logo}
-                source={require("../Login/unlimitedLogo.png")}
-              />
-            </View>
-          </View>
-          <View style={{ backgroundColor: "#F2F3F5" }}>
-            {/* Barra de Pesquisa e filtro / palavras-chave*/}
-            <View style={styles.searchView}>
-              <TextInput
-                placeholder="Pesquisa..."
-                type="text"
-                onChangeText={(text) => alterarFiltroManual(text)}
-                value={filtro}
-                style={styles.searchInput}
-              />
-              <SelectDropdown
-                data={filtros}
-                onSelect={(selectedItem, index) => {
-                  alterarFiltro(selectedItem);
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                  return selectedItem;
-                }}
-                rowTextForSelection={(item, index) => {
-                  return item;
-                }}
-                renderDropdownIcon={(isOpened) => {
-                  return (
-                    <FontAwesome5
-                      name={"filter"}
-                      color={"#444"}
-                      style={styles.filterIcon}
-                    />
-                  );
-                }}
-                defaultValue={"Todos"}
-                defaultButtonText="Todos"
-                dropdownIconPosition="left"
-                rowTextStyle={{ fontWeight: "600" }}
-                buttonStyle={{
-                  width: "20%",
-                  height: 40,
-                  backgroundColor: "transparent",
-                }}
-                dropdownStyle={{
-                  width: "40%",
-                  position: "absolute",
-                  left: "55%",
-                  borderRadius: 5,
-                }}
-              />
-            </View>
-            <FlatList
-              data={listaEventosFiltrada}
-              initialNumToRender={10}
-              renderItem={(item) => _renderItem(item)}
-              keyExtractor={(item) => {
-                return item.id;
+         <HeaderInclinado />
+
+          {/* Barra de Pesquisa e filtro / palavras-chave*/}
+          <View style={styles.searchView}>
+            <TextInput
+              placeholder="Pesquisa..."
+              type="text"
+              onChangeText={(text) => alterarFiltroManual(text)}
+              value={filtro}
+              style={styles.searchInput}
+            />
+            <SelectDropdown
+              data={filtros}
+              onSelect={(selectedItem, index) => {
+                alterarFiltro(selectedItem)
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem
+              }}
+              rowTextForSelection={(item, index) => {
+                return item
+              }}
+              renderDropdownIcon={(isOpened) => {
+                return (
+                  <FontAwesome5
+                    name={"filter"}
+                    color={"#444"}
+                    style={styles.filterIcon}
+                  />
+                )
+              }}
+              defaultValue={"Todos"}
+              defaultButtonText="Todos"
+              dropdownIconPosition="left"
+              rowTextStyle={{ fontWeight: "600" }}
+              buttonStyle={{
+                width: "20%",
+                height: 40,
+                backgroundColor: "transparent",
+              }}
+              dropdownStyle={{
+                width: "40%",
+                position: "absolute",
+                left: "55%",
+                borderRadius: 5,
               }}
             />
           </View>
+          <FlatList
+            data={listaEventosFiltrada}
+            initialNumToRender={3}
+            renderItem={(item) => _renderItem(item)}
+            keyExtractor={(item) => {
+              return item.id
+            }}
+          />
         </>
       </TouchableWithoutFeedback>
     </SafeAreaView>
-  );
-};
+  )
+}
 
 class ItemLista extends React.PureComponent {
   render() {
     return (
       <>
         <TouchableOpacity
+          style={{ zIndex: 0, marginBottom: 20, }}
           onPress={() =>
             this.props.navigation.navigate("DetalheEvento", {
               item: this.props.item,
@@ -332,8 +347,7 @@ class ItemLista extends React.PureComponent {
               <Text style={styles.cardNome}>{this.props.item.tema}</Text>
               <Text style={styles.cardData}>Data: {this.props.item.data}</Text>
               <Text style={styles.cardData}>
-                Horário: {this.props.item.horaInicio} -{" "}
-                {this.props.item.horaFim}
+                Horário: {this.props.item.horaInicio} - {this.props.item.horaFim}
               </Text>
             </View>
             <View style={styles.cardIconContainer}>
@@ -342,8 +356,8 @@ class ItemLista extends React.PureComponent {
           </View>
         </TouchableOpacity>
       </>
-    );
+    )
   }
 }
 
-export default Agenda;
+export default Agenda
