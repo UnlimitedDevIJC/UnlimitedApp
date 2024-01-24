@@ -1,0 +1,25 @@
+{
+  "cli": {
+    "version": ">= 5.9.2",
+    "promptToConfigurePushNotifications": false
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal"
+    },
+    "preview": {
+      "distribution": "internal"
+    },
+    "production": {}
+  },
+  "submit": {
+    "production": {
+      "ios": {
+        "appleId": "app-store-developer@future.pt",
+        "ascAppId": "6476400332",
+        "appleTeamId": "7DY75V7W4G"
+      }
+    }
+  }
+}

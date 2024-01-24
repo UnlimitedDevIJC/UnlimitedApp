@@ -29,6 +29,7 @@ import styles from "./AgendaStyle"
 import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
 import React, { useState, useEffect } from "react"
 import SelectDropdown from "react-native-select-dropdown"
+import { Header } from "react-native/Libraries/NewAppScreen"
 
 const db = getFirestore()
 
@@ -236,6 +237,29 @@ const Agenda = ({ navigation }) => {
     }
   }
 
+  const HeaderInclinado = () => {
+    return (
+      <View>
+        <View
+          style={{
+            backgroundColor: "#1A649F",
+            height: 150,
+            width: "120%",
+            left: -50,
+            top: -50,
+            transform: [{ skewY: "-15deg" }],
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        />
+        <Image
+          style={styles.imageLogo}
+          source={require("../Login/unlimitedLogo.png")}
+        />
+      </View>
+    );
+  };
+
   return (
     <SafeAreaView style={styles.safeArea}>
       <TouchableWithoutFeedback
@@ -244,17 +268,7 @@ const Agenda = ({ navigation }) => {
         }}
       >
         <>
-          {/* Retangulo de fundo */}
-          <View style={{ height: 130, backgroundColor: "#F2F3F5" }}>
-            {/* Logo pequneo */}
-            <View style={styles.retanguloFundo} />
-            <View style={styles.logoView}>
-              <Image
-                style={styles.logo}
-                source={require("../Login/unlimitedLogo.png")}
-              />
-            </View>
-          </View>
+         <HeaderInclinado />
 
           {/* Barra de Pesquisa e filtro / palavras-chave*/}
           <View style={styles.searchView}>
@@ -310,7 +324,6 @@ const Agenda = ({ navigation }) => {
               return item.id
             }}
           />
-          <View style={{ zIndex: -1, height: 50, marginTop: 10 }}></View>
         </>
       </TouchableWithoutFeedback>
     </SafeAreaView>
@@ -322,7 +335,7 @@ class ItemLista extends React.PureComponent {
     return (
       <>
         <TouchableOpacity
-          style={{ zIndex: 0 }}
+          style={{ zIndex: 0, marginBottom: 20, }}
           onPress={() =>
             this.props.navigation.navigate("DetalheEvento", {
               item: this.props.item,

@@ -6,71 +6,31 @@ const styles = StyleSheet.create({
     backgroundColor: "#F2F3F5",
   },
 
-  retanguloFundo: {
-    width: "190%",
-    transform: [{ rotateZ: "-15deg" }],
-    height: "520%",
-    left: "-25%",
-    top: "-498%",
-    backgroundColor: "#1A649F",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 5,
-      height: 8,
-    },
-    shadowOpacity: 0.35,
-    shadowRadius: 3.84,
-    elevation: 40,
-  },
-
-  logoView: {
-    width: "100%",
-    position: "absolute",
-    top: "17%",
-  },
-
-  logo: {
-    width: 85,
-    height: 85,
-    alignSelf: "center",
+  imageLogo: {
+    top: '-40%',
+    alignSelf:'center',
+    width: 100,
+    height: 100,
   },
 
   searchView: {
-    width: "100%",
     height: 40,
     flexDirection: "row",
-    marginTop: 20,
-    marginBottom: 10,
+    top: '-15%'
   },
 
   searchInput: {
     width: "70%",
-    height: "100%",
     fontSize: 14,
-    marginLeft: 20,
-    padding: 10,
+    marginLeft: '5%',
     backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 20,
+    height: 50,
   },
 
   filterIcon: {
-    marginLeft: 30,
+    marginLeft: '35%',
     fontSize: 35,
     color: "#174162",
-  },
-
-  listaEventos: {
-    backgroundColor: "#f2f2f2",
-    borderRadius: 12,
-    width: "100%",
-    flex: 1,
   },
 
   cardView: {
@@ -79,36 +39,25 @@ const styles = StyleSheet.create({
     width: "90%",
     flex: 1,
     alignSelf: "center",
-    marginTop: 25,
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 3,
-      height: 6,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 20,
   },
 
   cardInfo: {
     width: "80%",
-    padding: 10,
-    marginLeft: 10,
+    padding: '2%',
+    marginLeft: '3%',
   },
 
   cardNome: {
-    padding: 10,
-    marginTop: 5,
+    padding: '3%',
+    marginTop: '2%',
     fontSize: 22,
     fontWeight: "700",
-    fontFamily:'Oswald-Regular'
   },
 
   cardData: {
-    padding: 10,
+    padding: '3%',
     fontSize: 14,
     fontWeight: "400",
-    fontFamily:'Oswald-Regular'
   },
 
   cardIconContainer: {

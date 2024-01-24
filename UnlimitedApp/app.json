@@ -1,22 +1,39 @@
 {
   "expo": {
-    "name": "UnlimitedApp",
+    "name": "Unlimited App",
     "slug": "UnlimitedApp",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/unlimitedLogo.png",
     "userInterfaceStyle": "light",
+
+    "splash": {
+      "image": "./assets/unlimitedLogo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp",
+      "buildNumber": "2"
     },
-    "android": {  
-      "package": "com.unlimitedApp.UnlimitedApp",
-      "versionCode": 1
-    },
-    "web": {
-    }
+      "android": {
+        "adaptiveIcon": {
+          "foregroundImage": "./assets/unlimitedLogo.png",
+          "backgroundColor": "#ffffff"
+        },
+        "package": "com.unlimitedfuture.UnlimitedApp",
+        "versionCode": 10
+      },
+      "web": {
+        "favicon": "./assets/unlimitedLogo.png"
+      },
+      "extra": {
+        "eas": {
+          "projectId": "4f4e08fb-4c44-48fc-bc99-8f94d2ed5352"
+        }
+      }
   }
 }

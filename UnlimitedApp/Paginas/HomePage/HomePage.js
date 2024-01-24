@@ -338,6 +338,7 @@ const HomePage = ({ navigation }) => {
             alignItems: "center",
             justifyContent: "center",
             marginTop: 30,
+            marginBottom: 40,
           }}
         >
           <View>

@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     width: 300,
     height: 50,
     position: "absolute",
-    top: "54%",
+    top: "56%",
     alignSelf: "center",
     // backgroundColor: "blue",
     padding: 5,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 35,
     position: "absolute",
-    top: "62%",
+    top: "68%",
   },
 
   recuperarPasswordButton: {
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     position: "absolute",
-    top: "70%",
+    top: "77%",
     // backgroundColor: "blue",
     alignItems: "center",
     justifyContent: "center",
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 50,
     position: "absolute",
-    top: "78%",
+    top: "88%",
     // backgroundColor: "blue",
     alignItems: "center",
     justifyContent: "center",
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
     width: "10%",
     zIndex: 1,
     alignSelf: "center",
-    top: '40%',
+    top: '57%',
     left: '30%'
   },
 

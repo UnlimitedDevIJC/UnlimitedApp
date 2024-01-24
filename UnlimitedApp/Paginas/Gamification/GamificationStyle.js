@@ -3,12 +3,12 @@ import { Platform, StyleSheet } from "react-native"
 const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: "#1A649F",
+    marginTop: 30,
     flex: 1,
   },
 
   scrollView: {
     flex: 1,
-    marginBottom: 45,
     backgroundColor: "#F2F3F5",
   },
 

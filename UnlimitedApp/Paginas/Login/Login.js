@@ -119,7 +119,7 @@ const Login = ({ navigation }) => {
         <TextInput
           keyboardType="email-address"
           placeholderTextColor="#174162"
-          placeholder="Colocar Email"
+          placeholder="Email"
           autoCapitalize="none"
           type="text"
           returnKeyType="next"
@@ -133,7 +133,7 @@ const Login = ({ navigation }) => {
         {/* Inserir Password */}
         <TextInput
           placeholderTextColor="#174162"
-          placeholder="Colocar Palavra-Passe"
+          placeholder="Password"
           type="text"
           returnKeyType="done"
           ref={passwordRef}
@@ -183,7 +183,7 @@ const Login = ({ navigation }) => {
         {email === "" || password === "" ? (
           <View style={styles.loginView}>
             <TouchableOpacity disabled={true} style={styles.loginButtonDisable}>
-              <Text style={styles.loginText}>Iniciar Sessão</Text>
+              <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
           </View>
         ) : (

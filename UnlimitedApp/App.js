@@ -8,6 +8,8 @@ export default function App() {
     async function loadFont() {
       await Font.loadAsync({
         "Oswald-Regular": require("../UnlimitedApp/assets/fonts/Oswald-Regular.ttf"),
+        
+  
       })
     }
     loadFont()

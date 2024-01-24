@@ -316,7 +316,7 @@ const EditarPerfil = ({ navigation }) => {
                 ) : (
                   <Image
                     style={styles.perfilImage}
-                    source={require("../Perfil/default.jpeg")}
+                    source={require("../Perfil/default.png")}
                   />
                 )}
                 <FontAwesome5 name="pen" style={styles.editFotoIcon} />

@@ -128,7 +128,7 @@ const Perfil = ({ navigation }) => {
                 ) : (
                   <Image
                     style={styles.perfilImage}
-                    source={require("../Perfil/default.jpeg")}
+                    source={require("../Perfil/default.png")}
                   />
                 )}
               </View>
