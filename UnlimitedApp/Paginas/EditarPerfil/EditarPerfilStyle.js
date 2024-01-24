@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   safeArea: {
     backgroundColor: "#1A649F",
     flex: 1,
-    marginTop: 30
   },
 
   scrollView: {

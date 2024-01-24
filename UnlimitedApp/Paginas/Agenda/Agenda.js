@@ -13,6 +13,7 @@ import {
   FlatList,
   Alert,
   ImageBackground,
+  StatusBar
 } from "react-native"
 import {
   getFirestore,
@@ -246,7 +247,7 @@ const Agenda = ({ navigation }) => {
             height: 150,
             width: "120%",
             left: -50,
-            top: -50,
+            top: -80,
             transform: [{ skewY: "-15deg" }],
             justifyContent: "center",
             alignItems: "center",
@@ -261,6 +262,19 @@ const Agenda = ({ navigation }) => {
   };
 
   return (
+    <>
+    <View
+        style={{
+          backgroundColor: "#1A649F",
+          height: Platform.OS === "ios" ? 40 : StatusBar.currentHeight,
+        }}
+      >
+        <StatusBar
+          translucent
+          backgroundColor="#1A649F"
+          barStyle="light-content"
+        />
+      </View>
     <SafeAreaView style={styles.safeArea}>
       <TouchableWithoutFeedback
         onPress={() => {
@@ -327,6 +341,7 @@ const Agenda = ({ navigation }) => {
         </>
       </TouchableWithoutFeedback>
     </SafeAreaView>
+    </>
   )
 }
 

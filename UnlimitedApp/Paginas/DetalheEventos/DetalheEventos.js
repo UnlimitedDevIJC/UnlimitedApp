@@ -12,7 +12,8 @@ import {
   Image,
   Alert,
   ImageBackground,
-} from "react-native";
+  StatusBar,
+} from "react-native"
 import {
   getFirestore,
   collection,
@@ -22,76 +23,76 @@ import {
   setDoc,
   doc,
   getDocs,
-} from "firebase/firestore";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import React, { useState, useEffect } from "react";
-import styles from "./DetalheEventosStyle";
-import { FontAwesome5, FontAwesome } from "@expo/vector-icons";
-import { v4 as uuidv4 } from "uuid";
-import { getRandomBase64 } from "react-native-get-random-values";
+} from "firebase/firestore"
+import { getAuth, onAuthStateChanged } from "firebase/auth"
+import React, { useState, useEffect } from "react"
+import styles from "./DetalheEventosStyle"
+import { FontAwesome5, FontAwesome } from "@expo/vector-icons"
+import { v4 as uuidv4 } from "uuid"
+import { getRandomBase64 } from "react-native-get-random-values"
 
 const DetalheEventos = ({ route, navigation }) => {
-  const db = getFirestore();
-  const ref = collection(db, "EventoUtilizador");
+  const db = getFirestore()
+  const ref = collection(db, "EventoUtilizador")
 
-  const [utilizador, setUtilizador] = useState("null");
-  const [inscrito, setInscrito] = useState(false);
-  const [imageCodigo, setImageCodigo] = useState();
-  const [imageCodigoEvento, setImageCodigoEvento] = useState();
+  const [utilizador, setUtilizador] = useState("null")
+  const [inscrito, setInscrito] = useState(false)
+  const [imageCodigo, setImageCodigo] = useState()
+  const [imageCodigoEvento, setImageCodigoEvento] = useState()
 
-  const imageData = `${route.params.item.foto}`;
+  const imageData = `${route.params.item.foto}`
 
-  let utilizadorRef = null;
+  let utilizadorRef = null
   useEffect(() => {
-    let isMounted = true;
+    let isMounted = true
     if (isMounted) {
-      const auth = getAuth();
+      const auth = getAuth()
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          utilizadorRef = doc(db, "Utilizador", user.email);
+          utilizadorRef = doc(db, "Utilizador", user.email)
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
-              setUtilizador(doc.data());
-              setImageCodigo(route.params.item.foto);
+              setUtilizador(doc.data())
+              setImageCodigo(route.params.item.foto)
             } else {
-              console.log("No such document!");
+              console.log("No such document!")
             }
-          });
+          })
         } else {
         }
-      });
+      })
     }
     return () => {
-      isMounted = false;
-    };
-  }, []);
+      isMounted = false
+    }
+  }, [])
 
-  let listaEventoUtilizador = [];
+  let listaEventoUtilizador = []
 
   onSnapshot(ref, (snapshot) => {
-    let mounted = true;
+    let mounted = true
     if (mounted) {
-      listaEventoUtilizador = [];
+      listaEventoUtilizador = []
       snapshot.docs.forEach((doc) => {
-        listaEventoUtilizador.push({ ...doc.data(), id: doc.id });
-      });
+        listaEventoUtilizador.push({ ...doc.data(), id: doc.id })
+      })
 
       for (let i = 0; i < listaEventoUtilizador.length; i++) {
         if (
           listaEventoUtilizador[i].idEvento == route.params.item.id &&
           listaEventoUtilizador[i].utilizador == utilizador.email
         ) {
-          setInscrito(true);
+          setInscrito(true)
         }
       }
     }
-    return () => (mounted = false);
-  });
+    return () => (mounted = false)
+  })
 
   function inscrever() {
     const randomId = uuidv4({
       random: getRandomBase64,
-    });
+    })
 
     getDocs(ref).then(() => {
       if (inscrito == false) {
@@ -99,132 +100,148 @@ const DetalheEventos = ({ route, navigation }) => {
           EventoUtilizadorId: randomId,
           idEvento: route.params.item.id,
           utilizador: utilizador.email,
-        });
+        })
       }
-    });
+    })
 
     if (inscrito == true) {
-      Alert.alert("Já estás inscrito para este evento! Esperamos-te lá!");
+      Alert.alert("Já estás inscrito para este evento! Esperamos-te lá!")
     } else {
-      Alert.alert("Estás inscrito! Esperamos-te lá!");
+      Alert.alert("Estás inscrito! Esperamos-te lá!")
     }
 
-    navigation.navigate("Agenda");
+    navigation.navigate("Agenda")
   }
 
   const goBack = () => {
-    navigation.goBack();
-  };
+    navigation.goBack()
+  }
 
   return (
-    <SafeAreaView style={{ backgroundColor: "#1A649F", flex: 1,  marginTop: 30 }}>
-      <ScrollView
-        style={{ flex: 1, backgroundColor: "#F2F3F5" }}
-        bounces={false}
+    <>
+      <View
+        style={{
+          backgroundColor: "#1A649F",
+          height: Platform.OS === "ios" ? 40 : StatusBar.currentHeight,
+        }}
       >
-        <View
-          style={{
-            width: "100%",
-            padding: 10,
-            marginBottom: 20,
-            height: 125,
-          }}
+        <StatusBar
+          translucent
+          backgroundColor="#1A649F"
+          barStyle="light-content"
+        />
+      </View>
+      <SafeAreaView
+        style={{ backgroundColor: "#1A649F", flex: 1}}
+      >
+        <ScrollView
+          style={{ flex: 1, backgroundColor: "#F2F3F5" }}
+          bounces={false}
         >
-          <View
-            style={{
-              width: "120%",
-              transform: [{ rotateZ: "-15deg" }],
-              height: "120%",
-              left: "-10%",
-              top: "-70%",
-              backgroundColor: "#1A649F",
-              shadowColor: "#000",
-              shadowOffset: {
-                width: 5,
-                height: 8,
-              },
-              shadowOpacity: 0.35,
-              shadowRadius: 3.84,
-              elevation: 40,
-            }}
-          ></View>
-          <TouchableOpacity style={styles.goBackBtn} onPress={goBack}>
-            <FontAwesome5 name="arrow-left" style={styles.goBackIcon} />
-          </TouchableOpacity>
           <View
             style={{
               width: "100%",
-              position: "absolute",
-              top: "24%",
+              padding: 10,
+              marginBottom: 20,
+              height: 125,
             }}
           >
-            <Image
+            <View
               style={{
-                width: 85,
-                height: 85,
-                alignSelf: "center",
+                width: "120%",
+                transform: [{ rotateZ: "-15deg" }],
+                height: "120%",
+                left: "-10%",
+                top: "-70%",
+                backgroundColor: "#1A649F",
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 5,
+                  height: 8,
+                },
+                shadowOpacity: 0.35,
+                shadowRadius: 3.84,
+                elevation: 40,
               }}
-              source={require("../Login/unlimitedLogo.png")}
+            ></View>
+            <TouchableOpacity style={styles.goBackBtn} onPress={goBack}>
+              <FontAwesome5 name="arrow-left" style={styles.goBackIcon} />
+            </TouchableOpacity>
+            <View
+              style={{
+                width: "100%",
+                position: "absolute",
+                top: "24%",
+              }}
+            >
+              <Image
+                style={{
+                  width: 85,
+                  height: 85,
+                  alignSelf: "center",
+                }}
+                source={require("../Login/unlimitedLogo.png")}
+              />
+            </View>
+          </View>
+          <View style={styles.eventoLogo}>
+            <Image
+              style={{ height: 300, width: "100%" }}
+              source={{ uri: `data:image/png;base64,${imageData}` }}
             />
           </View>
-        </View>
-        <View style={styles.eventoLogo}>
-          <Image
-            style={{ height: 300, width: "100%" }}
-            source={{ uri: `data:image/png;base64,${imageData}` }}
-          />
-        </View>
 
-        <View
-          style={{
-            height: "80%",
-            width: "100%",
-            top: "-80%",
-          }}
-        >
-          <View style={styles.eventoTituloBox}>
-            <Text style={styles.eventoTitulo}>{route.params.item.tema}</Text>
+          <View
+            style={{
+              height: "80%",
+              width: "100%",
+              top: "-80%",
+            }}
+          >
+            <View style={styles.eventoTituloBox}>
+              <Text style={styles.eventoTitulo}>{route.params.item.tema}</Text>
+            </View>
+            <View style={styles.descricaoEventoBox}>
+              <Text style={styles.descricao}>
+                <Text style={{ fontWeight: 600 }}>Descrição: </Text>
+                {route.params.item.descricao}
+              </Text>
+              <Text style={styles.descricao}>
+                <Text style={{ fontWeight: 600 }}>Data: </Text>
+                {route.params.item.data}
+              </Text>
+              <Text style={styles.descricao}>
+                <Text style={{ fontWeight: 600 }}>Local: </Text>
+                {route.params.item.local}
+              </Text>
+              <Text style={styles.descricao}>
+                <Text style={{ fontWeight: 600 }}>Hora inicio: </Text>
+                {route.params.item.horaInicio}
+              </Text>
+              <Text style={styles.descricao}>
+                <Text style={{ fontWeight: 600 }}>Hora final: </Text>
+                {route.params.item.horaFim}
+              </Text>
+            </View>
+            <View style={styles.inscreverBotaoBox}>
+              <TouchableOpacity
+                onPress={() => inscrever()}
+                style={styles.inscreverBotao}
+              >
+                <Text style={styles.inscreverText}>Inscrever</Text>
+              </TouchableOpacity>
+              <TouchableOpacity onPress={() => navigation.navigate("QrCode")}>
+                <FontAwesome5
+                  style={{ fontSize: 50, color: "#174162" }}
+                  name="qrcode"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={styles.descricaoEventoBox}>
-            <Text style={styles.descricao}>
-              <Text style={{ fontWeight: 600 }}>Descrição: </Text>
-              {route.params.item.descricao}
-            </Text>
-            <Text style={styles.descricao}>
-              <Text style={{ fontWeight: 600 }}>Data: </Text>
-              {route.params.item.data}
-            </Text>
-            <Text style={styles.descricao}>
-              <Text style={{ fontWeight: 600 }}>Local: </Text>
-              {route.params.item.local}
-            </Text>
-            <Text style={styles.descricao}>
-              <Text style={{ fontWeight: 600 }}>Hora inicio: </Text>
-              {route.params.item.horaInicio}
-            </Text>
-            <Text style={styles.descricao}>
-              <Text style={{ fontWeight: 600 }}>Hora final: </Text>
-              {route.params.item.horaFim}
-            </Text>
-          </View>
-          <View style={styles.inscreverBotaoBox}>
-            <TouchableOpacity
-              onPress={() => inscrever()}
-              style={styles.inscreverBotao}
-            >
-              <Text style={styles.inscreverText}>Inscrever</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate("QrCode")}>
-              <FontAwesome5
-                style={{ fontSize: 50, color: "#174162" }}
-                name="qrcode"
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+        </ScrollView>
+      </SafeAreaView>
+    </>
+  )
+}
 
-export default DetalheEventos;
+export default DetalheEventos

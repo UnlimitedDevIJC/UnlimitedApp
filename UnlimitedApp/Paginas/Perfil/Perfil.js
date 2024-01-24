@@ -13,6 +13,7 @@ import {
   Alert,
   ImageBackground,
   Linking,
+  StatusBar
 } from "react-native"
 import {
   getFirestore,
@@ -97,6 +98,19 @@ const Perfil = ({ navigation }) => {
   
 
   return (
+    <>
+    <View
+        style={{
+          backgroundColor: "#1A649F",
+          height: Platform.OS === "ios" ? 40 : StatusBar.currentHeight,
+        }}
+      >
+        <StatusBar
+          translucent
+          backgroundColor="#1A649F"
+          barStyle="light-content"
+        />
+      </View>
     <SafeAreaView style={styles.safeArea}>
       <ScrollView style={styles.scrollView} bounces={false}>
         <TouchableWithoutFeedback
@@ -173,6 +187,7 @@ const Perfil = ({ navigation }) => {
         </TouchableWithoutFeedback>
       </ScrollView>
     </SafeAreaView>
+    </>
   )
 }
 

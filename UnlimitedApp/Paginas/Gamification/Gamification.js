@@ -6,6 +6,7 @@ import {
   ScrollView,
   Image,
   TouchableOpacity,
+  StatusBar,
 } from "react-native"
 import {
   getFirestore,
@@ -49,45 +50,57 @@ const Gamification = ({ navigation }) => {
   })
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} bounces={false}>
-        <View style={{ width: "100%", height: 130 }}>
-          <View style={{ width: "100%", height: "100%" }}>
-            <View style={styles.retanguloFundo} />
-            <View style={styles.logoView}>
-              <Image
-                style={styles.logo}
-                source={require("../Login/unlimitedLogo.png")}
-              />
+    <>
+      <View
+        style={{
+          backgroundColor: "#1A649F",
+          height: Platform.OS === "ios" ? 40 : StatusBar.currentHeight,
+        }}
+      >
+        <StatusBar
+          translucent
+          backgroundColor="#1A649F"
+          barStyle="light-content"
+        />
+      </View>
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView style={styles.scrollView} bounces={false}>
+          <View style={{ width: "100%", height: 130 }}>
+            <View style={{ width: "100%", height: "100%" }}>
+              <View style={styles.retanguloFundo} />
+              <View style={styles.logoView}>
+                <Image
+                  style={styles.logo}
+                  source={require("../Login/unlimitedLogo.png")}
+                />
+              </View>
+            </View>
+            <TouchableOpacity
+              style={styles.notificationBtn}
+              onPress={() => navigation.navigate("QrCode")}
+            >
+              <FontAwesome5 style={styles.notificationIcon} name="qrcode" />
+            </TouchableOpacity>
+            <View style={{ width: "100%", height: "100%", top: "-15%" }}>
+              <View style={styles.titleView}>
+                <Text style={styles.titleText}>
+                  Já conheces os nossos prémios?
+                </Text>
+              </View>
             </View>
           </View>
-          <TouchableOpacity
-            style={styles.notificationBtn}
-            onPress={() => navigation.navigate("QrCode")}
-          >
-            <FontAwesome5 style={styles.notificationIcon} name="qrcode" />
-          </TouchableOpacity>
-          <View style={{ width: "100%", height: "100%", top: "-15%" }}>
-            <View style={styles.titleView}>
-              <Text style={styles.titleText}>
-                Já conheces os nossos prémios?
-              </Text>
-            </View>
-          </View>
-        </View>
-        <View
-          style={{ height: 550, width: 430, top: 100 }}
-        >
-          <Image
+          <View style={{ height: 550, width: 430, top: 100 }}>
+            <Image
               style={{
                 width: "100%",
                 height: "100%",
               }}
               source={{ uri: `data:image/png;base64,${image}` }}
             />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   )
 }
 

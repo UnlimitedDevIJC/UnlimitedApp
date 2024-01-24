@@ -14,6 +14,7 @@ import {
   ImageBackground,
   Linking,
   Modal,
+  StatusBar,
 } from "react-native"
 import {
   getFirestore,
@@ -258,222 +259,246 @@ const EditarPerfil = ({ navigation }) => {
   }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      <ScrollView style={styles.scrollView} bounces={false}>
-        <TouchableWithoutFeedback
-          onPress={() => {
-            Keyboard.dismiss()
-          }}
-        >
-          <>
-            <View style={{ width: "100%", height: 130 }}>
-              <View style={{ width: "100%", height: "100%" }}>
-                <View style={styles.retanguloFundo} />
-                <View style={styles.logoView}>
-                  <Image
-                    style={styles.logo}
-                    source={require("../Login/unlimitedLogo.png")}
-                  />
+    <>
+      <View
+        style={{
+          backgroundColor: "#1A649F",
+          height: Platform.OS === "ios" ? 40 : StatusBar.currentHeight,
+        }}
+      >
+        <StatusBar
+          translucent
+          backgroundColor="#1A649F"
+          barStyle="light-content"
+        />
+      </View>
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView style={styles.scrollView} bounces={false}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              Keyboard.dismiss()
+            }}
+          >
+            <>
+              <View style={{ width: "100%", height: 130 }}>
+                <View style={{ width: "100%", height: "100%" }}>
+                  <View style={styles.retanguloFundo} />
+                  <View style={styles.logoView}>
+                    <Image
+                      style={styles.logo}
+                      source={require("../Login/unlimitedLogo.png")}
+                    />
+                  </View>
                 </View>
+
+                <TouchableOpacity
+                  style={{
+                    width: "15%",
+                    position: "absolute",
+                    top: 50,
+                    right: 15,
+                    alignSelf: "flex-end",
+                  }}
+                  onPress={() => setModalVisible(true)}
+                >
+                  <FontAwesome5
+                    style={{
+                      fontSize: 34,
+                      color: "red",
+                    }}
+                    name="trash"
+                  />
+                  <ConfirmationModal
+                    isVisible={isModalVisible}
+                    onCancel={() => setModalVisible(false)}
+                    onConfirm={handleConfirm}
+                  ></ConfirmationModal>
+                </TouchableOpacity>
               </View>
 
-              <TouchableOpacity
-                style={{
-                  width: "15%",
-                  position: "absolute",
-                  top: 50,
-                  right: 15,
-                  alignSelf: "flex-end",
-                }}
-                onPress={() => setModalVisible(true)}
-              >
-                <FontAwesome5
-                  style={{
-                    fontSize: 34,
-                    color: "red",
-                  }}
-                  name="trash"
-                />
-                <ConfirmationModal
-                  isVisible={isModalVisible}
-                  onCancel={() => setModalVisible(false)}
-                  onConfirm={handleConfirm}
-                ></ConfirmationModal>
-              </TouchableOpacity>
-            </View>
-
-            <View
-              style={{
-                width: "100%",
-                flex: -10,
-                zIndex: 20,
-                marginTop: 20,
-              }}
-            >
-              <TouchableOpacity style={styles.editFotoBtn} onPress={pickImage}>
-                {image2 ? (
-                  <Image source={{ uri: image2 }} style={styles.perfilImage} />
-                ) : (
-                  <Image
-                    style={styles.perfilImage}
-                    source={require("../Perfil/default.png")}
-                  />
-                )}
-                <FontAwesome5 name="pen" style={styles.editFotoIcon} />
-              </TouchableOpacity>
-            </View>
-            <View
-              style={{
-                width: "100%",
-                flex: 1,
-                alignItems: "center",
-                marginBottom: 50,
-              }}
-            >
               <View
                 style={{
-                  width: "80%",
-                  flex: 1,
-                  backgroundColor: "#ffffff",
-                  alignItems: "center",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  top: -20,
+                  width: "100%",
+                  flex: -10,
+                  zIndex: 20,
+                  marginTop: 20,
                 }}
               >
-                <TextInput
-                  style={styles.perfilNomeContainer}
-                  onChangeText={(text) =>
-                    setUtilizador({ ...utilizador, nome: text })
-                  }
-                >
-                  <Text style={styles.perfilNome}>
-                    {utilizador ? utilizador.nome : ""}
-                  </Text>
-                </TextInput>
-                <TextInput
-                  style={styles.perfilDetalhesContainer}
-                  onChangeText={(text) =>
-                    setUtilizador({ ...utilizador, telemovel: text })
-                  }
-                >
-                  <Text style={styles.perfilDetalhes}>
-                    {utilizador ? utilizador.telemovel : ""}
-                  </Text>
-                </TextInput>
-                <View style={styles.escolaView}>
-                  <SelectDropdown
-                    dropdownStyle={{
-                      width: "50%",
-                    }}
-                    buttonStyle={{
-                      width: "100%",
-                      backgroundColor: "transparent",
-                      textAlign: "center",
-                    }}
-                    defaultButtonText={
-                      utilizador ? utilizador.universidade : "Universidade"
-                    }
-                    buttonTextStyle={{
-                      fontSize: 18,
-                      color: "black",
-                      fontFamily: "Oswald-Regular",
-                      textAlign: "center",
-                    }}
-                    data={listaUniversidades}
-                    onSelect={(selectedItem, index) => {
-                      setUtilizador({
-                        ...utilizador,
-                        universidade: selectedItem,
-                      })
-                    }}
-                  />
-                </View>
-                <View style={styles.escolaView}>
-                  <SelectDropdown
-                    dropdownStyle={{
-                      width: "50%",
-                    }}
-                    buttonStyle={{
-                      width: "100%",
-                      backgroundColor: "transparent",
-                      textAlign: "center",
-                    }}
-                    defaultButtonText={
-                      utilizador
-                        ? utilizador.anoEscolar + "º Ano"
-                        : "Ano Escolar"
-                    }
-                    buttonTextStyle={{
-                      fontSize: 18,
-                      color: "black",
-                      fontFamily: "Oswald-Regular",
-                      textAlign: "center",
-                    }}
-                    data={anos}
-                    onSelect={(selectedItem, index) => {
-                      setUtilizador({
-                        ...utilizador,
-                        anoEscolar: selectedItem,
-                      })
-                    }}
-                  />
-                </View>
                 <TouchableOpacity
-                  style={styles.perfilDetalhesContainer}
-                  onPress={pickAndUploadFile}
+                  style={styles.editFotoBtn}
+                  onPress={pickImage}
                 >
-                  {utilizador.curriculo ? (
-                    <Text style={styles.perfilDetalhes}>
-                      CV - {utilizador.nome}
-                    </Text>
+                  {image2 ? (
+                    <Image
+                      source={{ uri: image2 }}
+                      style={styles.perfilImage}
+                    />
                   ) : (
-                    <Text style={styles.perfilDetalhes}>Inserir Currículo</Text>
+                    <Image
+                      style={styles.perfilImage}
+                      source={require("../Perfil/default.png")}
+                    />
                   )}
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() =>
-                    Linking.openURL(
-                      "https://www.adobe.com/pt/acrobat/online/compress-pdf.html"
-                    )
-                  }
-                >
-                  <Text style={{ marginTop: 10, fontSize: 12 }}>
-                    Compacta o teu currículo Aqui!
-                  </Text>
-                </TouchableOpacity>
-                <TextInput
-                  style={styles.perfilDetalhesContainer}
-                  onChangeText={(text) =>
-                    setUtilizador({ ...utilizador, linkedIn: text })
-                  }
-                >
-                  {utilizador.linkedIn ? (
-                    <Text style={styles.perfilDetalhes}>
-                      LinkedIn - {utilizador.nome}
-                    </Text>
-                  ) : (
-                    <Text style={styles.perfilDetalhes}>Inserir LinkedIn</Text>
-                  )}
-                </TextInput>
-                <TouchableOpacity
-                  style={styles.guardarBtn}
-                  onPress={() => handleUpdate()}
-                >
-                  <Text style={styles.guardarTexto}>Guardar</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.perfilBtn}
-                  onPress={() => navigation.navigate("Perfil")}
-                >
-                  <Text style={styles.guardarTexto}>Cancelar</Text>
+                  <FontAwesome5 name="pen" style={styles.editFotoIcon} />
                 </TouchableOpacity>
               </View>
-            </View>
-          </>
-        </TouchableWithoutFeedback>
-      </ScrollView>
-    </SafeAreaView>
+              <View
+                style={{
+                  width: "100%",
+                  flex: 1,
+                  alignItems: "center",
+                  marginBottom: 50,
+                }}
+              >
+                <View
+                  style={{
+                    width: "80%",
+                    flex: 1,
+                    backgroundColor: "#ffffff",
+                    alignItems: "center",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    top: -20,
+                  }}
+                >
+                  <TextInput
+                    style={styles.perfilNomeContainer}
+                    onChangeText={(text) =>
+                      setUtilizador({ ...utilizador, nome: text })
+                    }
+                  >
+                    <Text style={styles.perfilNome}>
+                      {utilizador ? utilizador.nome : ""}
+                    </Text>
+                  </TextInput>
+                  <TextInput
+                    style={styles.perfilDetalhesContainer}
+                    onChangeText={(text) =>
+                      setUtilizador({ ...utilizador, telemovel: text })
+                    }
+                  >
+                    <Text style={styles.perfilDetalhes}>
+                      {utilizador ? utilizador.telemovel : ""}
+                    </Text>
+                  </TextInput>
+                  <View style={styles.escolaView}>
+                    <SelectDropdown
+                      dropdownStyle={{
+                        width: "50%",
+                      }}
+                      buttonStyle={{
+                        width: "100%",
+                        backgroundColor: "transparent",
+                        textAlign: "center",
+                      }}
+                      defaultButtonText={
+                        utilizador ? utilizador.universidade : "Universidade"
+                      }
+                      buttonTextStyle={{
+                        fontSize: 18,
+                        color: "black",
+                        fontFamily: "Oswald-Regular",
+                        textAlign: "center",
+                      }}
+                      data={listaUniversidades}
+                      onSelect={(selectedItem, index) => {
+                        setUtilizador({
+                          ...utilizador,
+                          universidade: selectedItem,
+                        })
+                      }}
+                    />
+                  </View>
+                  <View style={styles.escolaView}>
+                    <SelectDropdown
+                      dropdownStyle={{
+                        width: "50%",
+                      }}
+                      buttonStyle={{
+                        width: "100%",
+                        backgroundColor: "transparent",
+                        textAlign: "center",
+                      }}
+                      defaultButtonText={
+                        utilizador
+                          ? utilizador.anoEscolar + "º Ano"
+                          : "Ano Escolar"
+                      }
+                      buttonTextStyle={{
+                        fontSize: 18,
+                        color: "black",
+                        fontFamily: "Oswald-Regular",
+                        textAlign: "center",
+                      }}
+                      data={anos}
+                      onSelect={(selectedItem, index) => {
+                        setUtilizador({
+                          ...utilizador,
+                          anoEscolar: selectedItem,
+                        })
+                      }}
+                    />
+                  </View>
+                  <TouchableOpacity
+                    style={styles.perfilDetalhesContainer}
+                    onPress={pickAndUploadFile}
+                  >
+                    {utilizador.curriculo ? (
+                      <Text style={styles.perfilDetalhes}>
+                        CV - {utilizador.nome}
+                      </Text>
+                    ) : (
+                      <Text style={styles.perfilDetalhes}>
+                        Inserir Currículo
+                      </Text>
+                    )}
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() =>
+                      Linking.openURL(
+                        "https://www.adobe.com/pt/acrobat/online/compress-pdf.html"
+                      )
+                    }
+                  >
+                    <Text style={{ marginTop: 10, fontSize: 12 }}>
+                      Compacta o teu currículo Aqui!
+                    </Text>
+                  </TouchableOpacity>
+                  <TextInput
+                    style={styles.perfilDetalhesContainer}
+                    onChangeText={(text) =>
+                      setUtilizador({ ...utilizador, linkedIn: text })
+                    }
+                  >
+                    {utilizador.linkedIn ? (
+                      <Text style={styles.perfilDetalhes}>
+                        LinkedIn - {utilizador.nome}
+                      </Text>
+                    ) : (
+                      <Text style={styles.perfilDetalhes}>
+                        Inserir LinkedIn
+                      </Text>
+                    )}
+                  </TextInput>
+                  <TouchableOpacity
+                    style={styles.guardarBtn}
+                    onPress={() => handleUpdate()}
+                  >
+                    <Text style={styles.guardarTexto}>Guardar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.perfilBtn}
+                    onPress={() => navigation.navigate("Perfil")}
+                  >
+                    <Text style={styles.guardarTexto}>Cancelar</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      </SafeAreaView>
+    </>
   )
 }
 

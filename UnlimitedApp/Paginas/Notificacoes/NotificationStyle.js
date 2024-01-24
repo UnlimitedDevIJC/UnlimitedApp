@@ -4,7 +4,6 @@ const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
     backgroundColor: "#F2F3F5",
-    marginTop: 30
   },
 
   retanguloFundo: {
