@@ -200,13 +200,13 @@ const Registo = ({ navigation }) => {
     <>
       <View
         style={{
-          backgroundColor: "#00BCD4",
+          backgroundColor: "#1A649F",
           height: Platform.OS === "ios" ? 40 : StatusBar.currentHeight,
         }}
       >
         <StatusBar
           translucent
-          backgroundColor="#00BCD4"
+          backgroundColor="#1A649F"
           barStyle="light-content"
         />
       </View>
