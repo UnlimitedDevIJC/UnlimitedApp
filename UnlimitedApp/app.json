@@ -24,7 +24,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.unlimitedfuture.UnlimitedApp",
-      "versionCode": 10
+      "versionCode": 11
     },
     "web": {
       "favicon": "./assets/unlimitedLogo.png"
