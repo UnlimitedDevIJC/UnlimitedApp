@@ -182,7 +182,7 @@ const Login = ({ navigation }) => {
         {/* Caso os campos estejam vazios */}
         {email === "" || password === "" ? (
           <View style={styles.loginView}>
-            <TouchableOpacity disabled={true} style={styles.loginButtonDisable}>
+            <TouchableOpacity disabled={true} style={styles.loginButton}>
               <Text style={styles.loginText}>Login</Text>
             </TouchableOpacity>
           </View>
