@@ -16,7 +16,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp",
-      "buildNumber": "3"
+      "buildNumber": "6"
     },
     "android": {
       "adaptiveIcon": {
