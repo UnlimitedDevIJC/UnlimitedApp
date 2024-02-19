@@ -7,10 +7,10 @@ const styles = StyleSheet.create({
   },
 
   imageLogo: {
-    top: '-52%',
+    top: '-54%',
     alignSelf:'center',
-    width: 100,
-    height: 100,
+    width: 85,
+    height: 85,
   },
 
   searchView: {

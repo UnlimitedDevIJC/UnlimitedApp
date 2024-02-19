@@ -25,14 +25,6 @@ const styles = StyleSheet.create({
     left: "-10%",
     top: "-70%",
     backgroundColor: "#1A649F",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 5,
-      height: 8,
-    },
-    shadowOpacity: 0.35,
-    shadowRadius: 3.84,
-    elevation: 40,
   },
 
   logoView: {

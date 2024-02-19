@@ -472,7 +472,7 @@ const EditarPerfil = ({ navigation }) => {
                   >
                     {utilizador.linkedIn ? (
                       <Text style={styles.perfilDetalhes}>
-                        LinkedIn - {utilizador.nome}
+                        {utilizador.linkedIn}
                       </Text>
                     ) : (
                       <Text style={styles.perfilDetalhes}>

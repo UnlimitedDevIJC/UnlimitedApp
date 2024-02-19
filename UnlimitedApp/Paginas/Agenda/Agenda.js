@@ -247,7 +247,7 @@ const Agenda = ({ navigation }) => {
             height: 150,
             width: "120%",
             left: -50,
-            top: -80,
+            top: -81,
             transform: [{ skewY: "-15deg" }],
             justifyContent: "center",
             alignItems: "center",

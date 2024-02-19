@@ -1,6 +1,11 @@
 import { Platform, StyleSheet } from "react-native"
 
 const styles = StyleSheet.create({
+  scrollView: {
+    flex: 1,
+    backgroundColor: "#F2F3F5",
+  },
+
   imageBackground: {
     flex: 1,
     opacity: 0.65,
@@ -128,8 +133,8 @@ const styles = StyleSheet.create({
     width: "10%",
     zIndex: 1,
     alignSelf: "center",
-    top: '57%',
-    left: '30%'
+    top: "57%",
+    left: "30%",
   },
 
   passwordView: {
