@@ -16,7 +16,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp",
-      "buildNumber": "8"
+      "buildNumber": "9"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +24,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.unlimitedfuture.UnlimitedApp",
-      "versionCode": 12
+      "versionCode": 13
     },
     "web": {
       "favicon": "./assets/unlimitedLogo.png"
