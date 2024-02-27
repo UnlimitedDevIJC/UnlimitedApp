@@ -154,7 +154,7 @@ const QrCode = ({ navigation }) => {
         <Text style={{ margin: 10 }}>No access to camera</Text>
         <Button
           title={
-            "Tens de dar acesso à câmara para fazeres scan do código QR de maneira a poderes ganhares pontos para a gamification"
+            "Tens de dar acesso à câmara para fazeres scan do código QR de maneira a poderes ganhares pontos para a gamification. Este acesso apenas dará permissão para a câmara ler o QR Code presente em cada evento, de maneira a ganhares pontos e prémios."
           }
           onPress={() => askForCameraPermission()}
         />
