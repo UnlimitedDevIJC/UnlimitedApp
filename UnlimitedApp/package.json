@@ -19,6 +19,7 @@
     "@react-navigation/stack": "^6.3.20",
     "@types/react": "~18.2.14",
     "@types/react-native": "~0.69.1",
+    "expo": "^49.0.23",
     "expo-barcode-scanner": "~12.5.3",
     "expo-document-picker": "~11.5.4",
     "expo-file-system": "~15.4.5",
