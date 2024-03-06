@@ -145,7 +145,8 @@ const QrCode = ({ navigation }) => {
           Tens de dar acesso à câmara para fazeres scan do código QR de maneira
           a poderes ganhares pontos para a gamification. Este acesso apenas dará
           permissão para a câmara ler o QR Code presente em cada evento, de
-          maneira a ganhares pontos e prémios.
+          maneira a ganhares pontos e prémios. Podes sempre perguntar aos
+          responsáveis do evento sobre as condições.
         </Text>
       </View>
     )
