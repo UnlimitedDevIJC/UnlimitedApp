@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
@@ -9,7 +9,7 @@ import {
   Image,
   ScrollView,
   StatusBar,
-} from "react-native"
+} from "react-native";
 import {
   doc,
   arrayUnion,
@@ -17,83 +17,83 @@ import {
   collection,
   getFirestore,
   onSnapshot,
-} from "firebase/firestore"
-import { getAuth, onAuthStateChanged } from "firebase/auth"
-import styles from "./QrCodeStyle"
-import { BarCodeScanner } from "expo-barcode-scanner"
-import { FontAwesome5 } from "@expo/vector-icons"
+} from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import styles from "./QrCodeStyle";
+import { BarCodeScanner } from "expo-barcode-scanner";
+import { FontAwesome5 } from "@expo/vector-icons";
 
-let listaEventos = []
-let listaCodigos = []
+let listaEventos = [];
+let listaCodigos = [];
 
-const db = getFirestore()
-const colRef = collection(db, "Evento")
+const db = getFirestore();
+const colRef = collection(db, "Evento");
 
 onSnapshot(colRef, (snapshot) => {
-  let mounted = true
+  let mounted = true;
   if (mounted) {
-    listaEventos = []
-    listaCodigos = []
+    listaEventos = [];
+    listaCodigos = [];
     snapshot.docs.forEach((doc) => {
-      listaEventos.push({ ...doc.data(), id: doc.id })
-      listaCodigos.push(doc.data().codigoEvento)
-    })
+      listaEventos.push({ ...doc.data(), id: doc.id });
+      listaCodigos.push(doc.data().codigoEvento);
+    });
   }
-  return () => (mounted = false)
-})
+  return () => (mounted = false);
+});
 
 const QrCode = ({ navigation }) => {
-  const [hasPermission, setHasPermission] = useState(null)
-  const [scanned, setScanned] = useState(false)
-  const [text, setText] = useState("Not yet scanned")
-  const [utilizador, setUtilizador] = useState(null)
-  const [codigo, setCodigo] = useState("")
-  const [user, setUser] = useState()
-  const [utilizadorUtils, setUtilizadorUtils] = useState("null")
+  const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
+  const [text, setText] = useState("Not yet scanned");
+  const [utilizador, setUtilizador] = useState(null);
+  const [codigo, setCodigo] = useState("");
+  const [user, setUser] = useState();
+  const [utilizadorUtils, setUtilizadorUtils] = useState("null");
 
   const askForCameraPermission = () => {
-    ;(async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync()
-      setHasPermission(status === "granted")
-    })()
-  }
+    (async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
+      setHasPermission(status === "granted");
+    })();
+  };
 
-  let utilizadorRef = null
-  let utilizadorUtilsRef = null
+  let utilizadorRef = null;
+  let utilizadorUtilsRef = null;
   useEffect(() => {
     //verificar se tem login feito
-    let isMounted = true
+    let isMounted = true;
     if (isMounted) {
-      const auth = getAuth()
+      const auth = getAuth();
       onAuthStateChanged(auth, (user1) => {
         if (user1) {
-          utilizadorRef = doc(db, "Utilizador", user1.email)
-          utilizadorUtilsRef = doc(db, "UtilizadorUtils", user1.email)
-          setUser(user1)
+          utilizadorRef = doc(db, "Utilizador", user1.email);
+          utilizadorUtilsRef = doc(db, "UtilizadorUtils", user1.email);
+          setUser(user1);
           onSnapshot(utilizadorRef, { includeMetadataChanges: true }, (doc) => {
             if (doc.exists()) {
-              setUtilizador(doc.data())
+              setUtilizador(doc.data());
             } else {
             }
-          })
+          });
           onSnapshot(
             utilizadorUtilsRef,
             { includeMetadataChanges: true },
             (doc) => {
               if (doc.exists()) {
-                setUtilizadorUtils(doc.data())
+                setUtilizadorUtils(doc.data());
               } else {
               }
             }
-          )
+          );
         } else {
         }
-      })
+      });
     }
     return () => {
-      isMounted = false
-    }
-  }, [])
+      isMounted = false;
+    };
+  }, []);
 
   function testarCodigo() {
     if (
@@ -102,54 +102,53 @@ const QrCode = ({ navigation }) => {
     ) {
       let aux = (
         parseInt(utilizador.pontos) + parseInt(getPontos(codigo))
-      ).toString()
-      console.log(aux)
-      Alert.alert("Adicionado")
-      utilizadorRef = doc(db, "Utilizador", user.email)
+      ).toString();
+      console.log(aux);
+      Alert.alert("Adicionado");
+      utilizadorRef = doc(db, "Utilizador", user.email);
       updateDoc(utilizadorRef, {
         pontos: aux,
-      })
-      console.log(utilizador.pontos)
-      utilizadorUtilsRef = doc(db, "UtilizadorUtils", user.email)
+      });
+      console.log(utilizador.pontos);
+      utilizadorUtilsRef = doc(db, "UtilizadorUtils", user.email);
       updateDoc(utilizadorUtilsRef, {
         codigosEventos: arrayUnion(codigo),
-      })
+      });
     } else {
-      Alert.alert("Já adicionaste!")
+      Alert.alert("Já adicionaste!");
     }
   }
 
   function getPontos(code) {
     let aux = listaEventos.filter((item) => {
-      return item.codigoEvento == code
-    })
-    return aux[0].pontosAtribuidos
+      return item.codigoEvento == code;
+    });
+    return aux[0].pontosAtribuidos;
   }
 
   useEffect(() => {
-    askForCameraPermission()
-  }, [])
+    askForCameraPermission();
+  }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setScanned(true)
-    setText(data)
-    setCodigo(data)
-    console.log("Type: " + type + "\nData: " + data)
-  }
+    setScanned(true);
+    setText(data);
+    setCodigo(data);
+    console.log("Type: " + type + "\nData: " + data);
+  };
 
   // Check permissions and return the screens
   if (hasPermission === null) {
     return (
       <View style={styles.container}>
         <Text>
-          Tens de dar acesso à câmara para fazeres scan do código QR de maneira
-          a poderes ganhares pontos para a gamification. Este acesso apenas dará
-          permissão para a câmara ler o QR Code presente em cada evento, de
-          maneira a ganhares pontos e prémios. Podes sempre perguntar aos
-          responsáveis do evento sobre as condições.
+          Quando vais a um evento, a Unlimited proporciona-te oportunidades de
+          ganhares prémios através da nossa Gamification. Para poderes ganhar
+          esses prémios, tens de dar acesso à câmara, para poderes ler o código
+          QR do evento para o qual marcaste presença.
         </Text>
       </View>
-    )
+    );
   }
   if (hasPermission === false) {
     return (
@@ -162,12 +161,12 @@ const QrCode = ({ navigation }) => {
           onPress={() => askForCameraPermission()}
         />
       </View>
-    )
+    );
   }
 
   const goBack = () => {
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
 
   const HeaderInclinado = () => {
     return (
@@ -192,8 +191,8 @@ const QrCode = ({ navigation }) => {
           <FontAwesome5 name="arrow-left" style={styles.goBackIcon} />
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
   return (
     <>
@@ -221,8 +220,8 @@ const QrCode = ({ navigation }) => {
           <TouchableOpacity
             style={styles.buttonLogin}
             onPress={() => {
-              setScanned(false)
-              testarCodigo()
+              setScanned(false);
+              testarCodigo();
             }}
           >
             <Text style={styles.textButtonLogin}> Ler QR Code </Text>
@@ -230,7 +229,7 @@ const QrCode = ({ navigation }) => {
           <TouchableOpacity
             style={styles.buttonLogin}
             onPress={() => {
-              navigation.navigate("EscreverQrCode")
+              navigation.navigate("EscreverQrCode");
             }}
           >
             <Text style={styles.textButtonLogin}> Escrever Código </Text>
@@ -238,7 +237,7 @@ const QrCode = ({ navigation }) => {
         </ScrollView>
       </SafeAreaView>
     </>
-  )
-}
+  );
+};
 
-export default QrCode
+export default QrCode;
