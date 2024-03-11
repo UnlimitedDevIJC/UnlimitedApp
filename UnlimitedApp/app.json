@@ -16,7 +16,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp",
-      "buildNumber": "11",
+      "buildNumber": "12",
       "config": {
         "infoPlist": {
           "NSCameraUsageDescription": "This app uses the camera do scan for QRCodes during Unlimited Future events, it cannot take any photos or record any videos. This QRCode reader is used for users to gain points."
