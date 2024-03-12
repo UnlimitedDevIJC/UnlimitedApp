@@ -6,6 +6,7 @@
     "orientation": "portrait",
     "icon": "./assets/unlimitedLogo.png",
     "userInterfaceStyle": "light",
+    "NSCameraUsageDescription": "This app uses the camera to scan for QRCodes during Unlimited Future events, it cannot take any photos or record any videos. This QRCode reader is used for users to gain points. It will not, under any circumstance, collect any data from the user. We do not save or utilize any user data, assuring users of its privacy.",
     "splash": {
       "image": "./assets/unlimitedLogo.png",
       "resizeMode": "contain",
@@ -16,11 +17,9 @@
     ],
     "ios": {
       "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp",
-      "buildNumber": "12",
-      "config": {
-        "infoPlist": {
-          "NSCameraUsageDescription": "This app uses the camera to scan for QRCodes during Unlimited Future events, it cannot take any photos or record any videos. This QRCode reader is used for users to gain points. It will not, under any circumstance, collect any data from the user. We do not save or utilize any user data, assuring users of its privacy."
-        }
+      "buildNumber": "13",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera to scan for QRCodes during Unlimited Future events, it cannot take any photos or record any videos. This QRCode reader is used for users to gain points. It will not, under any circumstance, collect any data from the user. We do not save or utilize any user data, assuring users of its privacy."
       }
     },
     "android": {
