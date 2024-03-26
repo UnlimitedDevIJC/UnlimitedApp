@@ -11,6 +11,7 @@ import {
   ImageBackground,
   Touchable,
   ScrollView,
+  StatusBar,
 } from "react-native"
 import React, { useState, useEffect, useRef } from "react"
 import {
@@ -70,6 +71,19 @@ const Login = ({ navigation }) => {
   }
 
   return (
+    <>
+    <View
+        style={{
+          backgroundColor: "#1A649F",
+          height: Platform.OS === "ios" ? 40 : StatusBar.currentHeight,
+        }}
+      >
+        <StatusBar
+          translucent
+          backgroundColor="#1A649F"
+          barStyle="light-content"
+        />
+      </View>
     <ScrollView style={styles.scrollView} bounces={false}>
       <TouchableWithoutFeedback
         onPress={() => {
@@ -99,7 +113,7 @@ const Login = ({ navigation }) => {
               style={{
                 width: "100%",
                 top: "-180%",
-                left: "25%",
+                left: "22%",
               }}
             >
               <Image
@@ -211,6 +225,7 @@ const Login = ({ navigation }) => {
         </>
       </TouchableWithoutFeedback>
     </ScrollView>
+    </>
   )
 }
 
