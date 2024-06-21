@@ -108,7 +108,7 @@ const EditarPerfil = ({ navigation }) => {
       telemovel: utilizador.telemovel,
       universidade: utilizador.universidade,
       anoEscolar: utilizador.anoEscolar,
-      curriculo: document,
+      curriculo: utilizador.curriculo,
       linkedIn: utilizador.linkedIn,
     }).then(() => {
       navigation.navigate("Perfil")
@@ -199,6 +199,7 @@ const EditarPerfil = ({ navigation }) => {
         )
         const base64Data = await blobToBase64(fileBlob)
         setDocument(base64Data)
+        setUtilizador({ ...utilizador, curriculo: base64Data })
 
         console.log("File uploaded successfully!")
       }
