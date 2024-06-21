@@ -338,7 +338,6 @@ const HomePage = ({ navigation }) => {
                   fontFamily: "Oswald-Regular",
                 }}
               >
-                <Text style={{ fontWeight: 900 }}>Descrição: {""}</Text>
                 {academia.descricao}
               </Text>
             </View>
