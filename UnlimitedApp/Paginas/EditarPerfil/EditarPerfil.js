@@ -208,6 +208,37 @@ const EditarPerfil = ({ navigation }) => {
     }
   }
 
+  const handleFileUpload = async () => {
+    try {
+      // Pick a document
+      let result = await DocumentPicker.getDocumentAsync({});
+      if (result.type === 'cancel') {
+        console.log('User canceled document picker');
+        return;
+      }
+      
+      const { uri, name, size } = result;
+      if (size > 1024 * 1024 * 5) { // 5MB limit
+        alert('File size exceeds 5MB');
+        return;
+      }
+
+      // Prepare the file for upload
+      const response = await fetch(uri);
+      const blob = await response.blob();
+
+      // Create a reference to the file
+      const storageCVRef = ref(storage, `cvs/${utilizador.email}`);
+      const uploadTask = await uploadBytes(storageCVRef, blob);
+
+      console.log('File uploaded successfully:', uploadTask.metadata);
+      alert('File uploaded successfully!');
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Error uploading file: ' + error.message);
+    }
+  };
+
   async function getImage() {
     getDownloadURL(ref(storage, "imagens/" + utilizador.email))
       .then((url) => {
@@ -442,7 +473,7 @@ const EditarPerfil = ({ navigation }) => {
                   </View>
                   <TouchableOpacity
                     style={styles.perfilDetalhesContainer}
-                    onPress={pickAndUploadFile}
+                    onPress={handleFileUpload}
                   >
                     {utilizador.curriculo ? (
                       <Text style={styles.perfilDetalhes}>
