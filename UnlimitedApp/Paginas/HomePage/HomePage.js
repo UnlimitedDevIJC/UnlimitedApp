@@ -373,8 +373,8 @@ const HomePage = ({ navigation }) => {
                 <Image
                   style={{
                     width: 150,
-                    height: "70%",
-                    marginRight: 50,
+                    height: "60%",
+                    marginRight: 30,
                   }}
                   source={{ uri: `data:image/png;base64,${imageDataEmpresa}` }}
                   //style={{ width: 200, height: 200 }}
