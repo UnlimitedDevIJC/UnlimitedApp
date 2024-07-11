@@ -2,7 +2,7 @@
   "expo": {
     "name": "Unlimited App",
     "slug": "UnlimitedApp",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/unlimitedLogo.png",
     "userInterfaceStyle": "light",
@@ -16,7 +16,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp",
-      "buildNumber": "20",
+      "buildNumber": "25",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan for QRCodes during Unlimited Future events, it cannot take any photos or record any videos. This QRCode reader is used for users to gain points. It will not, under any circumstance, collect any data from the user. We do not save or utilize any user data, assuring users of its privacy."
       }
@@ -31,6 +31,11 @@
     },
     "web": {
       "favicon": "./assets/unlimitedLogo.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "4f4e08fb-4c44-48fc-bc99-8f94d2ed5352"
+      }
     }
   }
 }
