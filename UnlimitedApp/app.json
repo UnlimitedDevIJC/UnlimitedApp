@@ -33,9 +33,9 @@
       "favicon": "./assets/unlimitedLogo.png"
     },
     "extra": {
-      "eas": {
-        "projectId": "4f4e08fb-4c44-48fc-bc99-8f94d2ed5352"
-      }
+      //"eas": {
+       // "projectId": "4f4e08fb-4c44-48fc-bc99-8f94d2ed5352"
+      //}
     }
   }
 }
