@@ -7,9 +7,7 @@ export default function App() {
   useEffect(() => {
     async function loadFont() {
       await Font.loadAsync({
-        "Oswald-Regular": require("../UnlimitedApp/assets/fonts/Oswald-Regular.ttf"),
-        
-  
+        "Oswald-Regular": require("../UnlimitedApp/assets/fonts/Oswald-Regular.ttf"),  
       })
     }
     loadFont()
