@@ -27,13 +27,15 @@
     "expo-updates": "~0.16.4",
     "firebase": "^9.22.0",
     "react": "18.2.0",
-    "react-native": "^0.71.8",
+    "react-native": "0.71.14",
     "react-native-custom-datepicker-ios": "^0.0.5",
     "react-native-document-picker": "^9.0.1",
     "react-native-dropdown": "^0.0.6",
     "react-native-dropdown-select-list": "^2.0.4",
+    "react-native-get-random-values": "^1.11.0",
     "react-native-select-dropdown": "^3.3.4",
-    "typescript": "^4.6.3"
+    "typescript": "^4.6.3",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
