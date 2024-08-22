@@ -16,7 +16,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.unlimitedfuture.UnlimitedApp",
-      "buildNumber": "26",
+      "buildNumber": "27",
       "infoPlist": {
         "NSCameraUsageDescription": "This app uses the camera to scan for QRCodes during Unlimited Future events, it cannot take any photos or record any videos. This QRCode reader is used for users to gain points. It will not, under any circumstance, collect any data from the user. We do not save or utilize any user data, assuring users of its privacy."
       }
@@ -27,7 +27,7 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.unlimitedfuture.UnlimitedApp",
-      "versionCode": 15
+      "versionCode": 16
     },
     "web": {
       "favicon": "./assets/unlimitedLogo.png"
