@@ -154,29 +154,27 @@ const EditarPerfil = ({ navigation }) => {
   }
 
   const uploadImage = async () => {
-  if (!image || !image.uri) {
-    console.log("Image is null or has no URI.");
-    return;
+    if (!image || !image.uri) {
+      console.log("Image is null or has no URI.")
+      return
+    }
+
+    setUploading(true)
+
+    try {
+      const response = await fetch(image.uri)
+      const blob = await response.blob()
+      var ref = uploadBytes(storageRef, blob).then((snapshot) => {})
+      await ref
+
+      setUploading(false)
+      Alert.alert("Photo Uploaded!")
+      setImage(null)
+    } catch (e) {
+      console.log("Error uploading image:", e)
+      setUploading(false)
+    }
   }
-
-  setUploading(true);
-
-  try {
-    const response = await fetch(image.uri);
-    const blob = await response.blob();
-
-    // Create a reference to the file
-    const storageRef = ref(storage, `imagens/${user.email}`);
-    await uploadBytes(storageRef, blob);
-
-    setUploading(false);
-    Alert.alert("Photo Uploaded!");
-    setImage(null);
-  } catch (e) {
-    console.log("Error uploading image:", e);
-    setUploading(false);
-  }
-};
 
   const blobToBase64 = (blob) => {
     return new Promise((resolve, reject) => {
@@ -193,40 +191,22 @@ const EditarPerfil = ({ navigation }) => {
 
   const pickAndUploadFile = async () => {
     try {
-      const result = await DocumentPicker.getDocumentAsync({});
-      if (result.type === 'cancel') {
-        console.log('User canceled document picker');
-        return;
+      const result = await DocumentPicker.getDocumentAsync({})
+
+      if (result && !result.canceled) {
+        const fileBlob = await fetch(result.uri).then((response) =>
+          response.blob()
+        )
+        const base64Data = await blobToBase64(fileBlob)
+        setDocument(base64Data)
+        setUtilizador({ ...utilizador, curriculo: base64Data })
+
+        console.log("File uploaded successfully!")
       }
-  
-      console.log('Document selected:', result);
-      const { uri, name, size } = result.assets[0];
-  
-      // Validate URI
-      if (!uri) {
-        console.error('Invalid URI');
-        return;
-      }
-  
-      console.log('Fetching file from URI:', uri);
-  
-      // Use FileSystem to read the file as a binary string
-      const fileData = await FileSystem.readAsStringAsync(uri, {
-        encoding: FileSystem.EncodingType.Base64,
-      });
-      console.log('File data fetched:', fileData);
-  
-      // Update state with base64 data
-      setDocument(fileData);
-      setUtilizador({ ...utilizador, curriculo: fileData });
-  
-      console.log("File uploaded successfully!");
     } catch (error) {
-      console.error("Error picking/uploading file:", error.message);
-      console.error("Error details:", error);
-      Alert.alert('Error picking/uploading file: ' + error.message);
+      console.error("Error picking/uploading file:", error)
     }
-  };
+  }
 
   const handleFileUpload = async () => {
     try {
@@ -493,7 +473,7 @@ const EditarPerfil = ({ navigation }) => {
                   </View>
                   <TouchableOpacity
                     style={styles.perfilDetalhesContainer}
-                    onPress={pickAndUploadFile}
+                    onPress={handleFileUpload}
                   >
                     {utilizador.curriculo ? (
                       <Text style={styles.perfilDetalhes}>
